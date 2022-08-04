@@ -1,2 +1,4 @@
-# Entrega_0
+# Proyecto JaP
+
+Proyecto de e-commerce
  
