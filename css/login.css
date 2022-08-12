@@ -13,16 +13,27 @@ height: calc(100% - 73px);
 height: 100%;
 }
 }
-img {
-    width: 60%;
-    margin-left: 20%;
-  }
-  .footer2 {
+.footer2 {
     background-color: red;
 }
 .form-label {
     margin-top: 1%;
 }
-.icon {
-  width: 40%;
+
+.g-signin2 {
+  margin-left: 6%;
+}
+.email-error, .password-error {
+  
+  font-size: 18px;
+  padding: 5px 8px;
+  text-align: center;
+  margin-top: 5px;
+  background-color: rgba(255, 0, 0, 0.1);
+  color: #C62828;
+  display: none;
+}
+.myP {
+  margin-left: 10%;
+  margin-right: 5%;
 }

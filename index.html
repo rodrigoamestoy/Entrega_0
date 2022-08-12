@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="785274693495-hmmurqkq1gg3uafspoeto0vgqj9ue0oa.apps.googleusercontent.com">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -20,37 +21,29 @@
                 class="img-fluid" alt="E-Mercado">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-              <form id="login-form" onsubmit="redirect()">
+              <form onsubmit="return redirect()" action="inicio.html" id="myForm">
                 <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                  <p class="lead fw-normal mb-0">Sign in with</p>
-                  <button type="button" class="btn btn-floating mx-1">
-                    <img src="img/facebook.png" class="icon" alt="">
-                  </button>
-      
-                  <button type="button" class="btn btn-floating mx-1">
-                    <i class="fab fa-twitter"><img src="img/twitter.png" class="icon" alt=""></i>
-                  </button>
-      
-                  <button type="button" class="btn btn-floating mx-1">
-                    <i class="fab fa-linkedin-in"><img src="img/google.png" class="icon" alt=""></i>
-                  </button>
+                  <p class="lead fw-normal mb-0 myP">Sign in with</p>
+                  <div class="g-signin2" data-onsuccess="onSignIn">
+                  </div>
                 </div>
-      
                 <div class="divider d-flex align-items-center my-4">
                   <p class="text-center fw-bold mx-3 mb-0">Or</p>
                 </div>
                 <!-- Email input -->
                 <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example3">Email address</label>
                   <input type="email" id="email" class="form-control form-control-lg"
-                    placeholder="Enter a valid email address" required/>
-                  <label class="form-label" for="email">Email address</label>
+                    placeholder="Ingrese su email" autocomplete="off"/>
+                  <div class="email-error" id="email-error">Ingrese un email válido</div>
                 </div>
       
                 <!-- Password input -->
                 <div class="form-outline mb-3">
-                  <input type="password" id="password" class="form-control form-control-lg"
-                    placeholder="Enter password" required />
                   <label class="form-label" for="form3Example4">Password</label>
+                  <input type="password" id="password" class="form-control form-control-lg"
+                    placeholder="Ingrese su contraseña" autocomplete="off"/>
+                  <div class="password-error" id="password-error">Ingrese una contraseña de al menos 6 dígitos</div>
                 </div>
       
                 <div class="d-flex justify-content-between align-items-center">
@@ -65,8 +58,8 @@
                 </div>
       
                 <div class="text-center text-lg-start mt-4 pt-2">
-                  <button type="submit" class="btn btn-outline-info"
-                    style="padding-left: 2.5rem; padding-right: 2.5rem;" id="login-btn">Login</button></div>
+                  <button type="submit" class="btn btn-primary btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                   <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
                       class="link-danger">Register</a></p>
                 </div>
@@ -76,15 +69,32 @@
           </div>
         </div>
         <div
-    class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-    <!-- Copyright -->
-    <div class="text-white mb-3 mb-md-0">
-      Copyright © 2020. All rights reserved.
-    </div>
-    <!-- Copyright -->
-    
-  </div>
-</section>
-      <script src="js/login.js"></script>
+          class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+          <!-- Copyright -->
+          <div class="text-white mb-3 mb-md-0">
+            Copyright © 2020. All rights reserved.
+          </div>
+          <!-- Copyright -->
+      
+          <!-- Right -->
+          <div>
+            <a href="#!" class="text-white me-4">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+              <i class="fab fa-google"></i>
+            </a>
+            <a href="#!" class="text-white">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+          <!-- Right -->
+        </div>
+      </section>
+        <script src="js/login.js"></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
   </body>
 </html>
