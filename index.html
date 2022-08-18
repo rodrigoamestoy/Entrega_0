@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-signin-client_id" content="785274693495-hmmurqkq1gg3uafspoeto0vgqj9ue0oa.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="785274693495-7l3editrrhet5et27f4d7h1830rp3hls.apps.googleusercontent.com">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -24,8 +24,7 @@
               <form onsubmit="return redirect()" action="inicio.html" id="myForm">
                 <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                   <p class="lead fw-normal mb-0 myP">Sign in with</p>
-                  <div class="g-signin2" data-onsuccess="onSignIn">
-                  </div>
+                  <div class="g-signin2" data-onsuccess="onSignIn" data-scope="https://www.googleapis.com/auth/plus.login" data-accesstype="offline" data-redirecturi="http://localhost/Proyecto-JaP/inicio.html"></div>
                 </div>
                 <div class="divider d-flex align-items-center my-4">
                   <p class="text-center fw-bold mx-3 mb-0">Or</p>
@@ -38,7 +37,7 @@
                   <div class="email-error" id="email-error">Ingrese un email válido</div>
                 </div>
       
-                <!-- Password input -->
+                <!-- Pasword input -->
                 <div class="form-outline mb-3">
                   <label class="form-label" for="form3Example4">Password</label>
                   <input type="password" id="password" class="form-control form-control-lg"
@@ -75,23 +74,6 @@
             Copyright © 2020. All rights reserved.
           </div>
           <!-- Copyright -->
-      
-          <!-- Right -->
-          <div>
-            <a href="#!" class="text-white me-4">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-              <i class="fab fa-google"></i>
-            </a>
-            <a href="#!" class="text-white">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-          </div>
-          <!-- Right -->
         </div>
       </section>
         <script src="js/login.js"></script>
