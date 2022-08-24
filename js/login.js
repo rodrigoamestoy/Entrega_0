@@ -1,12 +1,16 @@
+
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const form = document.getElementById('myForm');
-
 const passwordError = document.getElementById('password-error');
 const emailError = document.getElementById('email-error');
 
+/* Events */
+
 email.addEventListener('textInput', emailVerify);
 password.addEventListener('textInput', passwordVerify);
+
+/* Login Verification */
 
     function redirect() {
         if (email.value.length < 6) {
@@ -44,6 +48,15 @@ function passwordVerify() {
         return true;
     }
 }
+
+/* LocalStorage */
+
+function storeEmail() {
+    let getEmail = document.getElementById('email').value;
+    localStorage.setItem('user', getEmail);
+}
+
+/* Google LogIn */
 
 function onSuccess(googleUser) {
     console.log('Logged in as: ' + googleUser.getBasicProfile().getName());        

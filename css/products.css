@@ -1,59 +1,77 @@
-.misautos {
-    flex: 1;
-    border: 1px double grey;
-    margin-top: 5%;
+/* Container */
+
+.products-container {
+    font-family: 'Oswald', sans-serif;
 }
 
-/* Products */
+/* Products Cards */
 
-.autosdiv {
-  display: flex;
-  border-bottom: 1px solid grey;
+.first-div {
+    display: flex;
+    flex-direction: row;
+    box-shadow: -1px 1px 1px 2px;
+    margin-bottom: 1.5%;
+    padding-right: 1%;
 }
 
-.imgautos img {
+.products-img img {
+    width: 150px;
+    height: 100px;
+    float: left;
+}
+
+.products-img {
+    width: 150px;
+    height: 100px;
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    margin: 10px;
+}
+
+.products-content {
+    display: grid;
     width: 100%;
-    border: 2px solid white;
+    height: 100%;
 }
 
-.imgautos {
-    width: 25%;
+.products-content h2 {
+    margin-top: 4px;
+    font-weight: normal;
 }
 
-.contentautos {
-    width: 100%;
-    display: block;
-}
-
-.contentautos h2 {
-    font-size: 1,2rem;
-    text-align: left;
-    margin-top: 1%;
-}
-
-.contentautos h6 {
+.products-content h6 {
+    font-size: 1em;
+    font-style: bold;
+    font-style: italic;
+    color: black;
     text-align: right;
-    margin-top: -5%;
-    margin-right: 1%;
+    font-weight: 600;
 }
 
-.contentautos p, h6 {
-    font-size: 16px;
-}
-.contentautos p {
-    margin-top: 3%;
-    text-align: left;
-}
 
-.autos {
-    display: block;
-}
 
 /* Título */
 
-.products {
+.products-name {
+    width: 80%;
     text-align: center;
+    margin-top: 2%;
+    margin-left: 10%;
+    margin-bottom: 4%;
+    border-bottom: 1px solid black;
+    font-family:'Times New Roman', Times, serif;
+}
 
+/* Filter */
+
+.search-bar {
+    width: 60%;
+    text-align: center;
+    float:right;
+    margin-bottom: 1.5%;
+    margin-top: -2.5%;
 }
 
 /* Btn */
