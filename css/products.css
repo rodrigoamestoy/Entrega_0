@@ -9,7 +9,7 @@
 .first-div {
     display: flex;
     flex-direction: row;
-    box-shadow: -1px 1px 1px 2px;
+    box-shadow: -1px 1px 1px 1px;
     margin-bottom: 1.5%;
     padding-right: 1%;
 }
@@ -43,11 +43,11 @@
 
 .products-content h6 {
     font-size: 1em;
-    font-style: bold;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: italic;
     color: black;
     text-align: right;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 

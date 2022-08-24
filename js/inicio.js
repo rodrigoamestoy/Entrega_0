@@ -1,5 +1,3 @@
-const emailNavbar = document.getElementById('email');
-
 document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);
