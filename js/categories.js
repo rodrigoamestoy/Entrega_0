@@ -141,16 +141,3 @@ document.addEventListener("DOMContentLoaded", function(e){
         showCategoriesList();
     });
 });
-
-/* Display User Nav Bar */
-
-const emailNavbar = document.getElementById('email');
-
-function emailDisplay() {
-    const emailInfo = localStorage.getItem('user');
-    emailNavbar.innerHTML = emailInfo;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    emailDisplay();
-}) 
