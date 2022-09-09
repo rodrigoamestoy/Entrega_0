@@ -1,17 +1,20 @@
-const CARSURL = 'https://japceibal.github.io/emercado-api/cats_products/101.json';
-const request = new XMLHttpRequest();
-request.open('GET', CARSURL);
-request.responseType = 'json';
-request.send();
-const divAUTOS = document.getElementById('misautos')
 
-request.onload = function() {
-    const AUTOS = request.response;
-    autosInfo(AUTOS);
-    mostrarAutos(AUTOS);
+/* Get Products Info */
+
+const URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
+const REQUEST = new XMLHttpRequest();
+REQUEST.open('GET', URL);
+REQUEST.responseType = 'json';
+REQUEST.send();
+
+REQUEST.onload = function() {
+    const URL_RESPONSE = REQUEST.response;
+    productsInfo(URL_RESPONSE);
 }
 
-function autosInfo(jsonObj) {
+/* Display Category */
+
+function productsInfo(jsonObj) {
     const categoria = jsonObj;
     const productName = document.getElementById('description')
     productName.textContent += " " + categoria.catName;
