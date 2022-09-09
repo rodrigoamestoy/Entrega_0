@@ -10,6 +10,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/product-info.css" rel="stylesheet">
 </head>
 
 <body>
@@ -31,19 +32,61 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
+<<<<<<< Updated upstream
+=======
+            <a class="nav-link" id="email" href=""></a>
+>>>>>>> Stashed changes
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <section>
+      <div class="container title">
+        <h2 id="title"></h2>
       </div>
-    </div>
+    <hr>
+    </section>
+    <section>
+      <div class="container" id="container">
+      </div>
+    </section>
+    <section>
+      <div class="container" id="comments-container">
+      </div>
+    </section>
+    <section>
+      <div class="container" id="add-comment">
+        <h3>Comentar</h3>
+        <form id="form">
+          <div class="col">
+            <div class="row">Tu opinion:</div>
+            <div class="row col-sm-5"><textarea required name="comment" id="opinion" cols="10" rows="2"></textarea></div>
+          </div>
+          <div class="col">
+            <div class="row col-sm-3">Tu puntuación:</div>
+            <div class="row col-sm-3">
+              <select name="" id="puntuacion" required>
+                <option disabled selected>Elige una puntuación</option>
+                <option value="1">1 estrella</option>
+                <option value="2">2 estrellas</option>
+                <option value="3">3 estrellas</option>
+                <option value="4">4 estrellas</option>
+                <option value="5">5 estrellas</option>
+              </select>
+            </div>
+            <div class="row col-sm-2">
+              <button type="button" id="upload">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
   </main>
-  <footer class="text-muted">
+  <footer class="">
+    <button id="deletebtn">DELETE</button>
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
