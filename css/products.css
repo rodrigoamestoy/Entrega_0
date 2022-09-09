@@ -17,11 +17,19 @@ body {
 }
 
 
+.filter-container {
+    border: 1px solid rgba(0, 0, 0, 0.226);
+    background-color: #fff;
+    padding: 1%;
+    margin: 1%;
+}
+
+
 .products-container {
     font-family: 'Oswald', sans-serif;
     background-color: #fff;
     padding: 10px;
-    border-radius: 1%;
+    border-radius: 0.5%;
 }
 
 /* Products Cards */
@@ -29,10 +37,11 @@ body {
 .first-div {
     display: flex;
     flex-direction: row;
-    box-shadow: -1px 1px 1px 0px;
+    box-shadow: -1px 3px 1px 1px  rgba(37, 109, 105, 0.329);
     margin-bottom: 1.5%;
     padding-right: 1%;
     margin-top: 1%;
+    border-radius: 2%;
 }
 
 .products-img img {
@@ -55,6 +64,7 @@ body {
     display: grid;
     width: 100%;
     height: 100%;
+    background-color: rgba(248, 248, 255, 0.582);
 }
 
 .products-content h2 {
@@ -74,10 +84,8 @@ body {
 
 /* Filter */
 
-.filter-container {
-    border: 1px solid rgba(0, 0, 0, 0.322);
-    background-color: #fff;
-    padding: 2%;
+#btn-group {
+    margin-right: 8%;
 }
 
 .search-bar {

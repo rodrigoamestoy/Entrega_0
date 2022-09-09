@@ -42,13 +42,13 @@
     </div>
   </nav>
   <main class="pb-5 container">
-    <div class="products-name-name">
+    <div class="products-name">
       <h1>Productos</h1>
       <h4 id="description">Verás aquí todos los productos de la categoría</h4>
     </div>
-    <div class="filter-container">
-      <div class="col text-end">
-        <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons" id="btn-grouup">
+    <div class="container">
+      <div class="col text-end filter-container">
+        <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons" id="btn-group">
           <input type="radio" class="btn-check" name="options" id="sortAsc">
           <label class="btn btn-light" for="sortAsc"><i class="fas fa-sort-amount-down mr-1">$</i></label>
           <input type="radio" class="btn-check" name="options" id="sortDesc">
@@ -57,7 +57,7 @@
           <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1">Rel.</i></label>
         </div>
         <div class="row">
-          <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
+          <div class="col-sm-10 container">
             <div class="col">
               <input class="form-control search-bar" onkeyup="return filter();" type="text" placeholder="Buscar" id="search-bar" >
             </div>
