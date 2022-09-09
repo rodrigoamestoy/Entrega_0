@@ -1,53 +1,26 @@
-const CARSURL = 'https://japceibal.github.io/emercado-api/cats_products/101.json';
-const request = new XMLHttpRequest();
-request.open('GET', CARSURL);
-request.responseType = 'json';
-request.send();
-const divAUTOS = document.getElementById('misautos')
+'use strict';
 
-request.onload = function() {
-    const AUTOS = request.response;
-    autosInfo(AUTOS);
-    mostrarAutos(AUTOS);
+/* Get Products Info */
+
+const URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
+const REQUEST = new XMLHttpRequest();
+REQUEST.open('GET', URL);
+REQUEST.responseType = 'json';
+REQUEST.send();
+
+REQUEST.onload = function() {
+    const URL_RESPONSE = REQUEST.response;
+    productsInfo(URL_RESPONSE);
 }
 
-function autosInfo(jsonObj) {
+/* Display Category */
+
+function productsInfo(jsonObj) {
     const categoria = jsonObj;
     const productName = document.getElementById('description')
     productName.textContent += " " + categoria.catName;
 } 
-
-function mostrarAutos(jsonObj) {
-    const autos = jsonObj['products'];
-
-    for (let i = 0; i < autos.length; i++) {
-        const myCarDiv = document.createElement('div');
-        const img = document.createElement('img');
-        const myH2 = document.createElement('h2');
-        const myP = document.createElement('p');
-        const myH6 = document.createElement('h6')
-        const mySecDiv = document.createElement('div')
-        const myThirdDiv = document.createElement('div')
-        const myBtn = document.createElement('button')
-        myBtn.classList.add('btn')
-        myCarDiv.classList.add('autosdiv')
-        mySecDiv.classList.add('imgautos')
-        myThirdDiv.classList.add('contentautos')
-
-        myH6.textContent = autos[i].soldCount + " " + "vendidos";
-        myH2.textContent = autos[i].name + ' - ' + autos[i].currency + " " + autos[i].cost;
-        myP.textContent = autos[i].description;
-        img.src = autos[i].image;
-
-        divAUTOS.appendChild(myCarDiv);
-        myCarDiv.appendChild(mySecDiv)
-        mySecDiv.appendChild(myBtn)
-        myBtn.appendChild(img);
-        myCarDiv.appendChild(myThirdDiv);
-        myThirdDiv.appendChild(myH2);
-        myThirdDiv.appendChild(myH6);
-        myThirdDiv.appendChild(myP);
-
+    
 /* Display Products Cards */
 
 const divPRODUCTS = document.getElementById('products')
@@ -62,14 +35,14 @@ function showCategoriesList(){
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.soldCount) <= maxCount))){
 
             htmlContentToAppend += `
-            <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
+                <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
                     <div class="products-img">
                         <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
                     </div>
                     <div class="products-content">
                             <h2 id="myH2">${category.name} - $${category.currency} ${category.cost}</h2>
-                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                             <p id="myP">${category.description}</p>
+                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                     </div>
                 </div>
             `
@@ -226,20 +199,19 @@ function showCategoriesList2(){
             ((maxPrice == undefined) || (maxPrice != undefined && parseInt(category.cost) <= maxPrice))){
 
             htmlContentToAppend += `
-                <div class="first-div" id="myFirstDiv">
+                <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', '${category.id}'">
                     <div class="products-img">
                         <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
                     </div>
                     <div class="products-content">
                             <h2 id="myH2">${category.name} - $${category.currency} ${category.cost}</h2>
-                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                             <p id="myP">${category.description}</p>
+                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                     </div>
                 </div>
             `
         }
+
         divPRODUCTS.innerHTML = htmlContentToAppend;
-    }
-}
     }
 }
