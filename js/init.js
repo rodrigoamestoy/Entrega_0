@@ -42,7 +42,7 @@ let getJSONData = function(url){
     });
 }
 
-/* Display User Nav Bar */
+// Display user in navbar 
 
 const emailNavbar = document.getElementById('email');
 

@@ -6,12 +6,17 @@ const form = document.getElementById('myForm');
 const passwordError = document.getElementById('password-error');
 const emailError = document.getElementById('email-error');
 
-/* Events */
+// Events
+
+form.addEventListener("submit", event => {
+    event.preventDefault();
+    redirect(event)
+})
 
 email.addEventListener('textInput', emailVerify);
 password.addEventListener('textInput', passwordVerify);
 
-/* Login Verification */
+// Login verification
 
     function redirect() {
         if (email.value.length < 6) {
@@ -29,11 +34,6 @@ password.addEventListener('textInput', passwordVerify);
         }
 }
     
-    form.addEventListener("submit", event => {
-        event.preventDefault();
-        redirect(event)
-    })
-    
 function emailVerify() {
     if (email.value.length > 6) {
         email.style.border = "1px solid silver";
@@ -50,7 +50,7 @@ function passwordVerify() {
     }
 }
 
-/* LocalStorage */
+// Saves email in local storage
 
 function storeEmail() {
     let getEmail = document.getElementById('email').value;
