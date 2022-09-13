@@ -1,24 +1,13 @@
 'use strict';
 
-/* Get Products Info */
-
 const URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
-const REQUEST = new XMLHttpRequest();
-REQUEST.open('GET', URL);
-REQUEST.responseType = 'json';
-REQUEST.send();
-
-REQUEST.onload = function() {
-    const URL_RESPONSE = REQUEST.response;
-    productsInfo(URL_RESPONSE);
-}
 
 /* Display Category */
 
-function productsInfo(jsonObj) {
-    const categoria = jsonObj;
-    const productName = document.getElementById('description')
-    productName.textContent += " " + categoria.catName;
+const productName = document.getElementById('description')
+
+function productsInfo() {
+    productName.textContent += " " + catName;
 } 
     
 /* Display Products Cards */
@@ -52,8 +41,6 @@ function showCategoriesList(){
     }
 }
 
-
-
 /* Real Time Search Bar */
 
 function filter() {
@@ -81,6 +68,7 @@ function filter() {
 const ORDER_ASC_BY_COST = "09";
 const ORDER_DESC_BY_COST = "90";
 const ORDER_BY_SOLD_COUNT = "Vendidos";
+let catName = undefined;
 let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
@@ -137,11 +125,13 @@ document.addEventListener("DOMContentLoaded", function(e){
 
     getJSONData(URL).then(function(resultObj){
         if (resultObj.status === "ok"){
+            catName = resultObj.data.catName;
             currentCategoriesArray = resultObj.data['products'];
-            showCategoriesList()
+            showCategoriesList();
+            productsInfo();
         }
     });
-
+             
     document.getElementById("sortAsc").addEventListener("click", function(){
         sortAndShowCategories(ORDER_ASC_BY_COST);
     });
@@ -211,7 +201,6 @@ function showCategoriesList2(){
                 </div>
             `
         }
-
         divPRODUCTS.innerHTML = htmlContentToAppend;
     }
 }
