@@ -1,24 +1,22 @@
 'use strict';    
-    
+
+const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.getItem('product') + '.json';
+
     document.addEventListener('DOMContentLoaded', () => {
 
-      // Requests Product Info
 
-        const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.getItem('product') + '.json';
-        const REQUEST = new XMLHttpRequest();
-        REQUEST.open('GET', URL);
-        REQUEST.responseType = 'json';
-        REQUEST.send();
+      let product = undefined;
 
-        REQUEST.onload = function() {
-        const URL_RESPONSE = REQUEST.response;
-        productInfo(URL_RESPONSE); 
-        }
+      getJSONData(URL).then(function(resultObj){
+        if (resultObj.status === "ok"){
+          product = resultObj.data;
+          productInfo();
+  }
+});
 
     // Product Info Display
 
-    function productInfo(jsonObj) {
-        let product = jsonObj; 
+    function productInfo() {
 
         const productName = document.getElementById('title');
         productName.innerText = product.name;
@@ -54,20 +52,18 @@
         // Comments Display
 
         const COMMENTS_URL = 'https://japceibal.github.io/emercado-api/products_comments/' + localStorage.getItem('product') + '.json';
-        const COMMENTS_REQUEST = new XMLHttpRequest();
-        COMMENTS_REQUEST.open('GET', COMMENTS_URL);
-        COMMENTS_REQUEST.responseType = 'json';
-        COMMENTS_REQUEST.send();
 
-        COMMENTS_REQUEST.onload = function() {
-        const COMMENTS_URL_RESPONSE = COMMENTS_REQUEST.response;
-        productComments(COMMENTS_URL_RESPONSE);
-        starRating (COMMENTS_URL_RESPONSE);  
-        }
+        let comments = undefined;
 
-        function productComments(jsonObj) {
+      getJSONData(COMMENTS_URL).then(function(resultObj){
+        if (resultObj.status === "ok"){
+          comments = resultObj.data;
+          productComments();
+          starRating()
+  }
+});
 
-            let comments = jsonObj;
+        function productComments() {
 
             const commentsContainer = document.getElementById('comments-container');
 
@@ -93,29 +89,28 @@
 
     // Displays Stars Ratings
 
-    function starRating(jsonObj) {
-      let comment = jsonObj;
+    function starRating() {
 
-      for (let i = 0; i < comment.length; i++) {
+      for (let i = 0; i < comments.length; i++) {
 
         const iconContainer = document.querySelectorAll('#rating');
 
         // Goes trough the i elements (odd numbers) and colors them if
         // they fulfill the requirements
 
-        if (comment[i].score === 5) {
+        if (comments[i].score === 5) {
           iconContainer[i].childNodes[3].classList.add('checked');
           iconContainer[i].childNodes[5].classList.add('checked');
           iconContainer[i].childNodes[7].classList.add('checked');
           iconContainer[i].childNodes[9].classList.add('checked');
-        } if (comment[i].score === 4) {
+        } if (comments[i].score === 4) {
           iconContainer[i].childNodes[3].classList.add('checked');
           iconContainer[i].childNodes[5].classList.add('checked');
           iconContainer[i].childNodes[7].classList.add('checked');
-        } if (comment[i].score === 3) {
+        } if (comments[i].score === 3) {
           iconContainer[i].childNodes[3].classList.add('checked');
           iconContainer[i].childNodes[5].classList.add('checked');
-        } if (comment[i].score === 2) {
+        } if (comments[i].score === 2) {
           iconContainer[i].childNodes[3].classList.add('checked');
         }
       }
@@ -182,3 +177,6 @@
 
     });
 });
+
+
+

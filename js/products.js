@@ -1,57 +1,27 @@
-
-/* Get Products Info */
+'use strict';
 
 const URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
-const REQUEST = new XMLHttpRequest();
-REQUEST.open('GET', URL);
-REQUEST.responseType = 'json';
-REQUEST.send();
 
-REQUEST.onload = function() {
-    const URL_RESPONSE = REQUEST.response;
-    productsInfo(URL_RESPONSE);
-}
+// Gets products info
 
-/* Display Category */
+getJSONData(URL).then(function(resultObj){
+    if (resultObj.status === "ok"){
+        catName = resultObj.data.catName;
+        currentCategoriesArray = resultObj.data['products'];
+        showCategoriesList();
+        productsInfo();
+    }
+});
 
-function productsInfo(jsonObj) {
-    const categoria = jsonObj;
-    const productName = document.getElementById('description')
-    productName.textContent += " " + categoria.catName;
+// Displays category name
+
+const productName = document.getElementById('description')
+
+function productsInfo() {
+    productName.textContent += " " + catName;
 } 
-
-function mostrarAutos(jsonObj) {
-    const autos = jsonObj['products'];
-
-    for (let i = 0; i < autos.length; i++) {
-        const myCarDiv = document.createElement('div');
-        const img = document.createElement('img');
-        const myH2 = document.createElement('h2');
-        const myP = document.createElement('p');
-        const myH6 = document.createElement('h6')
-        const mySecDiv = document.createElement('div')
-        const myThirdDiv = document.createElement('div')
-        const myBtn = document.createElement('button')
-        myBtn.classList.add('btn')
-        myCarDiv.classList.add('autosdiv')
-        mySecDiv.classList.add('imgautos')
-        myThirdDiv.classList.add('contentautos')
-
-        myH6.textContent = autos[i].soldCount + " " + "vendidos";
-        myH2.textContent = autos[i].name + ' - ' + autos[i].currency + " " + autos[i].cost;
-        myP.textContent = autos[i].description;
-        img.src = autos[i].image;
-
-        divAUTOS.appendChild(myCarDiv);
-        myCarDiv.appendChild(mySecDiv)
-        mySecDiv.appendChild(myBtn)
-        myBtn.appendChild(img);
-        myCarDiv.appendChild(myThirdDiv);
-        myThirdDiv.appendChild(myH2);
-        myThirdDiv.appendChild(myH6);
-        myThirdDiv.appendChild(myP);
-
-/* Display Products Cards */
+    
+// Displays products cards
 
 const divPRODUCTS = document.getElementById('products')
 
@@ -65,14 +35,14 @@ function showCategoriesList(){
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.soldCount) <= maxCount))){
 
             htmlContentToAppend += `
-            <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
+                <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
                     <div class="products-img">
                         <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
                     </div>
                     <div class="products-content">
                             <h2 id="myH2">${category.name} - $${category.currency} ${category.cost}</h2>
-                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                             <p id="myP">${category.description}</p>
+                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                     </div>
                 </div>
             `
@@ -82,11 +52,9 @@ function showCategoriesList(){
     }
 }
 
+// Real time search bar
 
-
-/* Real Time Search Bar */
-
-function filter() {
+function filterSearchBar() {
 
     const searchBar = document.getElementById('search-bar').value.toUpperCase();
     const cards = document.getElementsByClassName('first-div');
@@ -106,11 +74,12 @@ function filter() {
     }
 }
 
-/* Filter */
+// Filter
 
 const ORDER_ASC_BY_COST = "09";
 const ORDER_DESC_BY_COST = "90";
 const ORDER_BY_SOLD_COUNT = "Vendidos";
+let catName = undefined;
 let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
@@ -147,8 +116,6 @@ function sortCategories(criteria, array){
     return result;
 }
 
-/* */
-
 function sortAndShowCategories(sortCriteria, categoriesArray){
     currentSortCriteria = sortCriteria;
 
@@ -161,17 +128,8 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     showCategoriesList();
 }
 
-/* Buttons Onclick Events */
-
-document.addEventListener("DOMContentLoaded", function(e){
-
-    getJSONData(URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            currentCategoriesArray = resultObj.data['products'];
-            showCategoriesList()
-        }
-    });
-
+document.addEventListener("DOMContentLoaded", () =>{
+             
     document.getElementById("sortAsc").addEventListener("click", function(){
         sortAndShowCategories(ORDER_ASC_BY_COST);
     });
@@ -194,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         showCategoriesList();
     });
 
-    /* Filter By Price */
+// Filter by price
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
 
@@ -229,20 +187,18 @@ function showCategoriesList2(){
             ((maxPrice == undefined) || (maxPrice != undefined && parseInt(category.cost) <= maxPrice))){
 
             htmlContentToAppend += `
-                <div class="first-div" id="myFirstDiv">
+                <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', '${category.id}'">
                     <div class="products-img">
                         <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
                     </div>
                     <div class="products-content">
                             <h2 id="myH2">${category.name} - $${category.currency} ${category.cost}</h2>
-                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                             <p id="myP">${category.description}</p>
+                            <h6 id="myH6">${category.soldCount} vendidos</h6>
                     </div>
                 </div>
             `
         }
         divPRODUCTS.innerHTML = htmlContentToAppend;
-    }
-}
     }
 }

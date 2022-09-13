@@ -1,3 +1,5 @@
+'use strict';
+
 const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
 const PUBLISH_PRODUCT_URL = "https://japceibal.github.io/emercado-api/sell/publish.json";
 const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
@@ -40,8 +42,7 @@ let getJSONData = function(url){
     });
 }
 
-
-/* Display User Nav Bar */
+// Display user in navbar 
 
 const emailNavbar = document.getElementById('email');
 
