@@ -2,8 +2,7 @@
 
 const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.getItem('product') + '.json';
 
-    document.addEventListener('DOMContentLoaded', () => {
-
+document.addEventListener('DOMContentLoaded', () => {
 
       let product = undefined;
 
@@ -11,8 +10,8 @@ const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.
         if (resultObj.status === "ok"){
           product = resultObj.data;
           productInfo();
-  }
-});
+        }
+      });
 
     // Product Info Display
 
@@ -120,7 +119,7 @@ const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.
 
     const uploadButton = document.getElementById('upload');
 
-    uploadButton.addEventListener('click', ()=> {
+    uploadButton.addEventListener('click', () => {
       uploadComments();
     })
 
@@ -144,6 +143,8 @@ const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.
 
       const commentsContainer = document.getElementById('comments-container');
 
+      if (puntuacion == 5) {
+
       commentsContainer.innerHTML += 
       `
       <div class="row comment-container" id="myComment">
@@ -151,6 +152,81 @@ const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.
                     <h4>${user} ${dateTime}</h4>
                     <p>${comentario}</p>
                 </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                </div>
+            </div>
+      `
+    } else if (puntuacion == 4) {
+
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+      `
+
+    } else if (puntuacion == 3) {
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+      `
+    } else if (puntuacion == 2) {
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+      `
+    } else {
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
                 <div class="col comment-container" id="rating">
                     <i class="fa fa-star checked"></i>
                     <i class="fa fa-star"></i>
@@ -159,24 +235,7 @@ const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-      `; 
-      localStorage.setItem('comments', commentsContainer.innerHTML);
+      `
     }
-
-    // Displays LocalStorage
-
-    window.addEventListener('load', () => {
-      const commentsContainer = document.getElementById('comments-container');
-
-    //  commentsContainer.innerHTML = localStorage.getItem('comments');
-
-      const deleteBtn = document.getElementById('deletebtn');
-      deleteBtn.addEventListener('click', () => {
-   //     localStorage.removeItem('comments');
-      })
-
-    });
+  }
 });
-
-
-
