@@ -1,28 +1,21 @@
 'use strict';    
-    
-    document.addEventListener('DOMContentLoaded', () => {
 
-      // Requests Product Info
+const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.getItem('product') + '.json';
 
-<<<<<<< Updated upstream
-        const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.getItem('product') + '.json';
-        const REQUEST = new XMLHttpRequest();
-        REQUEST.open('GET', URL);
-        REQUEST.responseType = 'json';
-        REQUEST.send();
-=======
 document.addEventListener('DOMContentLoaded', async () => {
->>>>>>> Stashed changes
 
-        REQUEST.onload = function() {
-        const URL_RESPONSE = REQUEST.response;
-        productInfo(URL_RESPONSE); 
+      let product = undefined;
+
+      getJSONData(URL).then(function(resultObj){
+        if (resultObj.status === "ok"){
+          product = resultObj.data;
+          productInfo();
         }
+      });
 
     // Product Info Display
 
-    function productInfo(jsonObj) {
-        let product = jsonObj; 
+    function productInfo() {
 
         const productName = document.getElementById('title');
         productName.innerText = product.name;
@@ -58,20 +51,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Comments Display
 
         const COMMENTS_URL = 'https://japceibal.github.io/emercado-api/products_comments/' + localStorage.getItem('product') + '.json';
-        const COMMENTS_REQUEST = new XMLHttpRequest();
-        COMMENTS_REQUEST.open('GET', COMMENTS_URL);
-        COMMENTS_REQUEST.responseType = 'json';
-        COMMENTS_REQUEST.send();
 
-        COMMENTS_REQUEST.onload = function() {
-        const COMMENTS_URL_RESPONSE = COMMENTS_REQUEST.response;
-        productComments(COMMENTS_URL_RESPONSE);
-        starRating (COMMENTS_URL_RESPONSE);  
-        }
+        let comments = undefined;
 
-        function productComments(jsonObj) {
+      getJSONData(COMMENTS_URL).then(function(resultObj){
+        if (resultObj.status === "ok"){
+          comments = resultObj.data;
+          productComments();
+          starRating()
+  }
+});
 
-            let comments = jsonObj;
+        function productComments() {
 
             const commentsContainer = document.getElementById('comments-container');
 
@@ -97,29 +88,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Displays Stars Ratings
 
-    function starRating(jsonObj) {
-      let comment = jsonObj;
+    function starRating() {
 
-      for (let i = 0; i < comment.length; i++) {
+      for (let i = 0; i < comments.length; i++) {
 
         const iconContainer = document.querySelectorAll('#rating');
 
         // Goes trough the i elements (odd numbers) and colors them if
         // they fulfill the requirements
 
-        if (comment[i].score === 5) {
+        if (comments[i].score === 5) {
           iconContainer[i].childNodes[3].classList.add('checked');
           iconContainer[i].childNodes[5].classList.add('checked');
           iconContainer[i].childNodes[7].classList.add('checked');
           iconContainer[i].childNodes[9].classList.add('checked');
-        } if (comment[i].score === 4) {
+        } if (comments[i].score === 4) {
           iconContainer[i].childNodes[3].classList.add('checked');
           iconContainer[i].childNodes[5].classList.add('checked');
           iconContainer[i].childNodes[7].classList.add('checked');
-        } if (comment[i].score === 3) {
+        } if (comments[i].score === 3) {
           iconContainer[i].childNodes[3].classList.add('checked');
           iconContainer[i].childNodes[5].classList.add('checked');
-        } if (comment[i].score === 2) {
+        } if (comments[i].score === 2) {
           iconContainer[i].childNodes[3].classList.add('checked');
         }
       }
@@ -129,7 +119,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const uploadButton = document.getElementById('upload');
 
-    uploadButton.addEventListener('click', ()=> {
+    uploadButton.addEventListener('click', () => {
       uploadComments();
     })
 
@@ -153,6 +143,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const commentsContainer = document.getElementById('comments-container');
 
+      if (puntuacion == 5) {
+
       commentsContainer.innerHTML += 
       `
       <div class="row comment-container" id="myComment">
@@ -160,6 +152,81 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <h4>${user} ${dateTime}</h4>
                     <p>${comentario}</p>
                 </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                </div>
+            </div>
+      `
+    } else if (puntuacion == 4) {
+
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+      `
+
+    } else if (puntuacion == 3) {
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+      `
+    } else if (puntuacion == 2) {
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
+                <div class="col comment-container" id="rating">
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star checked"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+      `
+    } else {
+      commentsContainer.innerHTML += 
+      `
+      <div class="row comment-container" id="myComment">
+                <div class="col">
+                    <h4>${user} ${dateTime}</h4>
+                    <p>${comentario}</p>
+                </div>
+
                 <div class="col comment-container" id="rating">
                     <i class="fa fa-star checked"></i>
                     <i class="fa fa-star"></i>
@@ -168,25 +235,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <i class="fa fa-star"></i>
                 </div>
             </div>
-      `; 
-      localStorage.setItem('comments', commentsContainer.innerHTML);
+      `
     }
-<<<<<<< Updated upstream
-
-    // Displays LocalStorage
-
-    window.addEventListener('load', () => {
-      const commentsContainer = document.getElementById('comments-container');
-
-    //  commentsContainer.innerHTML = localStorage.getItem('comments');
-
-      const deleteBtn = document.getElementById('deletebtn');
-      deleteBtn.addEventListener('click', () => {
-   //     localStorage.removeItem('comments');
-      })
-
-    });
-=======
   }
 
   const RELATED_URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
@@ -208,5 +258,4 @@ document.addEventListener('DOMContentLoaded', async () => {
   relatedImg2.src = images[2].image;
   relatedImg3.src = images[3].image;
   
->>>>>>> Stashed changes
 });
