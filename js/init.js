@@ -42,7 +42,7 @@ let getJSONData = function(url){
     });
 }
 
-// Display user in navbar 
+/* Display User Nav Bar */
 
 const emailNavbar = document.getElementById('email');
 
@@ -54,3 +54,11 @@ function emailDisplay() {
 document.addEventListener('DOMContentLoaded', () => {
     emailDisplay();
 }) 
+
+/* Sign Out */
+
+const signOutBtn = document.getElementById('sign-out');
+
+signOutBtn.addEventListener('click', () => {
+  localStorage.removeItem('user');
+});

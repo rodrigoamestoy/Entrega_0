@@ -2,18 +2,7 @@
 
 const URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
 
-// Gets products info
-
-getJSONData(URL).then(function(resultObj){
-    if (resultObj.status === "ok"){
-        catName = resultObj.data.catName;
-        currentCategoriesArray = resultObj.data['products'];
-        showCategoriesList();
-        productsInfo();
-    }
-});
-
-// Displays category name
+// Display category name
 
 const productName = document.getElementById('description')
 
@@ -21,7 +10,7 @@ function productsInfo() {
     productName.textContent += " " + catName;
 } 
     
-// Displays products cards
+// Display products
 
 const divPRODUCTS = document.getElementById('products')
 
@@ -52,9 +41,9 @@ function showCategoriesList(){
     }
 }
 
-// Real time search bar
+/* Real Time Search Bar */
 
-function filterSearchBar() {
+function filter() {
 
     const searchBar = document.getElementById('search-bar').value.toUpperCase();
     const cards = document.getElementsByClassName('first-div');
@@ -74,7 +63,7 @@ function filterSearchBar() {
     }
 }
 
-// Filter
+/* Filter */
 
 const ORDER_ASC_BY_COST = "09";
 const ORDER_DESC_BY_COST = "90";
@@ -116,6 +105,8 @@ function sortCategories(criteria, array){
     return result;
 }
 
+/* */
+
 function sortAndShowCategories(sortCriteria, categoriesArray){
     currentSortCriteria = sortCriteria;
 
@@ -128,7 +119,18 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     showCategoriesList();
 }
 
-document.addEventListener("DOMContentLoaded", () =>{
+/* Buttons Onclick Events */
+
+document.addEventListener("DOMContentLoaded", function(e){
+
+    getJSONData(URL).then(function(resultObj){
+        if (resultObj.status === "ok"){
+            catName = resultObj.data.catName;
+            currentCategoriesArray = resultObj.data['products'];
+            showCategoriesList();
+            productsInfo();
+        }
+    });
              
     document.getElementById("sortAsc").addEventListener("click", function(){
         sortAndShowCategories(ORDER_ASC_BY_COST);
@@ -152,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         showCategoriesList();
     });
 
-// Filter by price
+    /* Filter By Price */
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
 
