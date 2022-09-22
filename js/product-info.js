@@ -4,11 +4,15 @@
 
       // Requests Product Info
 
+<<<<<<< Updated upstream
         const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.getItem('product') + '.json';
         const REQUEST = new XMLHttpRequest();
         REQUEST.open('GET', URL);
         REQUEST.responseType = 'json';
         REQUEST.send();
+=======
+document.addEventListener('DOMContentLoaded', async () => {
+>>>>>>> Stashed changes
 
         REQUEST.onload = function() {
         const URL_RESPONSE = REQUEST.response;
@@ -167,6 +171,7 @@
       `; 
       localStorage.setItem('comments', commentsContainer.innerHTML);
     }
+<<<<<<< Updated upstream
 
     // Displays LocalStorage
 
@@ -181,4 +186,27 @@
       })
 
     });
+=======
+  }
+
+  const RELATED_URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
+
+  async function relatedImages() {
+    const RELATED_RESPONSE = await fetch(RELATED_URL);
+    if (RELATED_RESPONSE.ok) {
+        const relatedImagesData = await RELATED_RESPONSE.json();
+        return relatedImagesData.products;
+    } return '';
+}
+
+  const images = await relatedImages();
+  const slidesContainer = document.getElementById('carousel-inner');
+  const relatedImg1 = document.getElementById('img-1'),
+  relatedImg2 = document.getElementById('img-2'),
+  relatedImg3 = document.getElementById('img-3');
+  relatedImg1.src = images[1].image;
+  relatedImg2.src = images[2].image;
+  relatedImg3.src = images[3].image;
+  
+>>>>>>> Stashed changes
 });

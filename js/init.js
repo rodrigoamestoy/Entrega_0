@@ -38,4 +38,29 @@ let getJSONData = function(url){
         hideSpinner();
         return result;
     });
+<<<<<<< Updated upstream
 }
+=======
+}
+
+// Display user in navbar 
+
+const emailNavbar = document.getElementById('email');
+
+function emailDisplay() {
+    const emailInfo = localStorage.getItem('user');
+    emailNavbar.innerHTML = emailInfo;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    emailDisplay();
+});
+
+/* Sign Out */
+
+const signOutBtn = document.getElementById('sign-out');
+
+signOutBtn.addEventListener('click', () => {
+  localStorage.removeItem('user');
+});
+>>>>>>> Stashed changes

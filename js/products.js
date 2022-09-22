@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 const CARSURL = 'https://japceibal.github.io/emercado-api/cats_products/101.json';
 const request = new XMLHttpRequest();
 request.open('GET', CARSURL);
@@ -10,12 +11,22 @@ request.onload = function() {
     autosInfo(AUTOS);
     mostrarAutos(AUTOS);
 }
+=======
+'use strict';
+
+const URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
+
+// Display category name
+
+const productName = document.getElementById('description')
+>>>>>>> Stashed changes
 
 function autosInfo(jsonObj) {
     const categoria = jsonObj;
     const productName = document.getElementById('description')
     productName.textContent += " " + categoria.catName;
 } 
+<<<<<<< Updated upstream
 
 function mostrarAutos(jsonObj) {
     const autos = jsonObj['products'];
@@ -49,6 +60,10 @@ function mostrarAutos(jsonObj) {
         myThirdDiv.appendChild(myP);
 
 /* Display Products Cards */
+=======
+    
+// Display products
+>>>>>>> Stashed changes
 
 const divPRODUCTS = document.getElementById('products')
 
@@ -79,10 +94,15 @@ function showCategoriesList(){
     }
 }
 
+<<<<<<< Updated upstream
 
 
 /* Real Time Search Bar */
 
+=======
+/* Real Time Search Bar */
+
+>>>>>>> Stashed changes
 function filter() {
 
     const searchBar = document.getElementById('search-bar').value.toUpperCase();
@@ -164,11 +184,21 @@ document.addEventListener("DOMContentLoaded", function(e){
 
     getJSONData(URL).then(function(resultObj){
         if (resultObj.status === "ok"){
+<<<<<<< Updated upstream
             currentCategoriesArray = resultObj.data['products'];
             showCategoriesList()
         }
     });
 
+=======
+            catName = resultObj.data.catName;
+            currentCategoriesArray = resultObj.data['products'];
+            showCategoriesList();
+            productsInfo();
+        }
+    });
+             
+>>>>>>> Stashed changes
     document.getElementById("sortAsc").addEventListener("click", function(){
         sortAndShowCategories(ORDER_ASC_BY_COST);
     });
