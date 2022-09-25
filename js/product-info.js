@@ -1,6 +1,10 @@
 'use strict';    
 
-const URL = 'https://japceibal.github.io/emercado-api/products/' + localStorage.getItem('product') + '.json';
+// Gets Product Info
+
+const ProductId = localStorage.getItem('product');
+
+const URL = 'https://japceibal.github.io/emercado-api/products/' + ProductId + '.json';
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -48,9 +52,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `
         }
 
-        // Comments Display
+        // Gets Product Comments Info
 
-        const COMMENTS_URL = 'https://japceibal.github.io/emercado-api/products_comments/' + localStorage.getItem('product') + '.json';
+        const COMMENTS_URL = 'https://japceibal.github.io/emercado-api/products_comments/' + ProductId + '.json';
 
         let comments = undefined;
 
@@ -61,6 +65,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           starRating()
   }
 });
+
+        // Comments Display
 
         function productComments() {
 
@@ -115,29 +121,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     };
 
-    // Uploads Comment and Saves Comments when onclick
+    // Uploads comment when onclick
 
     const uploadButton = document.getElementById('upload');
 
     uploadButton.addEventListener('click', () => {
       uploadComments();
     })
-
-    // Upload Comment Function
   
     function uploadComments() {
-
-      // Gets Actual Time
 
       let comentario = document.getElementById('opinion').value;
       let puntuacion = document.getElementById('puntuacion').value;
       let user = localStorage.getItem('user');
+
+      // Gets Actual Time
+
       let today = new Date();
       let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       let dateTime = date + ' ' + time;
-
-      console.log(puntuacion)
 
       // Adds Comment
 
@@ -239,23 +242,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // Gets products of the same category
+
   const RELATED_URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
 
-  async function relatedImages() {
-    const RELATED_RESPONSE = await fetch(RELATED_URL);
-    if (RELATED_RESPONSE.ok) {
-        const relatedImagesData = await RELATED_RESPONSE.json();
-        return relatedImagesData.products;
-    } return '';
-}
+  let products = undefined;
 
-  const images = await relatedImages();
-  const slidesContainer = document.getElementById('carousel-inner');
-  const relatedImg1 = document.getElementById('img-1'),
-  relatedImg2 = document.getElementById('img-2'),
-  relatedImg3 = document.getElementById('img-3');
-  relatedImg1.src = images[1].image;
-  relatedImg2.src = images[2].image;
-  relatedImg3.src = images[3].image;
-  
+  getJSONData(RELATED_URL).then(function(resultObj){
+    if (resultObj.status === "ok"){
+      products = resultObj.data.products;
+      relatedProducts();
+      }
+    }); 
+
+    
+
+  function relatedProducts() {
+
+    const relatedImg1 = document.getElementById('img-1'),
+    relatedImg2 = document.getElementById('img-2'),
+    relatedImg3 = document.getElementById('img-3'),
+    fig1 = document.getElementById('fig-1'),
+    fig2 = document.getElementById('fig-2'),
+    fig3 = document.getElementById('fig-3');
+
+    const relatedProductsArray = [];
+
+    for (let i = 0; i < products.length; i++) {
+
+      if (String(ProductId) !== String(products[i].id)) {
+        relatedProductsArray.push(i)
+      }
+    }
+
+    relatedImg1.src = products[relatedProductsArray[0]].image;
+    relatedImg2.src = products[relatedProductsArray[1]].image;
+    relatedImg3.src = products[relatedProductsArray[2]].image;
+
+    fig1.innerHTML = products[relatedProductsArray[0]].name;
+    fig2.innerHTML = products[relatedProductsArray[1]].name;
+    fig3.innerText = products[relatedProductsArray[2]].name;
+
+    relatedImg1.addEventListener('click', () => {
+      localStorage.setItem('product', products[relatedProductsArray[0]].id);
+      location.reload();
+    });
+
+    relatedImg2.addEventListener('click', () => {
+      localStorage.setItem('product', products[relatedProductsArray[1]].id);
+      location.reload();
+    });
+
+    relatedImg3.addEventListener('click', () => {
+      localStorage.setItem('product', products[relatedProductsArray[2]].id);
+      location.reload();
+    })
+  }
 });
