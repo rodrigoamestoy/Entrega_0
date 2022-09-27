@@ -1,25 +1,43 @@
 'use strict';    
 
-// Gets Product Info
-
 const ProductId = localStorage.getItem('product');
+const PRODUCT_URL = 'https://japceibal.github.io/emercado-api/products/' + ProductId + '.json';
+const COMMENTS_URL = 'https://japceibal.github.io/emercado-api/products_comments/' + ProductId + '.json';
+const PRODUCT_CATEGORY_URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
 
-const URL = 'https://japceibal.github.io/emercado-api/products/' + ProductId + '.json';
+async function PRODUCT_CATEGORY() {
+  const RESPONSE = await fetch(PRODUCT_CATEGORY_URL);
+  if (RESPONSE.ok) {
+      const data = await RESPONSE.json();
+      return data.products;
+  } return '';
+};
+
+async function COMMENTS_DISPLAY() {
+  const RESPONSE = await fetch(COMMENTS_URL);
+  if (RESPONSE.ok) {
+      const commentsDATA = await RESPONSE.json();
+      return commentsDATA;
+  } return '';
+};
+
+async function PRODUCT_INFO() {
+  const RESPONSE = await fetch(PRODUCT_URL);
+  if (RESPONSE.ok) {
+    const productDATA = await RESPONSE.json();
+    return productDATA;
+  } return '';
+};
+
 
 document.addEventListener('DOMContentLoaded', async () => {
-
-      let product = undefined;
-
-      getJSONData(URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-          product = resultObj.data;
-          productInfo();
-        }
-      });
-
+      
     // Product Info Display
 
-    function productInfo() {
+    const product = await PRODUCT_INFO();
+    productInfo(product);
+
+    function productInfo(product) {
 
         const productName = document.getElementById('title');
         productName.innerText = product.name;
@@ -52,23 +70,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `
         }
 
-        // Gets Product Comments Info
-
-        const COMMENTS_URL = 'https://japceibal.github.io/emercado-api/products_comments/' + ProductId + '.json';
-
-        let comments = undefined;
-
-      getJSONData(COMMENTS_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-          comments = resultObj.data;
-          productComments();
-          starRating()
-  }
-});
-
         // Comments Display
 
-        function productComments() {
+        const comments = await COMMENTS_DISPLAY();
+        productComments(comments);
+        
+        function productComments(comments) {
 
             const commentsContainer = document.getElementById('comments-container');
 
@@ -81,21 +88,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p>${comments[i].description}</p>
                 </div>
                 <div class="col comment-container" id="rating">
-                  <i class="fa fa-star checked"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
                 </div>
             </div>
                 `;
             }
     };
 
-    // Displays Stars Ratings
+    // Rating
 
-    function starRating() {
+    starRating(comments);
 
+    function starRating(comments) {
       for (let i = 0; i < comments.length; i++) {
 
         const iconContainer = document.querySelectorAll('#rating');
@@ -103,25 +106,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Goes trough the i elements (odd numbers) and colors them if
         // they fulfill the requirements
 
-        if (comments[i].score === 5) {
-          iconContainer[i].childNodes[3].classList.add('checked');
-          iconContainer[i].childNodes[5].classList.add('checked');
-          iconContainer[i].childNodes[7].classList.add('checked');
-          iconContainer[i].childNodes[9].classList.add('checked');
-        } if (comments[i].score === 4) {
-          iconContainer[i].childNodes[3].classList.add('checked');
-          iconContainer[i].childNodes[5].classList.add('checked');
-          iconContainer[i].childNodes[7].classList.add('checked');
-        } if (comments[i].score === 3) {
-          iconContainer[i].childNodes[3].classList.add('checked');
-          iconContainer[i].childNodes[5].classList.add('checked');
-        } if (comments[i].score === 2) {
-          iconContainer[i].childNodes[3].classList.add('checked');
-        }
+        let stars = ""
+        const fullStar = `<i class="fa fa-star checked"></i>`;
+        const emptyStar = `<i class="fa fa-star"></i>`;
+        stars = fullStar.repeat(comments[i].score) + emptyStar.repeat(5-comments[i].score);
+        iconContainer[i].innerHTML += stars;
       }
     };
-
-    // Uploads comment when onclick
 
     const uploadButton = document.getElementById('upload');
 
@@ -134,20 +125,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       let comentario = document.getElementById('opinion').value;
       let puntuacion = document.getElementById('puntuacion').value;
       let user = localStorage.getItem('user');
-
-      // Gets Actual Time
-
       let today = new Date();
       let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       let dateTime = date + ' ' + time;
 
-      // Adds Comment
+      let stars = ""
+      const fullStar = `<i class="fa fa-star checked"></i>`;
+      const emptyStar = `<i class="fa fa-star"></i>`;
+      stars = fullStar.repeat(puntuacion) + emptyStar.repeat(5-puntuacion);
 
       const commentsContainer = document.getElementById('comments-container');
 
-      if (puntuacion == 5) {
-
       commentsContainer.innerHTML += 
       `
       <div class="row comment-container" id="myComment">
@@ -155,109 +144,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <h4>${user} ${dateTime}</h4>
                     <p>${comentario}</p>
                 </div>
-
                 <div class="col comment-container" id="rating">
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
+                  ${stars}
                 </div>
             </div>
       `
-    } else if (puntuacion == 4) {
-
-      commentsContainer.innerHTML += 
-      `
-      <div class="row comment-container" id="myComment">
-                <div class="col">
-                    <h4>${user} ${dateTime}</h4>
-                    <p>${comentario}</p>
-                </div>
-
-                <div class="col comment-container" id="rating">
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star"></i>
-                </div>
-            </div>
-      `
-
-    } else if (puntuacion == 3) {
-      commentsContainer.innerHTML += 
-      `
-      <div class="row comment-container" id="myComment">
-                <div class="col">
-                    <h4>${user} ${dateTime}</h4>
-                    <p>${comentario}</p>
-                </div>
-
-                <div class="col comment-container" id="rating">
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                </div>
-            </div>
-      `
-    } else if (puntuacion == 2) {
-      commentsContainer.innerHTML += 
-      `
-      <div class="row comment-container" id="myComment">
-                <div class="col">
-                    <h4>${user} ${dateTime}</h4>
-                    <p>${comentario}</p>
-                </div>
-
-                <div class="col comment-container" id="rating">
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                </div>
-            </div>
-      `
-    } else {
-      commentsContainer.innerHTML += 
-      `
-      <div class="row comment-container" id="myComment">
-                <div class="col">
-                    <h4>${user} ${dateTime}</h4>
-                    <p>${comentario}</p>
-                </div>
-
-                <div class="col comment-container" id="rating">
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                </div>
-            </div>
-      `
-    }
   }
 
-  // Gets products of the same category
+  // Displays related products IMG and NAME
+  
+  const products = await PRODUCT_CATEGORY();
+  relatedProducts(products);
 
-  const RELATED_URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
-
-  let products = undefined;
-
-  getJSONData(RELATED_URL).then(function(resultObj){
-    if (resultObj.status === "ok"){
-      products = resultObj.data.products;
-      relatedProducts();
-      }
-    }); 
-
-    
-
-  function relatedProducts() {
+  function relatedProducts(products) {
 
     const relatedImg1 = document.getElementById('img-1'),
     relatedImg2 = document.getElementById('img-2'),
@@ -276,8 +175,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     relatedImg1.src = products[relatedProductsArray[0]].image;
+    relatedImg1.alt = products[relatedProductsArray[0]].name;
     relatedImg2.src = products[relatedProductsArray[1]].image;
+    relatedImg2.alt = products[relatedProductsArray[1]].name;
     relatedImg3.src = products[relatedProductsArray[2]].image;
+    relatedImg3.alt = products[relatedProductsArray[2]].name;
 
     fig1.innerHTML = products[relatedProductsArray[0]].name;
     fig2.innerHTML = products[relatedProductsArray[1]].name;
@@ -297,5 +199,5 @@ document.addEventListener('DOMContentLoaded', async () => {
       localStorage.setItem('product', products[relatedProductsArray[2]].id);
       location.reload();
     })
-  }
+  };
 });
