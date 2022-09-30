@@ -1,9 +1,8 @@
-/* Container */
+/* Containers */
 
 body {
     background-color:  lightgray;
 }
-
 .products-name {
     width: 80%;
     text-align: center;
@@ -15,16 +14,12 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.322);
     font-family:'Times New Roman', Times, serif;
 }
-
-
 .filter-container {
     border: 1px solid rgba(0, 0, 0, 0.226);
     background-color: #fff;
     padding: 1%;
     margin: 1%;
 }
-
-
 .products-container {
     font-family: 'Oswald', sans-serif;
     background-color: #fff;
@@ -34,7 +29,7 @@ body {
 
 /* Products Cards */
 
-.first-div {
+.card {
     display: flex;
     flex-direction: row;
     box-shadow: -1px 3px 1px 1px  rgba(37, 109, 105, 0.329);
@@ -42,37 +37,34 @@ body {
     padding-right: 1%;
     margin-top: 1%;
     border-radius: 2%;
+    cursor: pointer;
 }
 
-.products-img img {
+.card-img img {
     width: 80%;
     border-radius: 6%;
     border-color:  #fff;
     background-color:  #fff;
     float: left;
 }
-
-.products-img {
+.card-img {
     grid-row-start: 1;
     grid-row-end: 4;
     grid-column-start: 1;
     grid-column-end: 1;
     margin: 10px;
 }
-
-.products-content {
+.card-content {
     display: grid;
     width: 100%;
     height: 100%;
     background-color: rgba(248, 248, 255, 0.582);
 }
-
-.products-content h2 {
+.card-content h2 {
     margin-top: 4px;
     font-weight: normal;
 }
-
-.products-content h6 {
+.card-content h6 {
     font-size: 1em;
     font-style: italic;
     color: rgba(14, 13, 13, 0.801);
@@ -87,7 +79,6 @@ body {
 #btn-group {
     margin-right: 8%;
 }
-
 .search-bar {
     width: 60%;
     text-align: center;

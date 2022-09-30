@@ -37,11 +37,9 @@
     width: 18vw;
     margin: 1vw;
     border: 4px double rgba(0, 0, 0, 0.548);
-}
-
-.card-continer img:hover {
     cursor: pointer;
 }
+
 
 /* Comments Section */
 
@@ -113,6 +111,7 @@
 .carousel img {
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
+    cursor: pointer;
 }
 .carousel figcaption {
     text-align: center;
