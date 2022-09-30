@@ -42,20 +42,25 @@ let getJSONData = function(url){
     });
 }
 
-/* Display User Nav Bar */
+// Displays user in navbar
 
 const emailNavbar = document.getElementById('email');
 
 function emailDisplay() {
     const emailInfo = localStorage.getItem('user');
-    emailNavbar.innerHTML = emailInfo;
+    if (emailInfo === null) {
+      document.getElementById('sign-out').innerHTML = "Login";
+      emailNavbar.innerHTML = "More Options"
+    } else {
+      emailNavbar.innerHTML = emailInfo;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     emailDisplay();
 }) 
 
-/* Sign Out */
+// Signs out
 
 const signOutBtn = document.getElementById('sign-out');
 
