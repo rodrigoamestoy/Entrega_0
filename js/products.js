@@ -2,74 +2,48 @@
 
 const URL = 'https://japceibal.github.io/emercado-api/cats_products/' + localStorage.getItem('catID') + '.json';
 
-// Display category name
-
-const productName = document.getElementById('description')
-
-function productsInfo() {
-    productName.textContent += " " + catName;
-} 
-    
-// Display products
-
-const divPRODUCTS = document.getElementById('products')
-
-function showCategoriesList(){
-
-    let htmlContentToAppend = "";
-    for(let i = 0; i < currentCategoriesArray.length; i++){
-        let category = currentCategoriesArray[i];
-
-        if (((minCount == undefined) || (minCount != undefined && parseInt(category.soldCount) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.soldCount) <= maxCount))){
-
-            htmlContentToAppend += `
-                <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
-                    <div class="products-img">
-                        <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
-                    </div>
-                    <div class="products-content">
-                            <h2 id="myH2">${category.name} - $${category.currency} ${category.cost}</h2>
-                            <p id="myP">${category.description}</p>
-                            <h6 id="myH6">${category.soldCount} vendidos</h6>
-                    </div>
-                </div>
-            `
-        }
-
-        divPRODUCTS.innerHTML = htmlContentToAppend;
+async function CATEGORIES_LIST() {
+    const RESPONSE = await fetch(URL);
+        if (RESPONSE.ok) {
+            const DATA = await RESPONSE.json();
+            return DATA;
+        } return '';
     }
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const categories = await CATEGORIES_LIST();
+
+// Displays category name
+
+    const categoryName = document.getElementById('description');
+    categoryName.textContent += " " + categories.catName;
+
+// Displays products
+
+const ProductsContainer = document.getElementById('products');
+
+for (let j = 0; j < categories.products.length; j++) {
+    let category = categories.products[j];
+    ProductsContainer.innerHTML += `
+    <div class="card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
+        <div class="card-img">
+            <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
+        </div>
+        <div class="card-content">
+                <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
+                <p id="product-description">${category.description}</p>
+                <h6 id="sold-count">${category.soldCount} vendidos</h6>
+        </div>
+    </div>
+`
 }
 
-/* Real Time Search Bar */
-
-function filter() {
-
-    const searchBar = document.getElementById('search-bar').value.toUpperCase();
-    const cards = document.getElementsByClassName('first-div');
-    
-
-    for(let i = 0; i < cards.length; i++) {
-        let title = cards[i].querySelector('#myH2');
-        let description = cards[i].querySelector('#myP');
-
-        if(title.innerText.toUpperCase().indexOf(searchBar) > -1) {
-            cards[i].style.display = "";
-        } else if(description.innerText.toUpperCase().indexOf(searchBar) > -1) {
-            cards[i].style.display = "";
-        } else {
-            cards[i].style.display = "none"
-        }
-    }
-}
-
-/* Filter */
+// Filter products acording to cost and sold count
 
 const ORDER_ASC_BY_COST = "09";
 const ORDER_DESC_BY_COST = "90";
 const ORDER_BY_SOLD_COUNT = "Vendidos";
-let catName = undefined;
-let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
@@ -105,56 +79,75 @@ function sortCategories(criteria, array){
     return result;
 }
 
-/* */
+// Takes props given by the events and sends it to sortCreteria & showCategoriesList
 
 function sortAndShowCategories(sortCriteria, categoriesArray){
     currentSortCriteria = sortCriteria;
 
     if(categoriesArray != undefined){
-        currentCategoriesArray = categoriesArray;
+        categories.products = categoriesArray;
     }
 
-    currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
+    categories.products = sortCategories(currentSortCriteria, categories.products);
 
     showCategoriesList();
 }
 
-/* Buttons Onclick Events */
+// Events
 
-document.addEventListener("DOMContentLoaded", function(e){
+document.getElementById("sortAsc").addEventListener("click", function(){
+    sortAndShowCategories(ORDER_ASC_BY_COST);
+});
 
-    getJSONData(URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            catName = resultObj.data.catName;
-            currentCategoriesArray = resultObj.data['products'];
-            showCategoriesList();
-            productsInfo();
+document.getElementById("sortDesc").addEventListener("click", function(){
+    sortAndShowCategories(ORDER_DESC_BY_COST);
+});
+
+document.getElementById("sortByCount").addEventListener("click", function(){
+    sortAndShowCategories(ORDER_BY_SOLD_COUNT);
+});
+
+document.getElementById("clearRangeFilter").addEventListener("click", function(){
+    document.getElementById("rangeFilterCountMin").value = "";
+    document.getElementById("rangeFilterCountMax").value = "";
+
+    minCount = undefined;
+    maxCount = undefined;
+
+    showCategoriesList();
+});
+
+
+// Displays Products Acording To Sold Count
+
+function showCategoriesList() {
+
+    let htmlContentToAppend = "";
+    for(let i = 0; i < categories.products.length; i++){
+        let category = categories.products[i];
+
+        if (((minCount == undefined) || (minCount != undefined && parseInt(category.soldCount) >= minCount)) &&
+            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.soldCount) <= maxCount))){
+
+            htmlContentToAppend += `
+                <div class="card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
+                    <div class="card-img">
+                        <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
+                    </div>
+                    <div class="card-content">
+                            <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
+                            <p id="product-description">${category.description}</p>
+                            <h6 id="sold-count">${category.soldCount} vendidos</h6>
+                    </div>
+                </div>
+            `
         }
-    });
-             
-    document.getElementById("sortAsc").addEventListener("click", function(){
-        sortAndShowCategories(ORDER_ASC_BY_COST);
-    });
 
-    document.getElementById("sortDesc").addEventListener("click", function(){
-        sortAndShowCategories(ORDER_DESC_BY_COST);
-    });
+        ProductsContainer.innerHTML = htmlContentToAppend;
+    }
+}
 
-    document.getElementById("sortByCount").addEventListener("click", function(){
-        sortAndShowCategories(ORDER_BY_SOLD_COUNT);
-    });
-
-    document.getElementById("clearRangeFilter").addEventListener("click", function(){
-        document.getElementById("rangeFilterCountMin").value = "";
-        document.getElementById("rangeFilterCountMax").value = "";
-
-        minCount = undefined;
-        maxCount = undefined;
-
-        showCategoriesList();
-    });
-
-    /* Filter By Price */
+    // Filter by price
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
 
@@ -177,30 +170,53 @@ document.addEventListener("DOMContentLoaded", function(e){
 
         showCategoriesList2();
     });
+
+    function showCategoriesList2(){
+
+        let htmlContentToAppend = "";
+        for(let i = 0; i < categories.products.length; i++){
+            let category = categories.products[i];
+    
+            if (((minPrice == undefined) || (minPrice != undefined && parseInt(category.cost) >= minPrice)) &&
+                ((maxPrice == undefined) || (maxPrice != undefined && parseInt(category.cost) <= maxPrice))){
+    
+                htmlContentToAppend += `
+                    <div class="card"  onclick="localStorage.setItem('product', '${category.id}'">
+                        <div class="card-img">
+                            <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
+                        </div>
+                        <div class="card-content">
+                                <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
+                                <p id="product-description">${category.description}</p>
+                                <h6 id="sold-count">${category.soldCount} vendidos</h6>
+                        </div>
+                    </div>
+                `
+            }
+            ProductsContainer.innerHTML = htmlContentToAppend;
+        }
+    }
 });
 
-function showCategoriesList2(){
+// Real time search bar
 
-    let htmlContentToAppend = "";
-    for(let i = 0; i < currentCategoriesArray.length; i++){
-        let category = currentCategoriesArray[i];
+function filter() {
 
-        if (((minPrice == undefined) || (minPrice != undefined && parseInt(category.cost) >= minPrice)) &&
-            ((maxPrice == undefined) || (maxPrice != undefined && parseInt(category.cost) <= maxPrice))){
+    const searchBar = document.getElementById('search-bar').value.toUpperCase();
+    const cards = document.getElementsByClassName('card');
+    
 
-            htmlContentToAppend += `
-                <div class="first-div" id="myFirstDiv" onclick="localStorage.setItem('product', '${category.id}'">
-                    <div class="products-img">
-                        <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
-                    </div>
-                    <div class="products-content">
-                            <h2 id="myH2">${category.name} - $${category.currency} ${category.cost}</h2>
-                            <p id="myP">${category.description}</p>
-                            <h6 id="myH6">${category.soldCount} vendidos</h6>
-                    </div>
-                </div>
-            `
+    for(let i = 0; i < cards.length; i++) {
+        let title = cards[i].querySelector('#product-name');
+        let description = cards[i].querySelector('#product-description');
+
+        if(title.innerText.toUpperCase().indexOf(searchBar) > -1) {
+            cards[i].style.display = "";
+        } else if(description.innerText.toUpperCase().indexOf(searchBar) > -1) {
+            cards[i].style.display = "";
+        } else {
+            cards[i].style.display = "none"
         }
-        divPRODUCTS.innerHTML = htmlContentToAppend;
     }
 }
+
