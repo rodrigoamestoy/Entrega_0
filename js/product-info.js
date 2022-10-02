@@ -134,6 +134,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     uploadButton.addEventListener('click', () => {
       uploadComment();
     })
+
+    document.getElementById('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+    })
   
     function uploadComment() {
 
@@ -158,7 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <h4>${user}</h4>
                     <p>${comentario}</p>
                 </div>
-                <div class="col col-sm-4" id="rating">
+                <div class="col col-sm-3" id="rating">
                   ${stars}
                 </div>
                 <div class="row dateTime">

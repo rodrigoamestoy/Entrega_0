@@ -24,10 +24,13 @@
 
 nav a {
   text-decoration: none;
+  color: white;
 }
-
 #email {
   color: gray;
+}
+#email:hover {
+  color: white;
 }
 .dropdown ul {
   background-color: whitesmoke;
