@@ -1,79 +1,139 @@
 
-/* Containers */
 
-#title {
-    margin-top: 1%;
-    font-family:'Times New Roman', Times, serif;
-    letter-spacing: 2px;
-    font-weight: bold;
+#product-container {
+    margin: 2% auto;
+    padding: 2%;
+    border: 2px solid rgb(56, 53, 53, 0.5);
+    border-top-right-radius: 5%;
+    border-bottom-left-radius: 5%;
+    background-color: white;
 }
 
-#comments-container {
-    margin-top: 4vw;
+/* Product Images */
+
+.p-images img{
+    width: 75px;
+    height: 50px;
+    margin: 15% 0;
 }
-
-.card-container {
-    font-weight: bold;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    letter-spacing: 1px;
-    border: 1px solid rgba(139, 139, 139, 0.466);
-    border-top-left-radius: 10%;
-    border-bottom-right-radius: 10%;
-    background-color: rgba(128, 128, 128, 0.171);
-    margin: 0.5vw;
-    padding: 0.5vw;
-    padding-right: 2vw;
-}
-
-/* Product Description */
-
-.card-container p {
-    font-weight: lighter;
-    letter-spacing: 2px;
-    margin-left: 0.5vw;
-}
-
-.card-container img {
-    width: 18vw;
-    margin: 1vw;
-    border: 4px double rgba(0, 0, 0, 0.548);
+.p-images img:hover {
+    border: 2px solid black;
     cursor: pointer;
 }
 
+/* Big image */
+
+.image-display {
+
+}
+#big-image {
+    width: 95%;
+    padding: 5%;
+    margin: 0 2% 0 4%;
+    background-color: white;
+    border-radius: 5%;
+}
+
+/* Product Info */
+
+.product-info {
+    font-family: var(--product-info-font);
+    text-align: right;
+    border: 2px solid rgb(43, 42, 42);
+    border-radius: 2%;
+    background-color: white;
+    width: 35%;
+    text-shadow: 1px .25px rgba(0, 0, 0, .75);
+    letter-spacing: 2px;
+}
+#product-category {
+    margin: .5% auto;
+    width: 90%;
+}
+#sold-count {
+    margin: 15% auto 0 auto;
+    padding-top: 1%;
+    font-style: italic;
+    border-top: 1px solid black;
+    width: 90%;
+}
+#product-name {
+    width: 90%;
+    margin: 2% auto;
+    padding-bottom: 1%;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-family: var(--product-title-font);
+}
+#product-description {
+    font-weight: 500;
+    width: 90%;
+    margin: 2% auto 0 auto;
+}
+#product-price {
+    margin: 2% auto 0 auto;
+    padding-bottom: 1%;
+    width: 90%;
+    font-style: italic;
+    border-bottom: 1px solid black;
+}
 
 /* Comments Section */
 
 .comment-container {
-    padding: 1vw;
-    background-color: aliceblue;
+    width: 100%;
+    background-color: whitesmoke;
     border-radius: 20px;
     border-top-right-radius: 0px;
-    margin: 20px;
     letter-spacing: 2px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--product-font);
+    margin: 2% 0 0 0;
 }
-
+#comments-container h2 {
+    text-align: center;
+    font-family: var(--title-font);
+}
 .comment-container p {
     font-family:Arial, Helvetica, sans-serif;
     border-top: 1px solid black;
     padding-top: 0.5vw;
     font-style: italic;
 }
+.dateTime {
+    margin: auto 2% 2% 0;
+    font-weight: 100;
+    font-family: 'Courier New', Courier, monospace;
+}
+#rating {
+    margin: 7% 0 auto 0;
+}
 
 /* Add Comment Section */
 
-#add-comment .row {
-    padding: 0.5vw
+#add-comment {
+    width: 100%;
+    text-align: left;
+    margin: 0 auto 0 20%;
 }
-
+#add-comment h3 {
+    font-family: var(--title-font);
+}
+#add-comment .row {
+    padding: 0.5vw;
+}
 #add-comment button {
+    width: 100%;
     border-radius: 10%;
-    border: 2px solid lightskyblue;
-    background-color: rgba(32, 178, 171, 0.541);
-    color: rgba(0, 0, 255, 0.664);
+    border: 1px solid lightskyblue;
+    background-color: rgba(32, 178, 171, 0.6);
+    color: white;
+    letter-spacing: 2px;
     font-weight: bold;
 }
-
+#add-comment button:hover {
+    background-color: rgba(32, 178, 171, 0.5);
+}
 .comment-container i {
     color: grey;
 }
@@ -82,7 +142,7 @@
     color: rgba(255, 255, 0, 0.829);
 }
 
-/* Carousel */
+/* Footer carousel */
 
 .carousel-title {
     margin-top: 5%;
@@ -91,14 +151,12 @@
 }
 .carousel {
     display: block;
-    margin-top: 3%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    margin: 1% auto;
+    width: 80%;
     padding: 2px;
     border-radius: 10px;
-    border: 4px solid rgba(0, 0, 0, 0.4);
-    background-color: antiquewhite;
+    border: none;
+    background-color: rgb(97, 73, 73);
 }
 .carousel button {
     color: black;
@@ -113,9 +171,22 @@
     border-top-left-radius: 6px;
     cursor: pointer;
 }
-.carousel figcaption {
+.carousel-title h4 {
+    font-size: 2rem;
+    font-family: var(--title-font);
+}
+#carousel2 {
+    width: 60%;
+}
+#carousel2 figcaption {
+    width: 25%;
+    margin: 2% auto;
+    padding: 1% 0 2% 0;
     text-align: center;
-    background-color: wheat;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgba(165, 93, 77, 0.747);
+    border-radius: 50%;
+    font-family: var(--product-font);
+    font-weight: bold;
     font-style: italic;
+    font-size: 1.5rem;
 }

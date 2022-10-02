@@ -39,35 +39,41 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function productInfo(product) {
 
-        const productName = document.getElementById('title');
-        productName.innerText = product.name;
+        const productContainer = document.getElementById('product-container');
 
-        container.innerHTML = `
-                <div class="col product-container">
-                <div class="row card-container">
-                  <h5>Precio</h5>
-                  <p id="price">${product.currency} ${product.cost}</p>
-                </div>
-                <div class="row card-container">
-                  <h5>Descripción</h5>
-                  <p id="description">${product.description}</p>
-                </div>
-                <div class="row card-container">
-                  <h5>Categoría</h5>
-                  <p id="category">${product.category}</p>
-                </div>
-                <div class="row card-container">
-                  <h5>Cantidad de Unidades Vendidas</h5>
-                  <p id="soldcount">${product.soldCount}</p>
-                </div>
-                <div class="row card-container">
-                  <div class="col col-sm-3"><img id="img1" src="${product.images[0]}" alt=""></div>
-                  <div class="col col-sm-3"><img id="img2" src="${product.images[1]}" alt=""></div>
-                  <div class="col col-sm-3"><img id="img3" src="${product.images[2]}" alt=""></div>
-                  <div class="col col-sm-3"><img id="img4" src="${product.images[3]}" alt=""></div>
-                </div>
-              </div>
-                `
+        // Images 
+
+        const pImage0 = document.getElementById('p-img-0'),
+        pImage1 = document.getElementById('p-img-1'),
+        pImage2 = document.getElementById('p-img-2'),
+        pImage3 = document.getElementById('p-img-3');
+
+        pImage0.src = product.images[0];
+        pImage1.src = product.images[1];
+        pImage2.src = product.images[2];
+        pImage3.src = product.images[3];
+
+        pImage0.onmouseover = () => { bigImage.src = product.images[0]; };
+        pImage1.onmouseover = () => { bigImage.src = product.images[1]; };
+        pImage2.onmouseover = () => { bigImage.src = product.images[2]; };
+        pImage3.onmouseover = () => { bigImage.src = product.images[3]; };
+          
+
+        // Big image display 
+
+        const bigImage = document.getElementById('big-image');
+        bigImage.src = product.images[0]
+
+        const productName = document.getElementById('title');
+
+        // Product Info 
+
+        const productTitle = document.getElementById('product-name').innerHTML = product.name,
+        productDescription = document.getElementById('product-description').innerHTML = product.description,
+        productSoldCount = document.getElementById('sold-count').innerHTML = "Vendidos " + product.soldCount,
+        productCost = document.getElementById('product-price').innerHTML = product.currency + " " + product.cost,
+        productCategory = document.getElementById('product-category').innerHTML = "Categoria " + product.category;
+      
         }
 
         // Comments Display
@@ -80,16 +86,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             const commentsContainer = document.getElementById('comments-container');
 
             for (let i = 0; i < comments.length; i++) {
+
+            let dateTime = comments[i].dateTime.replaceAll('-','/');
+            dateTime = dateTime.slice(0,10);
               
             commentsContainer.innerHTML += `
             <div class="row comment-container">
                 <div class="col">
-                    <h4>${comments[i].user} ${comments[i].dateTime}</h4>
+                    <h4>${comments[i].user}</h4>
                     <p>${comments[i].description}</p>
                 </div>
-                <div class="col comment-container" id="rating">
+                <div class="col col-sm-3" id="rating">
+                </div>
+                <div class="row dateTime">
+                  ${dateTime}
                 </div>
             </div>
+            
                 `;
             }
     };
@@ -103,8 +116,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const iconContainer = document.querySelectorAll('#rating');
 
-        // Goes trough the i elements (odd numbers) and colors them if
-        // they fulfill the requirements
+        // Repeats checked stars according to score and the remainder
+        // to fulfill the 5 star system is fulfilled with no checked stars
 
         let stars = ""
         const fullStar = `<i class="fa fa-star checked"></i>`;
@@ -114,21 +127,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     };
 
+    // Upload new comment
+
     const uploadButton = document.getElementById('upload');
 
     uploadButton.addEventListener('click', () => {
-      uploadComments();
+      uploadComment();
     })
   
-    function uploadComments() {
+    function uploadComment() {
 
       let comentario = document.getElementById('opinion').value;
       let puntuacion = document.getElementById('puntuacion').value;
       let user = localStorage.getItem('user');
       let today = new Date();
-      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      let dateTime = date + ' ' + time;
+      let date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+      let dateTime = date;
 
       let stars = ""
       const fullStar = `<i class="fa fa-star checked"></i>`;
@@ -141,11 +155,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       `
       <div class="row comment-container" id="myComment">
                 <div class="col">
-                    <h4>${user} ${dateTime}</h4>
+                    <h4>${user}</h4>
                     <p>${comentario}</p>
                 </div>
-                <div class="col comment-container" id="rating">
+                <div class="col col-sm-4" id="rating">
                   ${stars}
+                </div>
+                <div class="row dateTime">
+                  ${dateTime}
                 </div>
             </div>
       `
@@ -165,6 +182,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     fig2 = document.getElementById('fig-2'),
     fig3 = document.getElementById('fig-3');
 
+
+    // Loops over the same category products and
+    // if the ID is not equal to te actual displayed
+    // product adds the product to an array
+
     const relatedProductsArray = [];
 
     for (let i = 0; i < products.length; i++) {
@@ -174,6 +196,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
+    // Selects the products position from the array and
+    // displays the related images and its alt (name)
+
     relatedImg1.src = products[relatedProductsArray[0]].image;
     relatedImg1.alt = products[relatedProductsArray[0]].name;
     relatedImg2.src = products[relatedProductsArray[1]].image;
@@ -181,23 +206,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     relatedImg3.src = products[relatedProductsArray[2]].image;
     relatedImg3.alt = products[relatedProductsArray[2]].name;
 
+    // Images figcaptions
+
     fig1.innerHTML = products[relatedProductsArray[0]].name;
     fig2.innerHTML = products[relatedProductsArray[1]].name;
     fig3.innerText = products[relatedProductsArray[2]].name;
 
+    // When the img is clicked, sets the local storage ID to 
+    // the selected product and opens it in a new page
+
     relatedImg1.addEventListener('click', () => {
       localStorage.setItem('product', products[relatedProductsArray[0]].id);
-      location.reload();
+      window.open('product-info.html', '_blank');
     });
 
     relatedImg2.addEventListener('click', () => {
       localStorage.setItem('product', products[relatedProductsArray[1]].id);
-      location.reload();
+      window.open('product-info.html', '_blank');
     });
 
     relatedImg3.addEventListener('click', () => {
       localStorage.setItem('product', products[relatedProductsArray[2]].id);
-      location.reload();
+      window.open('product-info.html', '_blank');
     })
   };
 });

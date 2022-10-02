@@ -48,55 +48,81 @@
   </nav>
   <main>
     <section>
-      <div class="container title">
-        <h2 id="title"></h2>
-      </div>
-    <hr>
-    </section>
-    <section>
-      <div class="container" id="container">
-      </div>
-    </section>
-    <section>
-      <div class="container" id="comments-container">
-      </div>
-    </section>
-    <section>
-      <div class="container" id="add-comment">
-        <h3>Comentar</h3>
-        <form id="form">
-          <div class="col">
-            <div class="row">Tu opinion:</div>
-            <div class="row col-sm-5"><textarea required name="comment" id="opinion" cols="10" rows="2"></textarea></div>
+      <div class="container" id="product-container">
+        <div class="row">
+          <div class="col col-sm-1 p-images">
+            <img id="p-img-0" src="" alt="">
+            <img id="p-img-1" src="" alt="">
+            <img id="p-img-2" src="" alt="">
+            <img id="p-img-3" src="" alt="">
           </div>
-          <div class="col">
-            <div class="row col-sm-3">Tu puntuación:</div>
-            <div class="row col-sm-3">
-              <select name="" id="puntuacion" required>
-                <option disabled selected>Elige una puntuación</option>
-                <option value="1">1 estrella</option>
-                <option value="2">2 estrellas</option>
-                <option value="3">3 estrellas</option>
-                <option value="4">4 estrellas</option>
-                <option value="5">5 estrellas</option>
-              </select>
+          <div class="col col-sm-6 image-display">
+            <img id="big-image"src="" alt="">
+          </div>
+          <div class="col col-sm-5 product-info">
+            <div class="row">
+              <h4 id="product-name"></h4>
             </div>
-            <div class="row col-sm-2">
-              <button type="button" id="upload">Enviar</button>
+            <div class="row">
+              <h4 id="product-price"></h4>
+            </div>
+            <div class="row">
+              <h4 id="product-description"></h4>
+            </div>
+            <div class="row">
+              <h4 id="sold-count"></h4>
+            </div>
+            <div class="row">
+              <h4 id="product-category"></h4>
             </div>
           </div>
-        </form>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container row">
+        <div class="col col-sm-7">
+          <div id="comments-container">
+            <h2>Comentarios</h2>
+          </div>
+        </div>
+        <div class="col col-sm-5">
+        <div id="add-comment">
+          <h3>Comentar</h3>
+            <form id="form">
+              <div class="col">
+                <div class="row">Tu opinion:</div>
+                <div class="row col-sm-8"><textarea required name="comment" id="opinion" cols="10" rows="2"></textarea></div>
+              </div>
+              <div class="col">
+                <div class="row col-sm-12">Tu puntuación:</div>
+                <div class="row col-sm-4">
+                  <select name="" id="puntuacion" required>
+                    <option value="1">1 estrella</option>
+                    <option value="2">2 estrellas</option>
+                    <option value="3">3 estrellas</option>
+                    <option value="4">4 estrellas</option>
+                    <option value="5">5 estrellas</option>
+                  </select>
+                </div>
+                <div class="row col-sm-4">
+                  <button type="button" id="upload">Enviar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
     <section>
       <div class="carousel-title">
         <h4>Productos Relacionados</h4>
       </div>
-      <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+      <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carousel2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carousel2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carousel2" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner" id="carousel-inner">
           <div class="carousel-item active">
@@ -112,11 +138,11 @@
             <figcaption id="fig-3"></figcaption>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
