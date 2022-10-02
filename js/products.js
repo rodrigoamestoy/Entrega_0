@@ -17,20 +17,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Displays category name
 
     const categoryName = document.getElementById('description');
-    categoryName.textContent += " " + categories.catName;
+    categoryName.textContent += " " + categories.catName.toUpperCase();
 
-// Displays products
+// Displays products 
 
 const ProductsContainer = document.getElementById('products');
 
 for (let j = 0; j < categories.products.length; j++) {
     let category = categories.products[j];
     ProductsContainer.innerHTML += `
-    <div class="card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
-        <div class="card-img">
-            <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
-        </div>
-        <div class="card-content">
+    <div class="products-card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
+            <img src="${category.image}" alt="${category.description}">
+        <div class="card-content col">
                 <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
                 <p id="product-description">${category.description}</p>
                 <h6 id="sold-count">${category.soldCount} vendidos</h6>
@@ -87,7 +85,7 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     if(categoriesArray != undefined){
         categories.products = categoriesArray;
     }
-
+    console.log(categories.products)
     categories.products = sortCategories(currentSortCriteria, categories.products);
 
     showCategoriesList();
@@ -130,16 +128,14 @@ function showCategoriesList() {
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.soldCount) <= maxCount))){
 
             htmlContentToAppend += `
-                <div class="card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
-                    <div class="card-img">
-                        <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
-                    </div>
-                    <div class="card-content">
-                            <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
-                            <p id="product-description">${category.description}</p>
-                            <h6 id="sold-count">${category.soldCount} vendidos</h6>
-                    </div>
+            <div class="products-card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
+                <img src="${category.image}" alt="${category.description}">
+                <div class="card-content col">
+                    <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
+                    <p id="product-description">${category.description}</p>
+                    <h6 id="sold-count">${category.soldCount} vendidos</h6>
                 </div>
+            </div>
             `
         }
 
@@ -171,26 +167,26 @@ function showCategoriesList() {
         showCategoriesList2();
     });
 
+
+
     function showCategoriesList2(){
 
         let htmlContentToAppend = "";
         for(let i = 0; i < categories.products.length; i++){
             let category = categories.products[i];
-    
+            console.log(category.cost)
             if (((minPrice == undefined) || (minPrice != undefined && parseInt(category.cost) >= minPrice)) &&
                 ((maxPrice == undefined) || (maxPrice != undefined && parseInt(category.cost) <= maxPrice))){
     
                 htmlContentToAppend += `
-                    <div class="card"  onclick="localStorage.setItem('product', '${category.id}'">
-                        <div class="card-img">
-                            <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
-                        </div>
-                        <div class="card-content">
-                                <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
-                                <p id="product-description">${category.description}</p>
-                                <h6 id="sold-count">${category.soldCount} vendidos</h6>
-                        </div>
+                <div class="products-card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
+                    <img src="${category.image}" alt="${category.description}">
+                    <div class="card-content col">
+                        <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
+                        <p id="product-description">${category.description}</p>
+                        <h6 id="sold-count">${category.soldCount} vendidos</h6>
                     </div>
+                </div>
                 `
             }
             ProductsContainer.innerHTML = htmlContentToAppend;
@@ -203,7 +199,7 @@ function showCategoriesList() {
 function filter() {
 
     const searchBar = document.getElementById('search-bar').value.toUpperCase();
-    const cards = document.getElementsByClassName('card');
+    const cards = document.getElementsByClassName('products-card');
     
 
     for(let i = 0; i < cards.length; i++) {
