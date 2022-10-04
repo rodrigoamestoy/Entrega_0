@@ -10,6 +10,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/cart.css" rel="stylesheet" >
 </head>
 
 <body>
@@ -47,8 +48,52 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div class="title">
+        <h2>Tu Carrito</h2>
+      </div>
+      <div class="cart-container">
+        <h4>Productos seleccionados (<span id="n-products">0</span>)</h4>
+        <div class="products" id="display-products">
+        </div>
+        <div class="envio">
+          <h4>Selecciona un tipo de envio:</h4>
+          <div class="tipos-envio">
+            <div class="tipo-list">      
+              <label for=""><input type="checkbox" value="envio" name="envio" id="">Premium 2 a 5 días (15%)
+              </label>
+              <label for="">
+                <input type="checkbox" value="envio" name="envio" id="">Express 5 a 8 días (7%)
+              </label>
+              <label for="">
+                <input type="checkbox" value="envio" name="envio" id="">Standard 12 a 15 días (5%)
+              </label>
+          </div>
+          <div class="direccion-envio">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="">Calle</label>
+              </div>
+              <div class="col-sm-3">
+                <label for="">Número</label>
+              </div>
+            </div>
+            <div class="row row-sm-6">
+              <div class="col-sm-3">
+                <input type="text">
+              </div>
+              <div class="col-sm-6">
+                <input type="text">
+              </div>
+            </div>
+            <div class="row esquina">
+              <label for="">Esquina</label>
+              <input type="text">
+            </div>
+          </div>
+        </div>
+        <div class="total-cart">
+          <h4>Subtotal: <span id="cart-total">0</span></h4>
+        </div>
       </div>
     </div>
   </main>

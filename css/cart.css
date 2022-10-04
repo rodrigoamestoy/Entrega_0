@@ -1,0 +1,98 @@
+
+/* Title */
+
+.title {
+    margin: 2% 0;
+    width: 15%;
+    border-bottom: 2px solid black;
+    font-family: var(--title-font);
+}
+
+/* Product Info */
+
+.products {
+    display: flex;
+    flex-direction: row;
+    margin: 2% auto;
+    border: 1px solid black;
+    align-items: baseline;
+}
+.img-container, .p-name, 
+.quantity, .price, .sub-total {
+    margin: 2%;
+    padding-right: 2%;
+    text-align: center;
+    font-weight: bold;
+}
+.img-container img {
+    width: 75px;
+}
+.p-name {
+    font-family: var(--product-title-font);
+}
+#name {
+    font-size: 2rem;
+}
+.price {
+    font-size: 1.2rem;
+}
+.quantity {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 0;
+    border: 1px solid black;
+    height: 32px;
+}
+.quantity input {
+    height: 30px;
+    border: none;
+    text-align: center;
+}
+.quantity input:focus {
+    outline: none;
+}
+.quantity button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: white;
+}
+
+.sub-total {
+    margin-left: auto;
+}
+
+/* Envio */
+
+.tipo-list {
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+}
+.tipo-list label {
+    letter-spacing: 2px;
+}
+.tipo-list input {
+    margin-right: 1%;
+}
+.esquina {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.esquina input {
+    margin: 0 0 0 1%;
+    width: 20%
+}
+
+/* Total */
+
+.total-cart {
+    padding: 1% 1%;
+    width: 100%;
+    margin: 2% 0;
+    text-align: right;
+    background-color: grey;
+    font-weight: bold;
+    font-family: var(--title-font);
+}
