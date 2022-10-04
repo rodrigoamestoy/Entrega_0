@@ -1,6 +1,6 @@
 'use strict';
 
-const USER_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json'
+const USER_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
 
 async function USER_CART() {
     const RESPONSE = await fetch(USER_URL);
@@ -10,15 +10,21 @@ async function USER_CART() {
     } return '';
 }
 
+const buyBtn = document.getElementById('buy');
+
 document.addEventListener('DOMContentLoaded', async () => {
 
-    const cartProducts = await USER_CART();
+    const CART_PRODUCTS = await USER_CART();
+    
     const numberItems = document.getElementById('n-products');
-    numberItems.innerHTML = cartProducts.length;
+    numberItems.innerHTML = CART_PRODUCTS.length;
+
 
     // Displays json cart products
 
-    const displayCart = (product) => {
+    displayCart(CART_PRODUCTS);
+
+    function displayCart(product) {
         const productContainer = document.getElementById('display-products');
 
         for (let i = 0; i < product.length; i++ ) {
@@ -39,13 +45,12 @@ document.addEventListener('DOMContentLoaded', async () => {
               <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
             </div>
             <div class="sub-total">
-              <p id="sub-total">${product[i].currency} ${product[i].unitCost + product[i].count}</p>
+              <p> Precio: ${product[i].currency} <span id="sub-total">${product[i].unitCost + product[i].count}</span></p>
             </div>
             ` 
             productContainer.innerHTML += htmlToAppend;
         }
     }
-    displayCart(cartProducts);
 
     // Change input value 
 
@@ -57,39 +62,121 @@ document.addEventListener('DOMContentLoaded', async () => {
         let sum = productQuantity.value - 1;
         if (sum <= 0 ) {
             productQuantity.focus();
-            window.alert('Enter a valid number')
+            window.alert('Enter a valid number');
             return false;
         } else {
             productQuantity.value = sum;
         }
-        cartSubTotal.innerHTML = cartProducts[0].currency + " " + (productQuantity.value * cartProducts[0].unitCost);
+        cartSubTotalRefresher();
+
+        if (checkbox1.checked == true) {
+            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(15));
+        } else if (checkbox2.checked == true) {
+            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(7));
+        } else { 
+            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(5));
+        }
     });
+
     quantityBtnRight.addEventListener('click', () => {
-        let sum = parseInt(productQuantity.value) + 1
-        productQuantity.value = sum;
-        cartSubTotal.innerHTML = cartProducts[0].currency + " " + (productQuantity.value * cartProducts[0].unitCost);
+
+        let sum = parseInt(productQuantity.value) + 1;
+        if (sum === 1000) {
+            productQuantity.focus();
+            window.alert('You exceed the product availability');
+        } else {
+            productQuantity.value = sum;
+        }
+        cartSubTotalRefresher();
+
+        if (checkbox1.checked == true) {
+            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(15));
+        } else if (checkbox2.checked == true) {
+            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(7));
+        } else { 
+            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(5));
+        }
     });
 
     // Change product subtotal value
 
     const cartSubTotal = document.getElementById('sub-total');
 
+    function cartSubTotalRefresher() {
+        cartSubTotal.innerHTML = " " + (productQuantity.value * CART_PRODUCTS[0].unitCost);
+    }
+
     productQuantity.addEventListener('change', () => {
-        cartSubTotal.innerHTML = cartProducts[0].currency + " " + (productQuantity.value * cartProducts[0].unitCost);
+        cartSubTotalRefresher();
     });
 
-    function quantityCheck() {
-        if (productQuantity.value < 1) {
-            productQuantity.focus()
-            productQuantity.style.border = "1px solid red";
-        }
+    // Checkboxes validation 
+
+    const checkboxes = document.querySelectorAll('.tipo-list input'),
+    checkbox1 = checkboxes[0],
+    checkbox2 = checkboxes[1],
+    checkbox3 = checkboxes[2];
+
+    checkbox1.addEventListener('click', () => {
+        checkbox2.checked = false;
+        checkbox3.checked = false;
+        displayCartTotal((cartSubTotal.innerHTML),shipmentCost(15));
+    });
+    checkbox2.addEventListener('click', () => {
+        checkbox1.checked = false;
+        checkbox3.checked = false;
+        displayCartTotal((cartSubTotal.innerHTML),shipmentCost(7));
+    });
+    checkbox3.addEventListener('click', () => {
+        checkbox1.checked = false;
+        checkbox2.checked = false;
+        displayCartTotal((cartSubTotal.innerHTML),shipmentCost(5));
+    });
+
+    // Shipment cost
+
+    function shipmentCost(percentage) {
+       let cost = (cartSubTotal.innerHTML) * (percentage / 100);
+       cost = Math.round(cost);
+       return cost;
     }
+
+    // Direction validation 
+
+    const directions = document.querySelectorAll('.direccion-envio input'),
+    directionsContainer = document.getElementById('direccion'),
+    street = directions[0],
+    streetNumber = directions[1],
+    streetCorner = directions[2];
+
+    buyBtn.addEventListener('click', () => {
+
+        if ( street.value == "" || streetNumber.value == "" || streetCorner.value == "" ) {
+            directionsContainer.focus()
+            window.alert("Fill all fields")
+        } 
+
+    });    
+    
     // Cart Total
 
-    const cartTotal = document.getElementById('cart-total');
+    const cartTotal = document.getElementById('cart-total'),
+    cartCurrency = document.getElementById('currency');
 
-    const displayCartTotal = (products, shipment) => {
-        cartTotal.innerHTML = "$ " + (products + shipment);
-    }
+    cartCurrency.innerHTML = CART_PRODUCTS[0].currency;
+
+    function displayCartTotal(products, shipment) {
+        cartTotal.innerHTML = " " + (parseInt(products) + shipment);
+    };
+
+    cartTotal.innerHTML = " " + (parseInt((cartSubTotal.innerHTML)) + shipmentCost(5));
+
     // displayCartTotal()
+
+    // Buy
+
+    
+
+
 })
+

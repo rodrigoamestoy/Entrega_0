@@ -234,4 +234,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       window.open('product-info.html', '_blank');
     })
   };
+
+    // Add to cart ????
+
+    const addCart = document.getElementById('add-cart');
+    const cartObjects = {};
+
+    addCart.addEventListener('click', () => {
+      cartObjects.assign(...cartObjects, {"obj1": ProductId});
+      localStorage.setItem('cart', JSON.stringify(cartObjects));
+      let get = localStorage.getItem('cart');
+      console.log(JSON.parse(get));
+    })
+
+
+
+    var testObject = { 'one': 1, 'two': 2, 'three': 3 };
+
+// Put the object into storage
+localStorage.setItem('testObject', JSON.stringify(testObject));
+
+// Retrieve the object from storage
+var retrievedObject = localStorage.getItem('testObject');
+
+console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
 });

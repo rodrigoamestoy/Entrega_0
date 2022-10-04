@@ -65,10 +65,10 @@
                 <input type="checkbox" value="envio" name="envio" id="">Express 5 a 8 días (7%)
               </label>
               <label for="">
-                <input type="checkbox" value="envio" name="envio" id="">Standard 12 a 15 días (5%)
+                <input type="checkbox" checked value="envio" name="envio" id="">Standard 12 a 15 días (5%)
               </label>
           </div>
-          <div class="direccion-envio">
+          <div class="direccion-envio" id="direccion">
             <div class="row">
               <div class="col-sm-3">
                 <label for="">Calle</label>
@@ -92,7 +92,10 @@
           </div>
         </div>
         <div class="total-cart">
-          <h4>Subtotal: <span id="cart-total">0</span></h4>
+          <h4>Subtotal: $<span id="currency"></span><span id="cart-total">0</span></h4>
+        </div>
+        <div class="buy">
+          <button type="button" id="buy">Comprar</button>
         </div>
       </div>
     </div>
