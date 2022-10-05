@@ -85,6 +85,20 @@
     font-style: italic;
     border-bottom: 1px solid black;
 }
+#add-cart {
+    margin: 2% 7% 1% auto;
+    width: 35%;
+    border: none;
+    background-color: rgb(209, 201, 201);
+    font-family: var(--product-font);
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+#add-cart:hover {
+    background-color: rgba(128, 128, 128, 0.5);
+    border: 1px solid black;
+    font-size: 1.1rem;
+}
 
 /* Comments Section */
 
