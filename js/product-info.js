@@ -238,25 +238,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Add to cart ????
 
     const addCart = document.getElementById('add-cart');
-    const cartObjects = {};
+    const CART = {
+      "cartProducts": [
+        {
+        }
+      ]
+    };
 
+    cartObjects.cartProducts[0] = ProductId;
+    cartObjects.cartProducts[1] = "123123";
+    console.log(cartObjects)
+    localStorage.setItem('cart', cartObjects);
+    const getCart = localStorage.getItem('cart');
+
+
+    console.log((getCart))
     addCart.addEventListener('click', () => {
-      cartObjects.assign(...cartObjects, {"obj1": ProductId});
-      localStorage.setItem('cart', JSON.stringify(cartObjects));
-      let get = localStorage.getItem('cart');
-      console.log(JSON.parse(get));
+      
+      localStorage.setItem('cart', cartObjects);
     })
 
 
 
-    var testObject = { 'one': 1, 'two': 2, 'three': 3 };
+//     var testObject = { 'one': 1, 'two': 2, 'three': 3 };
 
-// Put the object into storage
-localStorage.setItem('testObject', JSON.stringify(testObject));
+// // Put the object into storage
+// localStorage.setItem('testObject', JSON.stringify(testObject));
 
-// Retrieve the object from storage
-var retrievedObject = localStorage.getItem('testObject');
+// // Retrieve the object from storage
+// var retrievedObject = localStorage.getItem('testObject');
 
-console.log('retrievedObject: ', JSON.parse(retrievedObject));
+// console.log('retrievedObject: ', JSON.parse(retrievedObject));
 
 });
