@@ -238,12 +238,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Add to cart ????
 
     const addCart = document.getElementById('add-cart');
-    const CART = {
-      "cartProducts": [
-        {
-        }
-      ]
-    };
 
     cartObjects.cartProducts[0] = ProductId;
     cartObjects.cartProducts[1] = "123123";
@@ -258,16 +252,51 @@ document.addEventListener('DOMContentLoaded', async () => {
       localStorage.setItem('cart', cartObjects);
     })
 
-
-
-//     var testObject = { 'one': 1, 'two': 2, 'three': 3 };
-
-// // Put the object into storage
-// localStorage.setItem('testObject', JSON.stringify(testObject));
-
-// // Retrieve the object from storage
-// var retrievedObject = localStorage.getItem('testObject');
-
-// console.log('retrievedObject: ', JSON.parse(retrievedObject));
-
 });
+
+// CART Object
+
+const CART = {
+  KEY: "1234",
+  contents: [],
+  init() {
+    let _contents = localStorage.getItem(CART.KEY);
+    if (_contents) {
+      CART.contents = JSON.parse(_contents);
+    } else {
+      CART.contents = [];
+      CART.sync();
+    }
+  },
+  async sync() {
+    let _cart = JSON.stringify(CART.contents);
+    await localStorage.setItem(CART.KEY, _cart);
+  },
+  add(id) {
+    if (CART.find(id)) {
+      CART.increase(id, 1);
+    } else {
+      let arr = PRODUCTS.filter(products => {
+        if (product.id == id) {
+          return true;
+        }
+      });
+      if (arr & arr[0]) {
+        let obj = {
+          id: arr[0].id,
+          title: arr[0].title,
+          qty: 1,
+          itemPrice: arr[0].price
+        };
+        CART.contents.push(obj);
+        CART.sync();
+      } else {
+        
+      }
+    }
+  },
+  empty() {
+    CART.contents = [];
+    CART.sync()
+  }
+};
