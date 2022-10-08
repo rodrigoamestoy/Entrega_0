@@ -239,17 +239,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const addCart = document.getElementById('add-cart');
 
-    cartObjects.cartProducts[0] = ProductId;
-    cartObjects.cartProducts[1] = "123123";
-    console.log(cartObjects)
-    localStorage.setItem('cart', cartObjects);
-    const getCart = localStorage.getItem('cart');
-
-
-    console.log((getCart))
     addCart.addEventListener('click', () => {
-      
-      localStorage.setItem('cart', cartObjects);
+      CART.add(555);
+      CART.sync();
+      console.log(CART.contents)
     })
 
 });
@@ -268,10 +261,13 @@ const CART = {
       CART.sync();
     }
   },
-  async sync() {
+  sync() {
     let _cart = JSON.stringify(CART.contents);
-    await localStorage.setItem(CART.KEY, _cart);
+    localStorage.setItem(CART.KEY, _cart);
   },
+
+  // Add the full prdoduct (Product img, name, id, etc)
+  
   add(id) {
     if (CART.find(id)) {
       CART.increase(id, 1);
@@ -289,14 +285,33 @@ const CART = {
           itemPrice: arr[0].price
         };
         CART.contents.push(obj);
-        CART.sync();
       } else {
         
       }
     }
+    CART.sync();
   },
   empty() {
     CART.contents = [];
     CART.sync()
+  },
+  find(id) {
+    let match = CART.contents.filter(item => {
+      if(item.id == id) 
+        return true;
+    });
+    if (match && match[0]) {
+      return match[0];
+    }
+  },
+  increase(id, qty=1) {
+    CART.contents = CART.contents.map(item =>{
+      if(item.id === id) 
+      item.qty = item.qty + qty;
+      return item;
+    });
+    CART.sync();
   }
 };
+
+let PRODUCTS = [];
