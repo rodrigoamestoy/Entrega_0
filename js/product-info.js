@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const productContainer = document.getElementById('product-container');
 
-        // Images 
+        // Product Images 
 
         const pImage0 = document.getElementById('p-img-0'),
         pImage1 = document.getElementById('p-img-1'),
@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const productTitle = document.getElementById('product-name').innerHTML = product.name,
         productDescription = document.getElementById('product-description').innerHTML = product.description,
-        productSoldCount = document.getElementById('sold-count').innerHTML = "Vendidos " + product.soldCount,
+        productSoldCount = document.getElementById('sold-count').innerHTML = "Vendidos: " + product.soldCount,
         productCost = document.getElementById('product-price').innerHTML = product.currency + " " + product.cost,
-        productCategory = document.getElementById('product-category').innerHTML = "Categoria " + product.category;
+        productCategory = document.getElementById('product-category').innerHTML = "Categoria: " + product.category;
       
         }
 
@@ -240,10 +240,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addCart = document.getElementById('add-cart');
 
     addCart.addEventListener('click', () => {
-      CART.add(555);
-      CART.sync();
-      console.log(CART.contents)
-    })
+      CART.add(product)
+    });
 
 });
 
@@ -268,27 +266,24 @@ const CART = {
 
   // Add the full prdoduct (Product img, name, id, etc)
   
-  add(id) {
-    if (CART.find(id)) {
-      CART.increase(id, 1);
+  add(product) {
+    if (CART.find(product.id)) {
+      CART.increase(product.id, 1);
     } else {
       let arr = PRODUCTS.filter(products => {
-        if (product.id == id) {
+        if (products.id == id) {
           return true;
         }
-      });
-      if (arr & arr[0]) {
+      })
+    }
         let obj = {
-          id: arr[0].id,
-          title: arr[0].title,
+          id: product.id,
+          title: product.name,
           qty: 1,
-          itemPrice: arr[0].price
+          itemPrice: product.cost
         };
         CART.contents.push(obj);
-      } else {
-        
-      }
-    }
+    
     CART.sync();
   },
   empty() {
