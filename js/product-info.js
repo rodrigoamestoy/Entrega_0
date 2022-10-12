@@ -276,14 +276,15 @@ const CART = {
         }
       })
     }
-        let obj = {
-          id: product.id,
-          title: product.name,
-          qty: 1,
-          itemPrice: product.cost
-        };
-        CART.contents.push(obj);
-    
+    if (arr !== arr[0]) {
+      let obj = {
+        id: product.id,
+        title: product.name,
+        qty: 1,
+        itemPrice: product.cost
+      };
+      CART.contents.push(obj);
+    }
     CART.sync();
   },
   empty() {
