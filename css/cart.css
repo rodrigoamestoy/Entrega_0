@@ -12,10 +12,13 @@
 
 .products {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: 2% auto;
     border: 1px solid black;
     align-items: baseline;
+}
+.products-container {
+    width: 100%;
 }
 .img-container, .p-name, 
 .quantity, .price, .sub-total {

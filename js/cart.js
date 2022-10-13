@@ -1,28 +1,30 @@
 'use strict';
 
-const USER_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
+const CART_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
 
 async function USER_CART() {
-    const RESPONSE = await fetch(USER_URL);
+    const RESPONSE = await fetch(CART_URL);
     if (RESPONSE.ok) {
         const data = await RESPONSE.json();
         return data.articles;
     } return '';
-}
+};
 
 const buyBtn = document.getElementById('buy');
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    const CART_PRODUCTS = await USER_CART();
-    
-    const numberItems = document.getElementById('n-products');
-    numberItems.innerHTML = CART_PRODUCTS.length;
+    const CART_JSON = await USER_CART();
+    const CART = localStorage.getItem(1234);
+    const CART_PRODUCTS = JSON.parse(CART);
+    console.log();
+    // Number of items in the cart
 
+    document.getElementById('n-products').innerHTML = CART_JSON.length;
 
     // Displays json cart products
 
-    displayCart(CART_PRODUCTS);
+    displayCart(CART_JSON);
 
     function displayCart(product) {
         const productContainer = document.getElementById('display-products');
@@ -30,6 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         for (let i = 0; i < product.length; i++ ) {
 
             let htmlToAppend = `
+            <div class="product-container">
             <div class="img-container"> 
                 <img id="img" src="${product[i].image}" alt="">
             </div>
@@ -46,6 +49,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
             <div class="sub-total">
               <p> Precio: ${product[i].currency} <span id="sub-total">${product[i].unitCost + product[i].count}</span></p>
+            </div>
+            </div>
+            ` 
+            productContainer.innerHTML += htmlToAppend;
+        }
+        for (let j = 0; j < CART_PRODUCTS.length; j++) {
+            let cart_product = CART_PRODUCTS;
+            console.log(cart_product[j])
+            let htmlToAppend = `
+            <div class="product-container">
+            <div class="img-container"> 
+                <img id="img" src="${cart_product[j].image}" alt="">
+            </div>
+            <div class="p-name">
+              <h6 id="name">${cart_product[j].name}</h6>
+            </div>
+            <div class="price">
+              <p id="price"> Price: ${cart_product[j].currency}  ${cart_product[j].cost}</p>
+            </div>
+            <div class="quantity">
+            <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
+              <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${cart_product[j].count}">
+              <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
+            </div>
+            <div class="sub-total">
+              <p> Precio: ${cart_product[j].currency} <span id="sub-total">${cart_product[j].cost + cart_product[j].count}</span></p>
+            </div>
             </div>
             ` 
             productContainer.innerHTML += htmlToAppend;
@@ -103,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cartSubTotal = document.getElementById('sub-total');
 
     function cartSubTotalRefresher() {
-        cartSubTotal.innerHTML = " " + (productQuantity.value * CART_PRODUCTS[0].unitCost);
+        cartSubTotal.innerHTML = " " + (productQuantity.value * CART_JSON[0].unitCost);
     }
 
     productQuantity.addEventListener('change', () => {
@@ -163,7 +193,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cartTotal = document.getElementById('cart-total'),
     cartCurrency = document.getElementById('currency');
 
-    cartCurrency.innerHTML = CART_PRODUCTS[0].currency;
+    cartCurrency.innerHTML = CART_JSON[0].currency;
 
     function displayCartTotal(products, shipment) {
         cartTotal.innerHTML = " " + (parseInt(products) + shipment);
@@ -175,8 +205,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Buy
 
-    
+});
 
 
-})
+
 
