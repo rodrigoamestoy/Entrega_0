@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const comments = await COMMENTS_DISPLAY();
         productComments(comments);
         
+        console.log(String(product.id))
+        
         function productComments(comments) {
 
             const commentsContainer = document.getElementById('comments-container');
@@ -240,7 +242,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addCart = document.getElementById('add-cart');
 
     addCart.addEventListener('click', () => {
-      CART.add(product)
+      CART.init();
+      CART.add(product);
     });
 
 });
@@ -267,25 +270,28 @@ const CART = {
   // Add the full prdoduct (Product img, name, id, etc)
   
   add(product) {
-    if (CART.find(product.id)) {
-      CART.increase(product.id, 1);
+    const productId = String(product.id);
+    if (CART.find(productId)) {
+      CART.increase(productId, 1);
     } else {
       let arr = PRODUCTS.filter(products => {
-        if (products.id == id) {
-          return true;
+        if (products.id == productId) {
+          return console.log(arr);;
         }
-      })
-    }
-    if (arr !== arr[0]) {
-      let obj = {
-        id: product.id,
-        title: product.name,
-        qty: 1,
-        itemPrice: product.cost
-      };
-      CART.contents.push(obj);
-    }
-    CART.sync();
+      });
+      if (arr !== arr[0]) {
+       let obj = {
+         id: productId,
+         name: product.name,
+         image: product.images[0],
+         count: 1,
+         currency: product.currency,
+         cost: product.cost,
+       };
+       CART.contents.push(obj);
+       CART.sync();
+     }
+    } 
   },
   empty() {
     CART.contents = [];
@@ -300,14 +306,18 @@ const CART = {
       return match[0];
     }
   },
-  increase(id, qty=1) {
+  increase(id, count=1) {
     CART.contents = CART.contents.map(item =>{
       if(item.id === id) 
-      item.qty = item.qty + qty;
+      item.count = item.count + count;
       return item;
     });
     CART.sync();
-  }
+  },
+  deleteProduct(product) {
+    const productId = String(product.id);
+    this.find(productId).delete();
+  },
 };
 
 let PRODUCTS = [];
