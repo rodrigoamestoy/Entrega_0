@@ -17,10 +17,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const CART_JSON = await USER_CART();
     const CART = localStorage.getItem(1234);
     const CART_PRODUCTS = JSON.parse(CART);
-    console.log();
     // Number of items in the cart
 
-    document.getElementById('n-products').innerHTML = CART_JSON.length;
+    document.getElementById('n-products').innerHTML = CART_JSON.length + CART_PRODUCTS.length;
 
     // Displays json cart products
 
@@ -33,47 +32,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             let htmlToAppend = `
             <div class="product-container">
-            <div class="img-container"> 
+            <div class="img-container col-sm-1"> 
                 <img id="img" src="${product[i].image}" alt="">
             </div>
-            <div class="p-name">
+            <div class="p-name col">
               <h6 id="name">${product[i].name}</h6>
             </div>
-            <div class="price">
+            <div class="price col">
               <p id="price"> Price: ${product[i].currency}  ${product[i].unitCost}</p>
             </div>
-            <div class="quantity">
+            <div class="quantity col-sm-2">
             <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
               <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${product[i].count}">
               <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
             </div>
-            <div class="sub-total">
+            <div class="sub-total col">
               <p> Precio: ${product[i].currency} <span id="sub-total">${product[i].unitCost + product[i].count}</span></p>
             </div>
             </div>
             ` 
             productContainer.innerHTML += htmlToAppend;
         }
+
         for (let j = 0; j < CART_PRODUCTS.length; j++) {
             let cart_product = CART_PRODUCTS;
-            console.log(cart_product[j])
             let htmlToAppend = `
             <div class="product-container">
-            <div class="img-container"> 
+            <div class="img-container col-sm-1"> 
                 <img id="img" src="${cart_product[j].image}" alt="">
             </div>
-            <div class="p-name">
+            <div class="p-name col">
               <h6 id="name">${cart_product[j].name}</h6>
             </div>
-            <div class="price">
+            <div class="price col">
               <p id="price"> Price: ${cart_product[j].currency}  ${cart_product[j].cost}</p>
             </div>
-            <div class="quantity">
+            <div class="quantity col-sm-2">
             <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
               <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${cart_product[j].count}">
               <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
             </div>
-            <div class="sub-total">
+            <div class="sub-total col">
               <p> Precio: ${cart_product[j].currency} <span id="sub-total">${cart_product[j].cost + cart_product[j].count}</span></p>
             </div>
             </div>
@@ -84,61 +83,82 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Change input value 
 
-    const productQuantity = document.getElementById('quantity'),
-    quantityBtnLeft = document.getElementById('btn-left'),
-    quantityBtnRight = document.getElementById('btn-right');
+    const productQuantity = document.querySelectorAll('#quantity'),
+    quantityBtnLeft = document.querySelectorAll('#btn-left'),
+    quantityBtnRight = document.querySelectorAll('#btn-right');
 
-    quantityBtnLeft.addEventListener('click', () => {
-        let sum = productQuantity.value - 1;
-        if (sum <= 0 ) {
-            productQuantity.focus();
-            window.alert('Enter a valid number');
-            return false;
-        } else {
-            productQuantity.value = sum;
-        }
-        cartSubTotalRefresher();
+    for (let i = 0; i< productQuantity.length; i++) {
 
-        if (checkbox1.checked == true) {
-            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(15));
-        } else if (checkbox2.checked == true) {
-            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(7));
-        } else { 
-            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(5));
-        }
-    });
+            productQuantity[i].addEventListener('change', () => {
+                console.log(i);
+                cartSubTotalRefresher(i);
+            });
 
-    quantityBtnRight.addEventListener('click', () => {
+        quantityBtnLeft[i].addEventListener('click', () => {
+            let sum = productQuantity[i].value - 1;
+            if (sum <= 0 ) {
+                productQuantity[i].focus();
+                window.alert('Enter a valid number');
+                return false;
+            } else {
+                productQuantity[i].value = sum;
+            }
+            cartSubTotalRefresher(i);
+    
+            if (checkbox1.checked == true) {
+                displayCartTotal(shipmentCost(15));
+            } else if (checkbox2.checked == true) {
+                displayCartTotal(shipmentCost(7));
+            } else { 
+                displayCartTotal(shipmentCost(5));
+            }
+        });
 
-        let sum = parseInt(productQuantity.value) + 1;
+        quantityBtnRight[i].addEventListener('click', () => {
+
+        let sum = parseInt(productQuantity[i].value) + 1;
         if (sum === 1000) {
-            productQuantity.focus();
+            productQuantity[i].focus();
             window.alert('You exceed the product availability');
         } else {
-            productQuantity.value = sum;
+            productQuantity[i].value = sum;
         }
-        cartSubTotalRefresher();
+        cartSubTotalRefresher(i);
 
         if (checkbox1.checked == true) {
-            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(15));
+            displayCartTotal(shipmentCost(15));
         } else if (checkbox2.checked == true) {
-            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(7));
+            displayCartTotal(shipmentCost(7));
         } else { 
-            displayCartTotal((cartSubTotal.innerHTML), shipmentCost(5));
+            displayCartTotal(shipmentCost(5));
         }
     });
+    }
 
     // Change product subtotal value
 
-    const cartSubTotal = document.getElementById('sub-total');
+    const cartSubTotal = document.querySelectorAll('#sub-total');
 
-    function cartSubTotalRefresher() {
-        cartSubTotal.innerHTML = " " + (productQuantity.value * CART_JSON[0].unitCost);
+    function cartSubTotalRefresherForJSON() {
+        cartSubTotal[0].innerHTML = " " + (productQuantity[0].value * CART_JSON[0].unitCost);
+    }
+    
+    function cartSubTotalRefresher(n) {
+        if (n === 0) {
+            cartSubTotalRefresherForJSON();
+        } else {
+            cartSubTotal[n].innerHTML = " " + (productQuantity[n].value * CART_PRODUCTS[n-1].cost);
+        }
     }
 
-    productQuantity.addEventListener('change', () => {
-        cartSubTotalRefresher();
-    });
+
+    function productsSum() {
+        let sum = 0;
+        for (let i = 0; i < cartSubTotal.length; i++) {
+            sum += parseInt(cartSubTotal[i].innerHTML);
+        }
+        return sum;
+    }
 
     // Checkboxes validation 
 
@@ -150,23 +170,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     checkbox1.addEventListener('click', () => {
         checkbox2.checked = false;
         checkbox3.checked = false;
-        displayCartTotal((cartSubTotal.innerHTML),shipmentCost(15));
+        displayCartTotal(shipmentCost(15));
     });
     checkbox2.addEventListener('click', () => {
         checkbox1.checked = false;
         checkbox3.checked = false;
-        displayCartTotal((cartSubTotal.innerHTML),shipmentCost(7));
+        displayCartTotal(shipmentCost(7));
     });
     checkbox3.addEventListener('click', () => {
         checkbox1.checked = false;
         checkbox2.checked = false;
-        displayCartTotal((cartSubTotal.innerHTML),shipmentCost(5));
+        displayCartTotal(shipmentCost(5));
     });
 
     // Shipment cost
 
     function shipmentCost(percentage) {
-       let cost = (cartSubTotal.innerHTML) * (percentage / 100);
+       let cost = (productsSum()) * (percentage / 100);
        cost = Math.round(cost);
        return cost;
     }
@@ -184,7 +204,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if ( street.value == "" || streetNumber.value == "" || streetCorner.value == "" ) {
             directionsContainer.focus()
             window.alert("Fill all fields")
-        } 
+        } else {
+            window.alert("Thanks for your purchase")
+        }
 
     });    
     
@@ -195,11 +217,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     cartCurrency.innerHTML = CART_JSON[0].currency;
 
-    function displayCartTotal(products, shipment) {
-        cartTotal.innerHTML = " " + (parseInt(products) + shipment);
+    function displayCartTotal(shipment) {
+        cartTotal.innerHTML = " " + (productsSum() + shipment);
     };
 
-    cartTotal.innerHTML = " " + (parseInt((cartSubTotal.innerHTML)) + shipmentCost(5));
+    cartTotal.innerHTML = " " + (productsSum() + shipmentCost(5));
 
     // displayCartTotal()
 
