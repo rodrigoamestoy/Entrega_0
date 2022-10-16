@@ -29,8 +29,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
     document.getElementById('n-products').innerHTML = numOfItems(1 + (CART_PRODUCTS ? CART_PRODUCTS.length : 0));
 
-    // document.getElementById('n-products').innerHTML = CART_JSON.length + CART_PRODUCTS.length;
-
     // Displays json cart product and the cart object
 
     displayCart(CART_JSON);
@@ -71,33 +69,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // CART products
 
-        for (let j = 0; j < CART_PRODUCTS.length; j++) {
-            let cart_product = CART_PRODUCTS;
-            let htmlToAppend = `
-            <div class="product-container">
-            <div class="img-container col-sm-1"> 
-                <img id="img" src="${cart_product[j].image}" alt="">
-            </div>
-            <div class="p-name col-sm-2">
-              <h6 id="name">${cart_product[j].name}</h6>
-            </div>
-            <div class="price col-sm-2">
-              <p id="price"> Price: ${cart_product[j].currency}  ${cart_product[j].cost}</p>
-            </div>
-            <div class="quantity col-sm-2">
-            <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
-              <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${cart_product[j].count}">
-              <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
-            </div>
-            <div class="sub-total col-sm-2">
-              <p> Subtotal: ${cart_product[j].currency} <span id="sub-total">${(cart_product[j].cost * cart_product[j].count)}</span></p>
-            </div>
-            <div class="delete col-sm-1">
-                <button><i class="fa fa-times"></i></button>
-            </div>
-            </div>
-            ` 
-            productContainer.innerHTML += htmlToAppend;
+        if (CART_PRODUCTS) {
+            for (let j = 0; j < CART_PRODUCTS.length; j++) {
+                let cart_product = CART_PRODUCTS;
+                let htmlToAppend = `
+                <div class="product-container">
+                <div class="img-container col-sm-1"> 
+                    <img id="img" src="${cart_product[j].image}" alt="">
+                </div>
+                <div class="p-name col-sm-2">
+                  <h6 id="name">${cart_product[j].name}</h6>
+                </div>
+                <div class="price col-sm-2">
+                  <p id="price"> Price: ${cart_product[j].currency}  ${cart_product[j].cost}</p>
+                </div>
+                <div class="quantity col-sm-2">
+                <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
+                  <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${cart_product[j].count}">
+                  <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
+                </div>
+                <div class="sub-total col-sm-2">
+                  <p> Subtotal: ${cart_product[j].currency} <span id="sub-total">${(cart_product[j].cost * cart_product[j].count)}</span></p>
+                </div>
+                <div class="delete col-sm-1">
+                    <button><i class="fa fa-times"></i></button>
+                </div>
+                </div>
+                ` 
+                productContainer.innerHTML += htmlToAppend; 
+        }
         }
     }
 
@@ -203,8 +203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 deleteBtn[j].parentElement.remove();
             });
         }
-
-
     }
 
     // Takes the innerHTML of all the products SubTotal and realizes
