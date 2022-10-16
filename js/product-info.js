@@ -1,4 +1,4 @@
-'use strict';    
+"use strict";    
 
 const ProductId = localStorage.getItem('product');
 const PRODUCT_URL = 'https://japceibal.github.io/emercado-api/products/' + ProductId + '.json';
@@ -80,8 +80,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const comments = await COMMENTS_DISPLAY();
         productComments(comments);
-        
-        console.log(String(product.id))
         
         function productComments(comments) {
 
@@ -190,8 +188,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // Loops over the same category products and
-    // if the ID is not equal to te actual displayed
-    // product adds the product to an array
+    // if the ID is not equal to the actual displayed
+    // product it adds the product to an array
 
     const relatedProductsArray = [];
 
@@ -234,10 +232,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     relatedImg3.addEventListener('click', () => {
       localStorage.setItem('product', products[relatedProductsArray[2]].id);
       window.open('product-info.html', '_blank');
-    })
+    });
   };
 
-    // Add to cart ????
+    // Add to cart
 
     const addCart = document.getElementById('add-cart');
 
@@ -266,31 +264,35 @@ const CART = {
     let _cart = JSON.stringify(CART.contents);
     localStorage.setItem(CART.KEY, _cart);
   },
-
-  // Add the full prdoduct (Product img, name, id, etc)
-  
   add(product) {
     const productId = String(product.id);
     if (CART.find(productId)) {
       CART.increase(productId, 1);
     } else {
-      let arr = PRODUCTS.filter(products => {
-        if (products.id == productId) {
-          return console.log(arr);;
+        if (product.currency !== 'USD') {
+          let USD = Math.ceil(product.cost / 42);
+          let obj = {
+            id: productId,
+            name: product.name,
+            image: product.images[0],
+            count: 1,
+            currency: 'USD',
+            cost: USD,
+          };
+          CART.contents.push(obj);
+          CART.sync();
+        } else {
+          let obj = {
+            id: productId,
+            name: product.name,
+            image: product.images[0],
+            count: 1,
+            currency: 'USD',
+            cost: parseInt(product.cost),
+          };
+          CART.contents.push(obj);
+          CART.sync();
         }
-      });
-      if (arr !== arr[0]) {
-       let obj = {
-         id: productId,
-         name: product.name,
-         image: product.images[0],
-         count: 1,
-         currency: product.currency,
-         cost: product.cost,
-       };
-       CART.contents.push(obj);
-       CART.sync();
-     }
     } 
   },
   empty() {
@@ -314,10 +316,8 @@ const CART = {
     });
     CART.sync();
   },
-  deleteProduct(product) {
-    const productId = String(product.id);
-    this.find(productId).delete();
+  deleteProduct(id) {
+    let product = this.contents.find(id);
+    product.remove();
   },
 };
-
-let PRODUCTS = [];

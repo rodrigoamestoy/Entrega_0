@@ -48,6 +48,11 @@
     border: none;
     text-align: center;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .quantity input:focus {
     outline: none;
 }
@@ -56,9 +61,15 @@
     border: none;
     background-color: white;
 }
-
 .sub-total {
     margin-left: auto;
+}
+.delete button {
+    margin: 11% 0 0 50%;
+    background-color: rgba(255, 0, 0, 0.4);
+    border: none;
+    width: 25px;
+    height: 25px;
 }
 
 /* Envio */

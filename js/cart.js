@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const CART_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
 
@@ -10,23 +10,35 @@ async function USER_CART() {
     } return '';
 };
 
-const buyBtn = document.getElementById('buy');
-
 document.addEventListener('DOMContentLoaded', async () => {
 
+    const buyBtn = document.getElementById('buy');
     const CART_JSON = await USER_CART();
     const CART = localStorage.getItem(1234);
     const CART_PRODUCTS = JSON.parse(CART);
+
     // Number of items in the cart
 
-    document.getElementById('n-products').innerHTML = CART_JSON.length + CART_PRODUCTS.length;
+    function numOfItems(items) {
+        let sum = 0;
+        let one = 1
+        for (let i = 0; i < items; i++) {
+            sum += one;
+        }
+        return sum;
+    };
+    document.getElementById('n-products').innerHTML = numOfItems(1 + (CART_PRODUCTS ? CART_PRODUCTS.length : 0));
 
-    // Displays json cart products
+    // document.getElementById('n-products').innerHTML = CART_JSON.length + CART_PRODUCTS.length;
+
+    // Displays json cart product and the cart object
 
     displayCart(CART_JSON);
 
     function displayCart(product) {
         const productContainer = document.getElementById('display-products');
+
+        // JSON product
 
         for (let i = 0; i < product.length; i++ ) {
 
@@ -35,10 +47,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="img-container col-sm-1"> 
                 <img id="img" src="${product[i].image}" alt="">
             </div>
-            <div class="p-name col">
+            <div class="p-name col-sm-2">
               <h6 id="name">${product[i].name}</h6>
             </div>
-            <div class="price col">
+            <div class="price col-sm-2">
               <p id="price"> Price: ${product[i].currency}  ${product[i].unitCost}</p>
             </div>
             <div class="quantity col-sm-2">
@@ -46,13 +58,18 @@ document.addEventListener('DOMContentLoaded', async () => {
               <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${product[i].count}">
               <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
             </div>
-            <div class="sub-total col">
-              <p> Precio: ${product[i].currency} <span id="sub-total">${product[i].unitCost + product[i].count}</span></p>
+            <div class="sub-total col-sm-2">
+              <p> Subtotal: ${product[i].currency} <span id="sub-total">${product[i].unitCost}</span></p>
+            </div>
+            <div class="delete col-sm-1">
+                <button><i class="fa fa-times"></i></button>
             </div>
             </div>
             ` 
             productContainer.innerHTML += htmlToAppend;
         }
+
+        // CART products
 
         for (let j = 0; j < CART_PRODUCTS.length; j++) {
             let cart_product = CART_PRODUCTS;
@@ -61,10 +78,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="img-container col-sm-1"> 
                 <img id="img" src="${cart_product[j].image}" alt="">
             </div>
-            <div class="p-name col">
+            <div class="p-name col-sm-2">
               <h6 id="name">${cart_product[j].name}</h6>
             </div>
-            <div class="price col">
+            <div class="price col-sm-2">
               <p id="price"> Price: ${cart_product[j].currency}  ${cart_product[j].cost}</p>
             </div>
             <div class="quantity col-sm-2">
@@ -72,8 +89,11 @@ document.addEventListener('DOMContentLoaded', async () => {
               <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${cart_product[j].count}">
               <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
             </div>
-            <div class="sub-total col">
-              <p> Precio: ${cart_product[j].currency} <span id="sub-total">${cart_product[j].cost + cart_product[j].count}</span></p>
+            <div class="sub-total col-sm-2">
+              <p> Subtotal: ${cart_product[j].currency} <span id="sub-total">${(cart_product[j].cost * cart_product[j].count)}</span></p>
+            </div>
+            <div class="delete col-sm-1">
+                <button><i class="fa fa-times"></i></button>
             </div>
             </div>
             ` 
@@ -89,10 +109,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     for (let i = 0; i< productQuantity.length; i++) {
 
-            productQuantity[i].addEventListener('change', () => {
-                console.log(i);
-                cartSubTotalRefresher(i);
-            });
+        // Refreshes the cart subtotal when there is a change in 
+        // the inputs values
+
+        productQuantity[i].addEventListener('change', () => {
+            cartSubTotalRefresher(i);
+        });
+
+        // Decreases the inputs value and checks the value don´t
+        // go to 0
 
         quantityBtnLeft[i].addEventListener('click', () => {
             let sum = productQuantity[i].value - 1;
@@ -105,6 +130,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             cartSubTotalRefresher(i);
     
+            // Sends the new value to the display function and 
+            // sends the shipment cost according to which checkbox
+            // is checked
+
             if (checkbox1.checked == true) {
                 displayCartTotal(shipmentCost(15));
             } else if (checkbox2.checked == true) {
@@ -113,6 +142,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 displayCartTotal(shipmentCost(5));
             }
         });
+
+        // Increases the inputs value and checks it doesn´t exceed 
+        // the product availability
 
         quantityBtnRight[i].addEventListener('click', () => {
 
@@ -135,13 +167,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     }
 
-    // Change product subtotal value
+    // Refreshes the product subtotal value
 
     const cartSubTotal = document.querySelectorAll('#sub-total');
+
+    // Server product function
 
     function cartSubTotalRefresherForJSON() {
         cartSubTotal[0].innerHTML = " " + (productQuantity[0].value * CART_JSON[0].unitCost);
     }
+
+    // Cart object function
     
     function cartSubTotalRefresher(n) {
         if (n === 0) {
@@ -151,6 +187,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Delete product 
+
+    const deleteBtn = document.querySelectorAll('.delete');
+
+    for (let j = 0; j < deleteBtn.length; j++) {
+
+        if (j > 0) {
+            deleteBtn[j].addEventListener('click', () => {
+                deleteBtn[j].parentElement.remove();
+                // Add CART.delete function with NodeJS or import method
+            });
+        } else {
+            deleteBtn[j].addEventListener('click', () => {
+                deleteBtn[j].parentElement.remove();
+            });
+        }
+
+
+    }
+
+    // Takes the innerHTML of all the products SubTotal and realizes
+    // the sum 
 
     function productsSum() {
         let sum = 0;
@@ -221,12 +279,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         cartTotal.innerHTML = " " + (productsSum() + shipment);
     };
 
+    // Displays the cart total when the page loads
+
     cartTotal.innerHTML = " " + (productsSum() + shipmentCost(5));
-
-    // displayCartTotal()
-
-    // Buy
-
 });
 
 
