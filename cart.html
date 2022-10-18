@@ -55,54 +55,121 @@
         <h4>Productos seleccionados (<span id="n-products">0</span>)</h4>
         <div class="products" id="display-products">
         </div>
-        <div class="envio">
-          <h4>Selecciona un tipo de envio:</h4>
-          <div class="tipos-envio">
-            <div class="tipo-list">      
-              <label for=""><input type="checkbox" value="envio" name="envio" id="">Premium 2 a 5 días (15%)
-              </label>
-              <label for="">
-                <input type="checkbox" value="envio" name="envio" id="">Express 5 a 8 días (7%)
-              </label>
-              <label for="">
-                <input type="checkbox" checked value="envio" name="envio" id="">Standard 12 a 15 días (5%)
-              </label>
-          </div>
-          <div class="direccion-envio" id="direccion">
-            <h4>Dirección de envio:</h4>
-            <div class="row">
-              <div class="col-sm-3">
-                <label for="">Calle</label>
-              </div>
-              <div class="col-sm-3">
-                <label for="">Número</label>
-              </div>
+      </div>
+      <div class="envio" id="envio-container">
+        <h4>Selecciona un tipo de envio:</h4>
+        <div class="tipos-envio">
+          <div class="tipo-list">      
+            <label for=""><input type="checkbox" value="envio" name="envio" id="">Premium 2 a 5 días (15%)
+            </label>
+            <label for="">
+              <input type="checkbox" value="envio" name="envio" id="">Express 5 a 8 días (7%)
+            </label>
+            <label for="">
+              <input type="checkbox" checked value="envio" name="envio" id="">Standard 12 a 15 días (5%)
+            </label>
+            <div class="total-cart">
+              <h4>Total: $<span id="currency"></span><span id="cart-total">0</span></h4>
             </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <input type="text">
-              </div>
-              <div class="col-sm-3">
-                <input type="text">
-              </div>
+        </div>
+        <div class="direccion-envio" id="direccion">
+          <h4>Dirección de envio:</h4>
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="">Calle</label>
             </div>
-            <div class="row">
-              <label for="">Esquina</label>
-            </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <input type="text">
-              </div>
+            <div class="col-sm-3">
+              <label for="">Número</label>
             </div>
           </div>
-        </div>
-        <div class="total-cart">
-          <h4>Total: $<span id="currency"></span><span id="cart-total">0</span></h4>
-        </div>
-        <div class="buy">
-          <button type="button" id="buy">Comprar</button>
+          <div class="row">
+            <div class="col-sm-3">
+              <input type="text">
+            </div>
+            <div class="col-sm-3">
+              <input type="text">
+            </div>
+          </div>
+          <div class="row">
+            <label for="">Esquina</label>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <input type="text">
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="pago-container">
+      <div class="tipo-pago">
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Seleccione su forma de pago
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Metodos de pago</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col">
+                      <input type="checkbox" name="" id="card-transaction">
+                      <label for="" id="">Tarjeta de crédito</label>
+                      <div id="card-container">
+                        <div class="row">
+                          <div class="col">
+                            <label for="">Número de tarjeta</label>
+                            <input type="number" id="card-number">
+                          </div>
+                          <div class="col">
+                            <label for="">Código de seguridad</label>
+                            <input type="number" id="security-code">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="row">
+                            <label for="">Vencimiento(MM/AA)</label>
+                          </div>
+                          <div class="row">
+                            <input type="month" min="2020-06" max="2030-06" id="expiration">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <input type="checkbox" name="" id="bank-transaction">
+                      <label for="" >Transferencia Bancaria</label>
+                    </div>
+                    <div id="bank-container">
+                      <div class="row" id="">
+                        <div class="row">
+                          <label for="">Número de cuenta</label>
+                        </div>
+                        <div class="row">
+                          <input type="number" id="bank-account">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-purchase">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="buy">
+      <button type="button" id="buy">Comprar</button>
     </div>
   </main>
   <footer class="text-muted">

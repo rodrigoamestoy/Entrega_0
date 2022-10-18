@@ -31,10 +31,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Displays json cart product and the cart object
 
+    const productContainer = document.getElementById('display-products');
     displayCart(CART_JSON);
 
     function displayCart(product) {
-        const productContainer = document.getElementById('display-products');
+        
 
         // JSON product
 
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               <h6 id="name">${product[i].name}</h6>
             </div>
             <div class="price col-sm-2">
-              <p id="price"> Price: ${product[i].currency}  ${product[i].unitCost}</p>
+              <p id="price"> Price: ${product[i].currency}  ${setComa(product[i].unitCost)}</p>
             </div>
             <div class="quantity col-sm-2">
             <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
             </div>
             <div class="sub-total col-sm-2">
-              <p> Subtotal: ${product[i].currency} <span id="sub-total">${product[i].unitCost}</span></p>
+              <p> Subtotal: ${product[i].currency} <span id="sub-total">${setComa(product[i].unitCost)}</span></p>
             </div>
             <div class="delete col-sm-1">
                 <button><i class="fa fa-times"></i></button>
@@ -81,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                   <h6 id="name">${cart_product[j].name}</h6>
                 </div>
                 <div class="price col-sm-2">
-                  <p id="price"> Price: ${cart_product[j].currency}  ${cart_product[j].cost}</p>
+                  <p id="price"> Price: ${cart_product[j].currency}  ${setComa(cart_product[j].cost)}</p>
                 </div>
                 <div class="quantity col-sm-2">
                 <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
@@ -89,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                   <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
                 </div>
                 <div class="sub-total col-sm-2">
-                  <p> Subtotal: ${cart_product[j].currency} <span id="sub-total">${(cart_product[j].cost * cart_product[j].count)}</span></p>
+                  <p> Subtotal: ${cart_product[j].currency} <span id="sub-total">${setComa((cart_product[j].cost * cart_product[j].count))}</span></p>
                 </div>
                 <div class="delete col-sm-1">
                     <button><i class="fa fa-times"></i></button>
@@ -211,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function productsSum() {
         let sum = 0;
         for (let i = 0; i < cartSubTotal.length; i++) {
-            sum += parseInt(cartSubTotal[i].innerHTML);
+            sum += parseInt(cartSubTotal[i].innerHTML.replace(/\./g,''));
         }
         return sum;
     }
@@ -280,6 +281,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Displays the cart total when the page loads
 
     cartTotal.innerHTML = " " + (productsSum() + shipmentCost(5));
+
+    // Purchase options 
+
+    const cardContainer = document.getElementById('card-container');
+    const bankContainer = document.getElementById('bank-container');
+    const cardPurchase = document.getElementById('card-transaction');
+    const bankPurchase = document.getElementById('bank-transaction');
+
+    cardPurchase.addEventListener('click', () => {
+        bankPurchase.checked = false;
+        cardContainer.style.visibility = "visible";
+        bankContainer.style.visibility = "hidden";
+    });
+    bankPurchase.addEventListener('click', () => {
+        cardPurchase.checked = false;
+        bankContainer.style.visibility = "visible";
+        cardContainer.style.visibility = "hidden";
+    });
+
+    function purchaseValidation() {
+
+    }
 });
 
 
