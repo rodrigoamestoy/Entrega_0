@@ -17,6 +17,10 @@ let hideSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
+function setComa(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 let getJSONData = function(url){
     let result = {};
     showSpinner();

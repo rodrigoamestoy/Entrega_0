@@ -1,8 +1,4 @@
 
-body {
-
-}
-
 /* Category description */
 
 .products-name {
@@ -91,4 +87,31 @@ body {
     width: 60%;
     text-align: right;
     margin: 0 0 0 auto;
+}
+
+@media (max-width: 700px) {
+    .products-card {
+        flex-direction: column;
+    }
+    .products-card img{
+        width: 320px;
+        height: 200px;
+        margin-left: 5%;
+    }
+    .products-card h2 {
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin: 1% 5% 1% 0;
+    }
+    .products-card p {
+        font-size: 1.2rem;
+    }
+    .products-card h6 {
+        font-size: 1.2rem;
+        padding-bottom: 1%;
+    }
+    .card-content {
+        border: none;
+    }
+
 }

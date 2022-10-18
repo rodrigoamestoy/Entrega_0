@@ -27,7 +27,7 @@
     font-weight: bold;
 }
 .img-container img {
-    width: 75px;
+    width: 100px;
 }
 .p-name {
     font-family: var(--product-title-font);
@@ -85,13 +85,8 @@ input::-webkit-inner-spin-button {
 .tipo-list input {
     margin-right: 1%;
 }
-.esquina {
-    margin-top: 1%;
-    margin-bottom: 1%;
-}
-.esquina input {
-    margin: 0 0 0 1%;
-    width: 20%
+#direccion .row {
+    margin-top: .5%;
 }
 
 /* Total */
@@ -100,16 +95,94 @@ input::-webkit-inner-spin-button {
     padding: 1% 1%;
     width: 100%;
     margin: 2% 0;
-    text-align: right;
+    text-align: center;
     background-color: rgba(128, 128, 128, 0.75);
     font-weight: bold;
     font-family: var(--title-font);
 }
+.buy {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
 .buy button {
-    float: right;
     background-color: rgba(128, 128, 128, 0.5);
     border: 1px solid black;
 }
 .buy button:hover {
     background-color: rgba(128, 128, 128, 0.3);
+}
+
+/* Purchase Options */
+
+.pago-container {
+    margin: 2% 0;
+}
+.tipo-pago button:first-child {
+    background-color: lightcyan;
+    color: black;
+}
+.tipo-pago button:first-child:hover {
+    background-color: aquamarine;
+    border: 1px solid black;
+}
+#card-container {
+    visibility: hidden;
+}
+.tipo-pago input {
+    margin: 1% auto;
+}
+
+#expiration, #bank-account {
+    margin: 1% 0 1% 2.5%;
+    width: 40%;
+}
+#bank-container {
+    visibility: hidden;
+}
+
+
+@media (max-width: 700px) {
+    /* Product */
+
+    .title {
+        width: 35%;
+    }
+    .product-container {
+        margin: 4% auto;
+        flex-direction: column;
+        width: 60%;
+    }
+    .img-container img {
+        width: 100px;
+        height: 75px;
+    }
+    .delete button {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    /* Direction */
+
+    #direccion .row .col-sm-3 {
+        width: 50%;
+    }
+    #direccion .row-sm-6 .col-sm-3 {
+        width: 40%;
+        margin: 0 0 0 1px;
+    }
+    #direccion .row-sm-6 {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    #direccion .col-sm-3 input {
+        width: 90%;
+        margin: 0 5px 0 0;
+        padding: 0;
+    }
+    .esquina input {
+        margin-left: 3%;
+        width: 40%;
+    }
 }

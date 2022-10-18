@@ -216,7 +216,7 @@
     
 #product-container {
     margin: 2% auto;
-    border: 2px solid rgb(56, 53, 53, 0.5);
+    border: none;
     border-top-right-radius: 5%;
     border-bottom-left-radius: 5%;
     background-color: white;
@@ -244,7 +244,7 @@
 #big-image {
     width: 95%;
     padding: 5%;
-    margin: 0 2% 0 4%;
+    margin: 0 auto;
     background-color: white;
     border-radius: 5%;
 }
@@ -254,7 +254,7 @@
 .product-info {
     font-family: var(--product-info-font);
     text-align: right;
-    border: 2px solid rgb(43, 42, 42);
+    border: none;
     border-radius: 2%;
     background-color: white;
     width: 90%;
@@ -296,6 +296,18 @@
 #add-comment {
     width: 90%;
     text-align: left;
-    margin: auto;
+    margin: 2% auto;
+}
+#opinion {
+    height: 100px;
+}
+.container {
+    flex-direction: column;
+}
+#carousel-inner .carousel-item figcaption {
+    width: 80%;
+    font-size: 1.5rem;
+    padding: 10%;
+    border-radius: 10%;
 }
 }
