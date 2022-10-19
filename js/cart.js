@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function displayCart(product) {
         
-
         // JSON product
 
         for (let i = 0; i < product.length; i++ ) {
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
             <div class="quantity col-sm-2">
             <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
-              <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${product[i].count}">
+              <input id="quantity" min="1" max="99" type="number" oninput="validity.valid || (value = '1');" value="${product[i].count}">
               <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
             </div>
             <div class="sub-total col-sm-2">
@@ -86,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <div class="quantity col-sm-2">
                 <button type="button" id="btn-left"><i class="fa fa-minus"></i></button>
-                  <input id="quantity" min="1" max="999" type="number" oninput="validity.valid || (value = '1');" value="${cart_product[j].count}">
+                  <input id="quantity" min="1" max="99" type="number" oninput="validity.valid || (value = '1');" value="${cart_product[j].count}">
                   <button type="button" id="btn-right"><i class="fa fa-plus"></i></button>
                 </div>
                 <div class="sub-total col-sm-2">
@@ -98,9 +97,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 ` 
                 productContainer.innerHTML += htmlToAppend; 
+            }
         }
-        }
-    }
+    };
 
     // Change input value 
 
@@ -117,8 +116,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             cartSubTotalRefresher(i);
         });
 
-        // Decreases the inputs value and checks the value don´t
-        // go to 0
+        // Decreases the inputs value and checks the value is not
+        // less than 0
 
         quantityBtnLeft[i].addEventListener('click', () => {
             let sum = productQuantity[i].value - 1;
@@ -130,6 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 productQuantity[i].value = sum;
             }
             cartSubTotalRefresher(i);
+            subTotal();
     
             // Sends the new value to the display function and 
             // sends the shipment cost according to which checkbox
@@ -153,13 +153,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         quantityBtnRight[i].addEventListener('click', () => {
 
         let sum = parseInt(productQuantity[i].value) + 1;
-        if (sum === 1000) {
+        if (sum === 100) {
             productQuantity[i].focus();
             window.alert('You exceed the product availability');
         } else {
             productQuantity[i].value = sum;
         }
         cartSubTotalRefresher(i);
+        subTotal()
 
         if (checkbox1.checked == true) {
             displayCartTotal(shipmentCost(15));
@@ -171,8 +172,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             displayCartTotal(shipmentCost(5));
             shipmentTotal(5);
         }
-    });
-    }
+        });
+    };
 
     // Refreshes the product subtotal value
 
@@ -182,7 +183,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function cartSubTotalRefresherForJSON() {
         cartSubTotal[0].innerHTML = " " + setComa(productQuantity[0].value * CART_JSON[0].unitCost);
-    }
+    };
 
     // Cart object function
     
@@ -192,9 +193,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             cartSubTotal[n].innerHTML = " " + setComa(productQuantity[n].value * CART_PRODUCTS[n-1].cost);
         }
-    }
+    };
 
-    // Delete product 
+    // Deletes product 
 
     const deleteBtn = document.querySelectorAll('.delete');
 
@@ -210,10 +211,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 deleteBtn[j].parentElement.remove();
             });
         }
-    }
+    };
 
     // Takes the innerHTML of all the products SubTotal and realizes
-    // the sum 
+    // a sum 
 
     function productsSum() {
         let sum = 0;
@@ -221,13 +222,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             sum += parseInt(cartSubTotal[i].innerHTML.replace(/\./g,''));
         }
         return sum;
-    }
+    };
 
     // Checkboxes validation 
 
     const checkboxes = document.querySelectorAll('.tipo-list input'),
-    checkbox1 = checkboxes[0],
-    checkbox2 = checkboxes[1],
+    checkbox1 = checkboxes[0], 
+    checkbox2 = checkboxes[1], 
     checkbox3 = checkboxes[2];
 
     checkbox1.addEventListener('click', () => {
@@ -240,13 +241,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         checkbox1.checked = false;
         checkbox3.checked = false;
         displayCartTotal(shipmentCost(7));
-        shipmentTotal(7)
+        shipmentTotal(7);
     });
     checkbox3.addEventListener('click', () => {
         checkbox1.checked = false;
         checkbox2.checked = false;
         displayCartTotal(shipmentCost(5));
-        shipmentTotal(5)
+        shipmentTotal(5);
     });
 
     // Shipment cost
@@ -255,35 +256,23 @@ document.addEventListener('DOMContentLoaded', async () => {
        let cost = (productsSum()) * (percentage / 100);
        cost = Math.round(cost);
        return cost;
-    }
-
-    // Direction validation 
-
-    const directions = document.querySelectorAll('.direccion-envio input'),
-    directionsContainer = document.getElementById('direccion'),
-    street = directions[0],
-    streetNumber = directions[1],
-    streetCorner = directions[2];
-
-    buyBtn.addEventListener('click', () => {
-        purchaseValidation();
-    });    
+    };
     
-    // Cart Total
+    // Cart Total, Subtotal & Shipment
 
     const cartSubtotal = document.getElementById('cart-sub-total');
     const cartShipment = document.getElementById('shipment-total');
     const cartTotal = document.getElementById('cart-total');
-    
 
     function displayCartTotal(shipment) {
         cartTotal.innerHTML = " " + setComa((productsSum() + shipment));
     };
     function shipmentTotal(shipment) {
         cartShipment.innerHTML = setComa(shipmentCost(shipment));
-    }
-
-    // Displays the cart total when the page loads
+    };
+    function subTotal() {
+        cartSubtotal.innerHTML = " " + setComa(productsSum());
+    };
 
     cartSubtotal.innerHTML = " " + setComa(productsSum());
     cartShipment.innerHTML = " " + setComa(shipmentCost(5));
@@ -311,33 +300,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         cardSecurityCode.value = "";
     });
 
-    // Purchase Validation
+    // Purchase Validations
 
-    const cardNumber = document.getElementById('card-number');
-    const cardSecurityCode = document.getElementById('security-code');
-    const cardExpiration = document.getElementById('expiration');
-    // const savePuchase = document.getElementById('save-purchase');
-    const bankAccount = document.getElementById('bank-account');
-    const succesAlert = document.getElementById('succes-alert');
+    const cardNumber = document.getElementById('card-number'),
+    cardSecurityCode = document.getElementById('security-code'),
+    cardExpiration = document.getElementById('expiration'),
+    savePuchase = document.getElementById('save-purchase'),
+    bankAccount = document.getElementById('bank-account'),
+    purchaseMethod = document.getElementById('purchase-method'),
+    succesAlert = document.getElementById('succes-alert'),
+    directions = document.querySelectorAll('.direccion-envio input'),
+    street = directions[0],
+    streetNumber = directions[1],
+    streetCorner = directions[2];
 
-    function succesAlertVanish() {
-        succesAlert.style.visibility = "hidden"
-    }
     function shipmentValidation() {
         if (street.value != "" && streetNumber.value != "" && streetCorner.value != "") {
             return true;
         } else {
             return false;
         }
-    }
+    };
     function cardValidation() {
         if (cardNumber.value > 6 && cardExpiration.value != "" && cardSecurityCode.value.length == 4 ) {
             return true;
         } else {
             return false;
         }
-    }
+    };
 
+    function succesAlertVanish() {
+        succesAlert.style.visibility = "hidden"
+    };
     function purchaseValidation() {
         if ( cardValidation() != false && shipmentValidation() != false || bankAccount.value != "" &&  shipmentValidation() != false) {
             setTimeout(succesAlertVanish, 3000);
@@ -345,7 +339,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             window.alert('Completa todo los campos');
         }
-    }
+    };
+
+    savePuchase.addEventListener('click', () => {
+        if ( bankPurchase.checked || cardPurchase.checked ) 
+        // Checks if the bank option is checked
+        bankPurchase.checked ? 
+        // If checked sets this HTML
+        purchaseMethod.innerHTML = "Transferencia Bancaria <i class='fa fa-university'></i>" : 
+        // If it is not checked sets this HTML
+        purchaseMethod.innerHTML = "Tarjeta <i class='fa fa-credit-card'></i>";
+    });
+
+    // Buy
+
+    buyBtn.addEventListener('click', () => {
+        purchaseValidation();
+    });    
 });
 
 

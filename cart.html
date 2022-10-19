@@ -36,9 +36,21 @@
               <a class="btn dropdown-toggle" href="#" role="button" id="email" data-bs-toggle="dropdown" aria-expanded="false">
               </a>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-                <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-                <li><a class="dropdown-item" id="sign-out" href="index.html">Cerrar Sesión</a></li>
+                <li>
+                  <a class="dropdown-item" href="cart.html">
+                    Mi carrito <i class="fa fa-shopping-cart"></i>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="my-profile.html">
+                    Mi perfil <i class="fa fa-user"></i>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" id="sign-out" href="index.html">
+                    Cerrar Sesión <i class="fa fa-times"></i>
+                  </a>
+                </li>
               </ul>
             </div>
           </li>
@@ -56,8 +68,9 @@
         <div class="products" id="display-products">
         </div>
       </div>
-      <div class="envio" id="envio-container">
+      <div id="envio-container">
         <h4>Selecciona un tipo de envio:</h4>
+        <div class="envio">
         <div class="tipos-envio">
           <div class="tipo-list">      
             <label for=""><input type="checkbox" value="envio" name="envio" id="">Premium 2 a 5 días (15%)
@@ -97,81 +110,86 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="pago-container">
-      <div class="tipo-pago">
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Seleccione su forma de pago
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Metodos de pago</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <div class="row">
-                    <div class="col">
-                      <input type="checkbox" name="" id="card-transaction">
-                      <label for="" id="">Tarjeta de crédito</label>
-                      <div id="card-container">
-                        <div class="row">
-                          <div class="col">
-                            <label for="">Número de tarjeta</label>
-                            <input type="number" id="card-number">
-                          </div>
-                          <div class="col">
-                            <label for="">Código de seguridad</label>
-                            <input type="number" id="security-code">
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="row">
-                            <label for="">Vencimiento(MM/AA)</label>
-                          </div>
-                          <div class="row">
-                            <input type="month" min="2020-06" max="2030-06" id="expiration">
+      <div class="total-cart">
+        <h2>Detalles de su compra</h2>
+        <h4>Subtotal Productos: <br> $USD <span id="cart-sub-total">0</span></h4>
+        <h4>Costo de envio: <br> $USD <span id="shipment-total">0</span></h4>
+        <h4>Total a pagar: <br> $USD <span id="cart-total">0</span></h4>
+        <h4>Método de págo: </h4>
+        <div class="pago-container">
+          <div class="tipo-pago">
+            <button type="button" class="btn" id="purchase-method" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Seleccione su forma de pago
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Metodos de pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                        <div class="col">
+                          <input type="checkbox" name="" id="card-transaction">
+                          <label for="" id="">Tarjeta de crédito</label>
+                          <div id="card-container">
+                            <div class="row">
+                              <div class="col">
+                                <label for="">Número de tarjeta</label>
+                                <input type="number" id="card-number">
+                              </div>
+                              <div class="col">
+                                <label for="">Código de seguridad</label>
+                                <input type="number" id="security-code">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="row">
+                                <label for="">Vencimiento(MM/AA)</label>
+                              </div>
+                              <div class="row">
+                                <input type="month" min="2020-06" max="2030-06" id="expiration">
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <input type="checkbox" name="" id="bank-transaction">
-                      <label for="" >Transferencia Bancaria</label>
-                    </div>
-                    <div id="bank-container">
-                      <div class="row" id="">
-                        <div class="row">
-                          <label for="">Número de cuenta</label>
+                      <div class="row">
+                        <div class="col">
+                          <input type="checkbox" name="" id="bank-transaction">
+                          <label for="" >Transferencia Bancaria</label>
                         </div>
-                        <div class="row">
-                          <input type="number" id="bank-account">
+                        <div id="bank-container">
+                          <div class="row" id="">
+                            <div class="row">
+                              <label for="">Número de cuenta</label>
+                            </div>
+                            <div class="row">
+                              <input type="number" id="bank-account">
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
                   </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save-purchase">Save changes</button>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save-purchase">Save changes</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <div class="buy">
+            <button type="button" id="buy">Comprar</button>
+          </div>
         </div>
       </div>
+      </div>
     </div>
-    <div class="total-cart">
-      <h4>Subtotal: $USD <span id="cart-sub-total">0</span></h4>
-      <h4>Envio: $USD <span id="shipment-total">0</span></h4>
-      <h4>Total: $USD <span id="cart-total">0</span></h4>
-    </div>
-    <div class="buy">
-      <button type="button" id="buy">Comprar</button>
-    </div>
+    
+    
     <div id="succes-alert">
       <p>Su compra ha sido realizada con éxito!</p>
       <p>Muchas gracias!</p>
