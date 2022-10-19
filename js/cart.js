@@ -137,10 +137,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (checkbox1.checked == true) {
                 displayCartTotal(shipmentCost(15));
+                shipmentTotal(15);
             } else if (checkbox2.checked == true) {
                 displayCartTotal(shipmentCost(7));
+                shipmentTotal(7);
             } else { 
                 displayCartTotal(shipmentCost(5));
+                shipmentTotal(5);
             }
         });
 
@@ -160,10 +163,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (checkbox1.checked == true) {
             displayCartTotal(shipmentCost(15));
+            shipmentTotal(15);
         } else if (checkbox2.checked == true) {
             displayCartTotal(shipmentCost(7));
+            shipmentTotal(7);
         } else { 
             displayCartTotal(shipmentCost(5));
+            shipmentTotal(5);
         }
     });
     }
@@ -175,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Server product function
 
     function cartSubTotalRefresherForJSON() {
-        cartSubTotal[0].innerHTML = " " + (productQuantity[0].value * CART_JSON[0].unitCost);
+        cartSubTotal[0].innerHTML = " " + setComa(productQuantity[0].value * CART_JSON[0].unitCost);
     }
 
     // Cart object function
@@ -184,7 +190,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (n === 0) {
             cartSubTotalRefresherForJSON();
         } else {
-            cartSubTotal[n].innerHTML = " " + (productQuantity[n].value * CART_PRODUCTS[n-1].cost);
+            cartSubTotal[n].innerHTML = " " + setComa(productQuantity[n].value * CART_PRODUCTS[n-1].cost);
         }
     }
 
@@ -228,16 +234,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         checkbox2.checked = false;
         checkbox3.checked = false;
         displayCartTotal(shipmentCost(15));
+        shipmentTotal(15);
     });
     checkbox2.addEventListener('click', () => {
         checkbox1.checked = false;
         checkbox3.checked = false;
         displayCartTotal(shipmentCost(7));
+        shipmentTotal(7)
     });
     checkbox3.addEventListener('click', () => {
         checkbox1.checked = false;
         checkbox2.checked = false;
         displayCartTotal(shipmentCost(5));
+        shipmentTotal(5)
     });
 
     // Shipment cost
@@ -257,30 +266,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     streetCorner = directions[2];
 
     buyBtn.addEventListener('click', () => {
-
-        if ( street.value == "" || streetNumber.value == "" || streetCorner.value == "" ) {
-            directionsContainer.focus()
-            window.alert("Fill all fields")
-        } else {
-            window.alert("Thanks for your purchase")
-        }
-
+        purchaseValidation();
     });    
     
     // Cart Total
 
-    const cartTotal = document.getElementById('cart-total'),
-    cartCurrency = document.getElementById('currency');
-
-    cartCurrency.innerHTML = CART_JSON[0].currency;
+    const cartSubtotal = document.getElementById('cart-sub-total');
+    const cartShipment = document.getElementById('shipment-total');
+    const cartTotal = document.getElementById('cart-total');
+    
 
     function displayCartTotal(shipment) {
-        cartTotal.innerHTML = " " + (productsSum() + shipment);
+        cartTotal.innerHTML = " " + setComa((productsSum() + shipment));
     };
+    function shipmentTotal(shipment) {
+        cartShipment.innerHTML = setComa(shipmentCost(shipment));
+    }
 
     // Displays the cart total when the page loads
 
-    cartTotal.innerHTML = " " + (productsSum() + shipmentCost(5));
+    cartSubtotal.innerHTML = " " + setComa(productsSum());
+    cartShipment.innerHTML = " " + setComa(shipmentCost(5));
+    cartTotal.innerHTML = " " + setComa((productsSum() + shipmentCost(5)));
 
     // Purchase options 
 
@@ -293,15 +300,51 @@ document.addEventListener('DOMContentLoaded', async () => {
         bankPurchase.checked = false;
         cardContainer.style.visibility = "visible";
         bankContainer.style.visibility = "hidden";
+        bankAccount.value = "";
     });
     bankPurchase.addEventListener('click', () => {
         cardPurchase.checked = false;
         bankContainer.style.visibility = "visible";
         cardContainer.style.visibility = "hidden";
+        cardNumber.value = "";
+        cardExpiration.value = "";
+        cardSecurityCode.value = "";
     });
 
-    function purchaseValidation() {
+    // Purchase Validation
 
+    const cardNumber = document.getElementById('card-number');
+    const cardSecurityCode = document.getElementById('security-code');
+    const cardExpiration = document.getElementById('expiration');
+    // const savePuchase = document.getElementById('save-purchase');
+    const bankAccount = document.getElementById('bank-account');
+    const succesAlert = document.getElementById('succes-alert');
+
+    function succesAlertVanish() {
+        succesAlert.style.visibility = "hidden"
+    }
+    function shipmentValidation() {
+        if (street.value != "" && streetNumber.value != "" && streetCorner.value != "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function cardValidation() {
+        if (cardNumber.value > 6 && cardExpiration.value != "" && cardSecurityCode.value.length == 4 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function purchaseValidation() {
+        if ( cardValidation() != false && shipmentValidation() != false || bankAccount.value != "" &&  shipmentValidation() != false) {
+            setTimeout(succesAlertVanish, 3000);
+            succesAlert.style.visibility = "visible";
+        } else {
+            window.alert('Completa todo los campos');
+        }
     }
 });
 

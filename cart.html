@@ -68,9 +68,6 @@
             <label for="">
               <input type="checkbox" checked value="envio" name="envio" id="">Standard 12 a 15 días (5%)
             </label>
-            <div class="total-cart">
-              <h4>Total: $<span id="currency"></span><span id="cart-total">0</span></h4>
-            </div>
         </div>
         <div class="direccion-envio" id="direccion">
           <h4>Dirección de envio:</h4>
@@ -160,16 +157,24 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save-purchase">Save changes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save-purchase">Save changes</button>
               </div>
             </div>
           </div>
         </div>
-        
       </div>
+    </div>
+    <div class="total-cart">
+      <h4>Subtotal: $USD <span id="cart-sub-total">0</span></h4>
+      <h4>Envio: $USD <span id="shipment-total">0</span></h4>
+      <h4>Total: $USD <span id="cart-total">0</span></h4>
     </div>
     <div class="buy">
       <button type="button" id="buy">Comprar</button>
+    </div>
+    <div id="succes-alert">
+      <p>Su compra ha sido realizada con éxito!</p>
+      <p>Muchas gracias!</p>
     </div>
   </main>
   <footer class="text-muted">

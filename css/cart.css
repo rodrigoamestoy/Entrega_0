@@ -140,7 +140,22 @@ input::-webkit-inner-spin-button {
 #bank-container {
     visibility: hidden;
 }
-
+#succes-alert {
+    visibility: hidden;
+    width: 50%;
+    text-align: center;
+    background-color: rgb(151, 209, 65);
+    font-size: 1.2rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 10%;
+    left: 30%;
+}
+#succes-alert p {
+    margin-top: 2%;
+    color: white;
+    letter-spacing: 2px;
+}
 
 @media (max-width: 700px) {
     /* Product */
