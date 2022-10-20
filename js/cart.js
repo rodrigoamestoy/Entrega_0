@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             let htmlToAppend = `
             <div class="product-container">
-            <div class="img-container col-sm-1"> 
+            <div class="img-container col-sm-2"> 
                 <img id="img" src="${product[i].image}" alt="">
             </div>
             <div class="p-name col-sm-2">
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let cart_product = CART_PRODUCTS;
                 let htmlToAppend = `
                 <div class="product-container">
-                <div class="img-container col-sm-1"> 
+                <div class="img-container col-sm-2"> 
                     <img id="img" src="${cart_product[j].image}" alt="">
                 </div>
                 <div class="p-name col-sm-2">
@@ -309,6 +309,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     bankAccount = document.getElementById('bank-account'),
     purchaseMethod = document.getElementById('purchase-method'),
     succesAlert = document.getElementById('succes-alert'),
+    errorAlert = document.getElementById('error-alert'),
     directions = document.querySelectorAll('.direccion-envio input'),
     street = directions[0],
     streetNumber = directions[1],
@@ -317,8 +318,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     function shipmentValidation() {
         if (street.value != "" && streetNumber.value != "" && streetCorner.value != "") {
             return true;
-        } else {
+        } else if ( street.value == "" ) {
+            setTimeout( () => {
+            street.style.outline = "1px solid red";;
+            street.focus();
+            street.placeholder = "Ingrese un valor";
+            }, 0);
+            setTimeout( () => {
+                street.blur();
+                street.style.outline = "none"
+                street.placeholder = "";
+            }, 4000)
             return false;
+        } else if ( streetNumber.value == "" ) {
+            setTimeout( () => {
+                streetNumber.style.outline = "1px solid red";;
+                streetNumber.focus();
+                streetNumber.placeholder = "Ingrese un valor";
+                }, 0);
+                setTimeout( () => {
+                    streetNumber.blur();
+                    streetNumber.style.outline = "none"
+                    streetNumber.placeholder = "";
+                }, 4000)
+                return false;
+        } else {
+            setTimeout( () => {
+                streetCorner.style.outline = "1px solid red";;
+                streetCorner.focus();
+                streetCorner.placeholder = "Ingrese un valor";
+                }, 0);
+                setTimeout( () => {
+                    streetCorner.blur();
+                    streetCorner.style.outline = "none"
+                    streetCorner.placeholder = "";
+                }, 4000)
+                return false;
         }
     };
     function cardValidation() {
@@ -330,14 +365,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     function succesAlertVanish() {
-        succesAlert.style.visibility = "hidden"
+        succesAlert.style.visibility = "hidden";
     };
     function purchaseValidation() {
         if ( cardValidation() != false && shipmentValidation() != false || bankAccount.value != "" &&  shipmentValidation() != false) {
-            setTimeout(succesAlertVanish, 3000);
+            setTimeout(succesAlertVanish, 5000);
             succesAlert.style.visibility = "visible";
+            succesAlert.scrollIntoView();
         } else {
-            window.alert('Completa todo los campos');
+            shipmentValidation();
+            setTimeout( () => {
+                errorAlert.style.visibility = "hidden";
+            }, 5000);
+            setTimeout( () => {
+                errorAlert.scrollIntoView();
+                errorAlert.style.visibility = "visible";
+            }, 1)
+            
         }
     };
 
