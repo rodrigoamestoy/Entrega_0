@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const email = document.getElementById('email');
 const password = document.getElementById('password');
@@ -6,11 +6,10 @@ const form = document.getElementById('myForm');
 const passwordError = document.getElementById('password-error');
 const emailError = document.getElementById('email-error');
 
-// Events
-
-form.addEventListener("submit", event => {
-    event.preventDefault();
-    redirect(event)
+form.addEventListener("submit", e => {
+    e.preventDefault();
+    storeEmail();
+    redirect();
 })
 
 email.addEventListener('textInput', emailVerify);
@@ -53,6 +52,6 @@ function passwordVerify() {
 // Saves email in local storage
 
 function storeEmail() {
-    let getEmail = document.getElementById('email').value;
-    localStorage.setItem('user', getEmail);
+    let userEmail = document.getElementById('email').value;
+    localStorage.setItem('user', userEmail);
 }
