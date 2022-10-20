@@ -106,7 +106,6 @@ const CART = {
             cost: USD,
           };
           CART.contents.push(obj);
-          CART.sync();
         } else {
           let obj = {
             id: productId,
@@ -117,8 +116,9 @@ const CART = {
             cost: parseInt(product.cost),
           };
           CART.contents.push(obj);
-          CART.sync();
+
         }
+        CART.sync();
     } 
   },
   empty() {
@@ -126,13 +126,8 @@ const CART = {
     CART.sync()
   },
   find(id) {
-    let match = CART.contents.filter(item => {
-      if(item.id == id) 
-        return true;
-    });
-    if (match && match[0]) {
-      return match[0];
-    }
+    let match = CART.contents.filter(item => item.id == id);
+    console.log(match);
   },
   increase(id, count=1) {
     CART.contents = CART.contents.map(item =>{
@@ -149,3 +144,7 @@ const CART = {
     product.remove();
   },
 };
+
+console.log(CART.contents)
+console.log(CART.init())
+console.log(CART.find(50921));
