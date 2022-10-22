@@ -37,42 +37,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Product Info Display
 
     const product = await PRODUCT_INFO();
+    const images = document.querySelectorAll('#p-imgs')
     productInfo(product);
 
     function productInfo(product) {
 
-        const productContainer = document.getElementById('product-container');
-
         // Product Images 
 
-        const pImage0 = document.getElementById('p-img-0'),
-        pImage1 = document.getElementById('p-img-1'),
-        pImage2 = document.getElementById('p-img-2'),
-        pImage3 = document.getElementById('p-img-3');
+        images[0].src = product.images[0];
+        images[1].src = product.images[1];
+        images[2].src = product.images[2];
+        images[3].src = product.images[3];
 
-        pImage0.src = product.images[0];
-        pImage1.src = product.images[1];
-        pImage2.src = product.images[2];
-        pImage3.src = product.images[3];
-
-        pImage0.onmouseover = () => { bigImage.src = product.images[0]; };
-        pImage1.onmouseover = () => { bigImage.src = product.images[1]; };
-        pImage2.onmouseover = () => { bigImage.src = product.images[2]; };
-        pImage3.onmouseover = () => { bigImage.src = product.images[3]; };
+        images[0].onmouseover = () => { bigImage.src = product.images[0]; };
+        images[1].onmouseover = () => { bigImage.src = product.images[1]; };
+        images[2].onmouseover = () => { bigImage.src = product.images[2]; };
+        images[3].onmouseover = () => { bigImage.src = product.images[3]; };
 
         // Big image display 
 
         const bigImage = document.getElementById('big-image');
         bigImage.src = product.images[0];
 
-        const productName = document.getElementById('title');
-
         // Product Info 
 
         const productTitle = document.getElementById('product-name').innerHTML = product.name,
         productDescription = document.getElementById('product-description').innerHTML = product.description,
         productSoldCount = document.getElementById('sold-count').innerHTML = "Vendidos: " + product.soldCount,
-        productCost = document.getElementById('product-price').innerHTML = product.currency + " " + product.cost,
+        productCost = document.getElementById('product-price').innerHTML = "Price: " + product.currency + " " + product.cost,
         productCategory = document.getElementById('product-category').innerHTML = "Categoria: " + product.category;
       
         }
@@ -131,9 +123,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Upload new comment
 
-    const uploadButton = document.getElementById('upload');
+    const uploadBtn = document.getElementById('upload');
 
-    uploadButton.addEventListener('click', () => {
+    uploadBtn.addEventListener('click', () => {
       uploadComment();
     })
 
@@ -181,42 +173,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function relatedProducts(products) {
 
-    const relatedImg1 = document.getElementById('img-1'),
-    relatedImg2 = document.getElementById('img-2'),
-    relatedImg3 = document.getElementById('img-3'),
-    fig1 = document.getElementById('fig-1'),
-    fig2 = document.getElementById('fig-2'),
-    fig3 = document.getElementById('fig-3');
+    const relatedImgs = document.querySelectorAll('#c-imgs');
+    const relatedFigs = document.querySelectorAll('#c-figs');
 
     const relatedProductsArray = products.filter(item => String(item.id) !== String(ProductId));
 
     // Selects the products position from the array and
     // displays the related images, figcaption and alt
 
-    relatedImg1.src = relatedProductsArray[0].image;
-    relatedImg1.alt = relatedProductsArray[0].name;
-    relatedImg2.src = relatedProductsArray[1].image;
-    relatedImg2.alt = relatedProductsArray[1].name;
-    relatedImg3.src = relatedProductsArray[2].image;
-    relatedImg3.alt = relatedProductsArray[2].name;
-    fig1.innerHTML = relatedProductsArray[0].name;
-    fig2.innerHTML = relatedProductsArray[1].name;
-    fig3.innerText = relatedProductsArray[2].name;
+    relatedImgs[0].src = relatedProductsArray[0].image;
+    relatedImgs[0].alt = relatedProductsArray[0].name;
+    relatedImgs[1].src = relatedProductsArray[1].image;
+    relatedImgs[1].alt = relatedProductsArray[1].name;
+    relatedImgs[2].src = relatedProductsArray[2].image;
+    relatedImgs[2].alt = relatedProductsArray[2].name;
+    relatedFigs[0].innerHTML = relatedProductsArray[0].name;
+    relatedFigs[1].innerHTML = relatedProductsArray[1].name;
+    relatedFigs[2].innerText = relatedProductsArray[2].name;
 
     // When the img is clicked, sets the local storage ID to 
     // the selected product and opens it in a new page
 
-    relatedImg1.addEventListener('click', () => {
+    relatedImgs[0].addEventListener('click', () => {
       localStorage.setItem('product', relatedProductsArray[0].id);
       window.open('product-info.html', 'reload');
     });
 
-    relatedImg2.addEventListener('click', () => {
+    relatedImgs[1].addEventListener('click', () => {
       localStorage.setItem('product', relatedProductsArray[1].id);
       window.open('product-info.html', 'reload');
     });
 
-    relatedImg3.addEventListener('click', () => {
+    relatedImgs[2].addEventListener('click', () => {
       localStorage.setItem('product', relatedProductsArray[2].id);
       window.open('product-info.html', 'reload');
     });
@@ -224,10 +212,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Add to cart
 
-    const addCart = document.getElementById('add-cart');
+    const addCart = document.getElementById('add-cart'),
+    cartAlert = document.getElementById('cart-alert');
 
     addCart.addEventListener('click', () => {
       CART.init();
       CART.add(product);
+      cartAlert.style.display = "block";
+      setTimeout(() => {
+        cartAlert.style.display = "";
+      }, 2000);
     });
 });

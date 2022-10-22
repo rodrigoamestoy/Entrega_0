@@ -14,27 +14,12 @@ async function USER_CART() {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    const buyBtn = document.getElementById('buy');
+    const productContainer = document.getElementById('display-products');
     const CART_JSON = await USER_CART();
     const cart = localStorage.getItem(1234);
     const CART_PRODUCTS = JSON.parse(cart);
+
     CART.init();
-
-    // Number of items in the cart
-
-    function numOfItems(items) {
-        let sum = 0;
-        let one = 1
-        for (let i = 0; i < items; i++) {
-            sum += one;
-        }
-        return sum;
-    };
-    document.getElementById('n-products').innerHTML = numOfItems(1 + (CART_PRODUCTS ? CART_PRODUCTS.length : 0));
-
-    // Displays json cart product and the cart object
-
-    const productContainer = document.getElementById('display-products');
     displayCart(CART_JSON);
 
     function displayCart(product) {
@@ -104,6 +89,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
+    // Number of items in the cart
+
+    let productsInCart = document.getElementById('n-products');
+    productsInCart.innerHTML = numOfItems();
+
+    function numOfItems() {
+        let productsInCart = document.querySelectorAll('.product-container');
+        return productsInCart.length;
+    };
+
     // Change input value 
 
     const productQuantity = document.querySelectorAll('#quantity'),
@@ -130,7 +125,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return false;
             } else {
                 productQuantity[i].value = sum;
+                CART.reduce(CART.contents[i-1].id);
             }
+
+            // Refreshes the cart subtotal for the JSON and the Object
+
             cartSubTotalRefresher(i);
             subTotal();
     
@@ -161,9 +160,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.alert('You exceed the product availability');
         } else {
             productQuantity[i].value = sum;
+            CART.increase(CART.contents[i-1].id);
         }
+
+        // Refreshes the cart subtotal for the JSON and the Object
+
         cartSubTotalRefresher(i);
-        subTotal()
+        subTotal();
 
         if (checkbox1.checked == true) {
             displayCartTotal(shipmentCost(15));
@@ -180,7 +183,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Refreshes the product subtotal value
 
-    const cartSubTotal = document.querySelectorAll('#sub-total');
+    let cartSubTotal = document.querySelectorAll('#sub-total');
 
     // Server product function
 
@@ -202,8 +205,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const deleteBtn = document.querySelectorAll('.delete');
 
-    console.log(CART.find(50741))
-
     for (let j = 0; j < deleteBtn.length; j++) {
 
         if (j > 0) {
@@ -220,22 +221,25 @@ document.addEventListener('DOMContentLoaded', async () => {
                 cartSubtotal.innerHTML = " " + setComa(productsTotal());
                 cartShipment.innerHTML = " " + setComa(shipmentCartTotal(x[0].value));
                 cartTotal.innerHTML = " " + setComa((productsTotal() + shipmentCartTotal(x[0].value)));
-                // Add CART.delete function with NodeJS or import method
+                productsInCart.innerHTML = numOfItems();
             });
         } else {
             deleteBtn[j].addEventListener('click', () => {
                 deleteBtn[j].parentElement.remove();
+                cartSubtotal.innerHTML = 0;
+                cartShipment.innerHTML = 0;
+                cartTotal.innerHTML = 0;
+                productsInCart.innerHTML = numOfItems();
             });
         }
     };
-
-    console.log(productsSum())
 
 
     // Takes the innerHTML of all the products SubTotal and realizes
     // a sum 
 
     function productsSum() {
+        let cartSubTotal = document.querySelectorAll('#sub-total')
         let sum = 0;
         for (let i = 0; i < cartSubTotal.length; i++) {
             sum += parseInt(cartSubTotal[i].innerHTML.replace(/\./g,''));
@@ -256,9 +260,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         let cost = (productsTotal()) * (percentage / 100);
         cost = Math.round(cost);
         return cost;
-    }
-    function CARTTOTAL() {
-
     }
 
     // Checkboxes validation 
@@ -305,7 +306,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cartTotal = document.getElementById('cart-total');
 
     function displayCartTotal(shipment) {
-        console.log(productsSum())
         cartTotal.innerHTML = " " + setComa((productsSum() + shipment));
     };
     function shipmentTotal(shipment) {
@@ -437,6 +437,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Buy
+
+    const buyBtn = document.getElementById('buy');
 
     buyBtn.addEventListener('click', () => {
         purchaseValidation();
