@@ -136,15 +136,21 @@ const CART = {
       return item;
     });
     CART.sync();
+  },reduce(id, count=1 ) {
+    CART.contents = CART.contents.map(item => {
+      if (item.id == id)
+      item.count = item.count - 1;
+      return item;
+    });
+    CART.sync();
   },
-  deleteProduct(id) {
-    // Utilizar map para una vez encontrado el producto crear un nuevo array 
-    // sin el producto
-    let product = this.contents.find(id);
-    product.remove();
+  remove(id) {
+    CART.contents = CART.contents.filter(item => {
+      if (item.id = id)
+      return true; 
+    });
+    CART.sync();
   },
 };
 
-console.log(CART.contents)
-console.log(CART.init())
-console.log(CART.find(50921));
+export default {CART}

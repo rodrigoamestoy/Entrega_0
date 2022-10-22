@@ -1,5 +1,7 @@
 "use strict";    
 
+import {CART} from "/js/CART_OBJECT.js";
+
 const ProductId = localStorage.getItem('product');
 const PRODUCT_URL = 'https://japceibal.github.io/emercado-api/products/' + ProductId + '.json';
 const COMMENTS_URL = 'https://japceibal.github.io/emercado-api/products_comments/' + ProductId + '.json';
@@ -57,12 +59,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         pImage1.onmouseover = () => { bigImage.src = product.images[1]; };
         pImage2.onmouseover = () => { bigImage.src = product.images[2]; };
         pImage3.onmouseover = () => { bigImage.src = product.images[3]; };
-          
 
         // Big image display 
 
         const bigImage = document.getElementById('big-image');
-        bigImage.src = product.images[0]
+        bigImage.src = product.images[0];
 
         const productName = document.getElementById('title');
 
@@ -119,11 +120,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Repeats checked stars according to score and the remainder
         // to fulfill the 5 star system is fulfilled with no checked stars
 
-        let stars = ""
+        let stars = "";
         const fullStar = `<i class="fa fa-star checked"></i>`;
         const emptyStar = `<i class="fa fa-star"></i>`;
         stars = fullStar.repeat(comments[i].score) + emptyStar.repeat(5-comments[i].score);
         iconContainer[i].innerHTML += stars;
+
       }
     };
 
@@ -186,52 +188,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     fig2 = document.getElementById('fig-2'),
     fig3 = document.getElementById('fig-3');
 
-
-    // Loops over the same category products and
-    // if the ID is not equal to the actual displayed
-    // product it adds the product to an array
-
-    const relatedProductsArray = [];
-
-    for (let i = 0; i < products.length; i++) {
-
-      if (String(ProductId) !== String(products[i].id)) {
-        relatedProductsArray.push(i)
-      }
-    };
+    const relatedProductsArray = products.filter(item => String(item.id) !== String(ProductId));
 
     // Selects the products position from the array and
-    // displays the related images and its alt (name)
+    // displays the related images, figcaption and alt
 
-    relatedImg1.src = products[relatedProductsArray[0]].image;
-    relatedImg1.alt = products[relatedProductsArray[0]].name;
-    relatedImg2.src = products[relatedProductsArray[1]].image;
-    relatedImg2.alt = products[relatedProductsArray[1]].name;
-    relatedImg3.src = products[relatedProductsArray[2]].image;
-    relatedImg3.alt = products[relatedProductsArray[2]].name;
-
-    // Images figcaptions
-
-    fig1.innerHTML = products[relatedProductsArray[0]].name;
-    fig2.innerHTML = products[relatedProductsArray[1]].name;
-    fig3.innerText = products[relatedProductsArray[2]].name;
+    relatedImg1.src = relatedProductsArray[0].image;
+    relatedImg1.alt = relatedProductsArray[0].name;
+    relatedImg2.src = relatedProductsArray[1].image;
+    relatedImg2.alt = relatedProductsArray[1].name;
+    relatedImg3.src = relatedProductsArray[2].image;
+    relatedImg3.alt = relatedProductsArray[2].name;
+    fig1.innerHTML = relatedProductsArray[0].name;
+    fig2.innerHTML = relatedProductsArray[1].name;
+    fig3.innerText = relatedProductsArray[2].name;
 
     // When the img is clicked, sets the local storage ID to 
     // the selected product and opens it in a new page
 
     relatedImg1.addEventListener('click', () => {
-      localStorage.setItem('product', products[relatedProductsArray[0]].id);
-      window.open('product-info.html', '_blank');
+      localStorage.setItem('product', relatedProductsArray[0].id);
+      window.open('product-info.html', 'reload');
     });
 
     relatedImg2.addEventListener('click', () => {
-      localStorage.setItem('product', products[relatedProductsArray[1]].id);
-      window.open('product-info.html', '_blank');
+      localStorage.setItem('product', relatedProductsArray[1].id);
+      window.open('product-info.html', 'reload');
     });
 
     relatedImg3.addEventListener('click', () => {
-      localStorage.setItem('product', products[relatedProductsArray[2]].id);
-      window.open('product-info.html', '_blank');
+      localStorage.setItem('product', relatedProductsArray[2].id);
+      window.open('product-info.html', 'reload');
     });
   };
 

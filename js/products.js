@@ -8,17 +8,16 @@ async function CATEGORIES_LIST() {
             const DATA = await RESPONSE.json();
             return DATA;
         } return '';
-    }
+    };
 
 document.addEventListener("DOMContentLoaded", async () => {
 
     const categories = await CATEGORIES_LIST();
     const categoryName = document.getElementById('description');
+    const ProductsContainer = document.getElementById('products');
     categoryName.textContent += " " + categories.catName.toUpperCase();
 
     // Displays products 
-
-    const ProductsContainer = document.getElementById('products');
 
     for (let j = 0; j < categories.products.length; j++) {
         let category = categories.products[j];
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return result;
     }
 
-    // Takes props given by the events and sends it to sortCreteria & showCategoriesList
+    // Takes props given by the order functions and sends it to sortCreteria & showCategoriesList
 
     function sortAndShowCategories(sortCriteria, categoriesArray){
         currentSortCriteria = sortCriteria;
@@ -88,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         showCategoriesList();
     }
 
-    // Events
+    // Order functions
 
     document.getElementById("sortAsc").addEventListener("click", function(){
         sortAndShowCategories(ORDER_ASC_BY_COST);
@@ -113,7 +112,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
 
-    // Displays Products Acording To Sold Count
+    // Orders Products Acording To Sold Count
 
     function showCategoriesList() {
 
@@ -163,8 +162,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             showCategoriesList2();
         });
-
-
 
         function showCategoriesList2(){
 
