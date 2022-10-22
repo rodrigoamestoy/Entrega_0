@@ -1,5 +1,7 @@
 "use strict";
 
+import {CART} from "/js/CART_OBJECT.js";
+
 const CART_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
 
 async function USER_CART() {
@@ -14,8 +16,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const buyBtn = document.getElementById('buy');
     const CART_JSON = await USER_CART();
-    const CART = localStorage.getItem(1234);
-    const CART_PRODUCTS = JSON.parse(CART);
+    const cart = localStorage.getItem(1234);
+    const CART_PRODUCTS = JSON.parse(cart);
+    CART.init();
 
     // Number of items in the cart
 
@@ -199,11 +202,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const deleteBtn = document.querySelectorAll('.delete');
 
+
+    console.log(CART.find(50741))
+
     for (let j = 0; j < deleteBtn.length; j++) {
 
         if (j > 0) {
             deleteBtn[j].addEventListener('click', () => {
                 deleteBtn[j].parentElement.remove();
+                CART.remove(CART.contents[j-1].id);
+                setTimeout( () => {
+                    cartSubtotal.innerHTML = " " + setComa(productsSum());
+                    console.log(productsSum())
+                }, 1000)
+                console.log(productsSum())
+
+                cartShipment.innerHTML = " " + setComa(shipmentCost(5));
+                cartTotal.innerHTML = " " + setComa((productsSum() + shipmentCost(5)));
                 // Add CART.delete function with NodeJS or import method
             });
         } else {
@@ -213,15 +228,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
+    console.log(productsSum())
+
+
     // Takes the innerHTML of all the products SubTotal and realizes
     // a sum 
 
     function productsSum() {
+
         let sum = 0;
-        for (let i = 0; i < cartSubTotal.length; i++) {
-            sum += parseInt(cartSubTotal[i].innerHTML.replace(/\./g,''));
+        for (let i = 0; i < CART.contents.length; i++) {
+            sum = CART.contents[i].cost + sum;
         }
-        return sum;
+        return sum + CART_JSON[0].unitCost;
+        // let sum = 0;
+        // for (let i = 0; i < cartSubTotal.length; i++) {
+        //     sum += parseInt(cartSubTotal[i].innerHTML.replace(/\./g,''));
+        // }
+        // return sum;
     };
 
     // Checkboxes validation 
@@ -265,6 +289,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cartTotal = document.getElementById('cart-total');
 
     function displayCartTotal(shipment) {
+        console.log(productsSum())
         cartTotal.innerHTML = " " + setComa((productsSum() + shipment));
     };
     function shipmentTotal(shipment) {
@@ -401,7 +426,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         purchaseValidation();
     });    
 });
-
-
-
-
