@@ -1,5 +1,3 @@
-// Cart Object
-
 const CART = {
     KEY: "1234",
     contents: [],
@@ -53,7 +51,7 @@ const CART = {
     },
     find(id) {
       let match = CART.contents.filter(item => {
-        if(item == id)
+        if(item.id == id)
         return true;
       });
       if (match && match[0])
@@ -80,7 +78,6 @@ const CART = {
             if (item.id != id)
             return true;
         });
-        console.log(CART.contents)
         CART.sync();
     },
   };
