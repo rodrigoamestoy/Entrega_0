@@ -1,5 +1,3 @@
-// Cart Object
-
 const CART = {
     KEY: "1234",
     contents: [],
