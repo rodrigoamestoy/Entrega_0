@@ -1,6 +1,6 @@
 "use strict";
 
-import {CART} from "./js/cartobject.js";
+import {CART} from "./cartobject.js";
 
 const CART_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
 
