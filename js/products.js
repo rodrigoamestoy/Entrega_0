@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="products-card"  onclick="localStorage.setItem('product', ${category.id}); window.location.href = 'product-info.html'">
                 <img src="${category.image}" alt="${category.description}">
             <div class="card-content col">
-                    <h2 id="product-name">${category.name} - $${category.currency} ${category.cost}</h2>
+                    <h2 id="product-name">${category.name}</h2>
+                    <h4>$${category.currency} ${category.cost}</h4>
                     <p id="product-description">${category.description}</p>
                     <h6 id="sold-count">${category.soldCount} vendidos</h6>
             </div>
