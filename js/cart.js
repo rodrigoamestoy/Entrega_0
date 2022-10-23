@@ -234,7 +234,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-
     // Takes the innerHTML of all the products SubTotal and realizes
     // a sum 
 
