@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rodrigoamestoy/Proyecto-JaP.git"
+    "url": "https://github.com/rodrigoamestoy/Proyecto-JaP.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rodrigoamestoy/Proyecto-JaP/issues"
   },
-  "homepage": "https://github.com/rodrigoamestoy/Proyecto-JaP#readme"
+  "homepage": "https://rodrigoamestoy.github.io/Proyecto-JaP/index"
 }
