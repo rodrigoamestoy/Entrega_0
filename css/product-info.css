@@ -105,14 +105,14 @@
 }
 #cart-alert {
     display: none;
-    font-size: .7rem;
+    font-size: 1rem;
     background-color: greenyellow;
-    width: 85%;
+    width: 75%;
     height: 30px;
     margin: 2% 7% 1% auto;
 }
 #cart-alert p {
-    margin-top: 2%;
+    margin: 1% auto;
     font-weight: bold;
     text-shadow: 3px 1px white;
 }
@@ -314,6 +314,16 @@
     font-style: italic;
     border-bottom: 1px solid black;
 }
+#cart-alert {
+    font-size: .9rem;
+    height: 60px;
+}
+#cart-alert p {
+    text-align: center;
+}
+
+/* Comments */
+
 #add-comment {
     width: 90%;
     text-align: left;
