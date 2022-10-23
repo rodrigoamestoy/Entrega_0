@@ -1,6 +1,6 @@
 "use strict";    
 
-import {CART} from "/js/cartobject.js";
+import {CART} from "../js/cartobject.js";
 
 const ProductId = localStorage.getItem('product');
 const PRODUCT_URL = 'https://japceibal.github.io/emercado-api/products/' + ProductId + '.json';
