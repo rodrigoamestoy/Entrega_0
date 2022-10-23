@@ -1,8 +1,8 @@
 {
-  "name": "proyecto-jap",
+  "name": "@rodrigoamestoy2/proyecto-jap",
   "version": "1.0.0",
   "description": "Proyecto de e-commerce",
-  "main": "index.js",
+  "main": "init.js",
   "directories": {
     "doc": "docs"
   },
