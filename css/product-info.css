@@ -53,7 +53,7 @@
     background-color: white;
     width: 50%;
     text-shadow: 1px .25px rgba(0, 0, 0, .75);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 #product-category {
     margin: .5% auto;
@@ -72,19 +72,22 @@
     width: 90%;
     margin: 2% auto;
     padding-bottom: 1%;
-    font-weight: bold;
     border-bottom: 1px solid black;
-    text-align: center;
-    font-family: var(--product-title-font);
+    text-align: right;
+    font-size: 2rem;
+    text-shadow: 1px 2px gray;
+    font-family: var(--product-font);
+    font-weight: bold;
 }
 #product-description {
-    font-size: 1.2rem;
+    color: black;
+    font-size: 1.4rem;
     width: 90%;
     margin: 2% auto 0 auto;
 }
 #product-price {
     margin: 2% auto 0 auto;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     padding-bottom: 1%;
     width: 90%;
     font-style: italic;
@@ -105,11 +108,12 @@
 }
 #cart-alert {
     display: none;
-    font-size: 1rem;
+    font-size: .9rem;
     background-color: greenyellow;
     width: 75%;
-    height: 30px;
+    height: 55px;
     margin: 2% 7% 1% auto;
+    text-align: center;
 }
 #cart-alert p {
     margin: 1% auto;
@@ -190,7 +194,7 @@
 .carousel {
     display: block;
     margin: 1% auto;
-    width: 80%;
+    width: 20%;
     padding: 2px;
     border-radius: 10px;
     border: none;
@@ -202,7 +206,13 @@
     margin: auto 0;
     height: 20%;
     border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.651);
+    background-color: rgba(128, 128, 128, 0.4);
+}
+.carousel-control-next-icon {
+}
+.carousel button:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid black;
 }
 .carousel img {
     border-top-right-radius: 6px;
@@ -212,9 +222,10 @@
 .carousel-title h4 {
     font-size: 2rem;
     font-family: var(--title-font);
+    text-shadow: 1px 1px grey;
 }
 #carousel2 {
-    width: 60%;
+    width: 55%;
 }
 .carousel-indicators {
     margin-bottom: 9%;
@@ -222,7 +233,7 @@
 #carousel2 figcaption {
     width: 60%;
     margin: 1% auto;
-    padding: 3%;
+    padding: 2.7%;
     text-align: center;
     background-color: rgba(165, 93, 77, 0.747);
     border-radius: 5%;
@@ -303,7 +314,8 @@
     font-family: var(--product-title-font);
 }
 #product-description {
-    font-weight: 500;
+    color: black;
+    font-size: 1.4rem;
     width: 90%;
     margin: 2% auto 0 auto;
 }

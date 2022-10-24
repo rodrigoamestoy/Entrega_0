@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const productTitle = document.getElementById('product-name').innerHTML = product.name,
         productDescription = document.getElementById('product-description').innerHTML = product.description,
         productSoldCount = document.getElementById('sold-count').innerHTML = "Vendidos: " + product.soldCount,
-        productCost = document.getElementById('product-price').innerHTML = "Price: " + product.currency + " " + product.cost,
+        productCost = document.getElementById('product-price').innerHTML = "Precio: " + product.currency + " " + setComa(product.cost),
         productCategory = document.getElementById('product-category').innerHTML = "Categoria: " + product.category;
       
         }

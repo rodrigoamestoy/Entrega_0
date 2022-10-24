@@ -124,8 +124,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 window.alert('Enter a valid number');
                 return false;
             } else {
-                productQuantity[i].value = sum;
-                CART.reduce(CART.contents[i-1].id);
+                if (i >= 1) {
+                    productQuantity[i].value = sum;
+                    CART.reduce(CART.contents[i-1].id);
+                } else {
+                    productQuantity[i].value = sum;
+                }
             }
 
             // Refreshes the cart subtotal for the JSON and the Object
@@ -159,8 +163,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             productQuantity[i].focus();
             window.alert('You exceed the product availability');
         } else {
-            productQuantity[i].value = sum;
-            CART.increase(CART.contents[i-1].id);
+            if (i >= 1) {
+                productQuantity[i].value = sum;
+                CART.increase(CART.contents[i-1].id);
+            } else {
+                productQuantity[i].value = sum;
+            }
         }
 
         // Refreshes the cart subtotal for the JSON and the Object
