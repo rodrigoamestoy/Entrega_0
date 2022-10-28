@@ -351,10 +351,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Purchase Validations
 
     const cardNumber = document.getElementById('card-number'),
+    cardCheckbox = document.getElementById('card-transaction'),
     cardSecurityCode = document.getElementById('security-code'),
+    buyBtn = document.getElementById('buy'),
     cardExpiration = document.getElementById('expiration'),
     savePuchase = document.getElementById('save-purchase'),
     bankAccount = document.getElementById('bank-account'),
+    bankCheckbox = document.getElementById('bank-transaction'),
     purchaseMethod = document.getElementById('purchase-method'),
     succesAlert = document.getElementById('succes-alert'),
     errorAlert = document.getElementById('error-alert'),
@@ -411,12 +414,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             return false;
         }
     };
+    function paymentValidation() {
+        if (bankCheckbox.checked != false || cardCheckbox.checked != false ) {
+            return true;
+        } else {
+            setTimeout( () => {
+                purchaseMethod.style.color = "red";
+            }, 0);
+            setTimeout( () => {
+                purchaseMethod.style.color = "";
+            }, 4000)
+            return false;
+        }
+    }
 
     function succesAlertVanish() {
         succesAlert.style.visibility = "hidden";
     };
     function purchaseValidation() {
-        if ( cardValidation() != false && shipmentValidation() != false || bankAccount.value != "" &&  shipmentValidation() != false) {
+        if ( paymentValidation() != false && cardValidation() != false && shipmentValidation() != false || paymentValidation() != false && bankAccount.value != "" &&  shipmentValidation() != false ) {
             setTimeout(succesAlertVanish, 5000);
             succesAlert.style.visibility = "visible";
             succesAlert.scrollIntoView();
@@ -429,23 +445,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 errorAlert.scrollIntoView();
                 errorAlert.style.visibility = "visible";
             }, 1)
-            
         }
     };
 
     savePuchase.addEventListener('click', () => {
         if ( bankPurchase.checked || cardPurchase.checked ) 
-        // Checks if the bank option is checked
-        bankPurchase.checked ? 
-        // If checked sets this HTML
-        purchaseMethod.innerHTML = "Transferencia Bancaria <i class='fa fa-university'></i>" : 
-        // If it is not checked sets this HTML
+        bankPurchase.checked ?
+        purchaseMethod.innerHTML = "Transferencia Bancaria <i class='fa fa-university'></i>" :
         purchaseMethod.innerHTML = "Tarjeta <i class='fa fa-credit-card'></i>";
     });
-
-    // Buy
-
-    const buyBtn = document.getElementById('buy');
 
     buyBtn.addEventListener('click', () => {
         purchaseValidation();
