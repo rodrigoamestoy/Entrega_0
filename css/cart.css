@@ -29,6 +29,10 @@
 #img {
     width: 150px;
 }
+#img:hover {
+    cursor: pointer;
+    scale: 1.2;
+}
 .p-name {
     font-family: var(--product-title-font);
 }
@@ -58,8 +62,15 @@ input::-webkit-inner-spin-button {
 }
 .quantity button {
     width: 30px;
+    height: 25px;
     border: none;
     background-color: white;
+}
+#btn-right {
+    background-color: greenyellow;
+}
+#btn-left {
+    background-color: rgba(255, 0, 0, 0.5);
 }
 .sub-total {
     margin-left: auto;

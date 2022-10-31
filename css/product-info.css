@@ -130,7 +130,7 @@
     border-top-right-radius: 0px;
     letter-spacing: 2px;
     font-family: var(--product-font);
-    margin: 2% 0 0 0;
+    margin: 2% 0 0 10%;
 }
 #comments-container h2 {
     text-align: center;
@@ -154,9 +154,9 @@
 /* Add Comment Section */
 
 #add-comment {
-    width: 100%;
+    width: 80%;
     text-align: left;
-    margin: 0 auto 0 20%;
+    margin: 0 0 0 20%;
 }
 #add-comment h3 {
     font-family: var(--title-font);
