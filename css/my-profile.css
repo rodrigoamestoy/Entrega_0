@@ -1,0 +1,66 @@
+
+.title {
+    margin: 2% 0 2% 6%;
+}
+
+.title, .add-profile h4 {
+    font-weight: bold;
+    font-family: var(--title-font);
+}
+
+#profile-img {
+    margin: 2% 0;
+    width: 150px;
+    height: 100px;
+}
+
+/* Form data */
+
+.asterisk, .blank-asterisk {
+    font-size: 45px;
+    position: relative;
+    top: 18px;
+    font-weight: bold;
+}
+.blank-asterisk {
+    color: white;
+}
+
+.datos {
+    margin: 2% auto;
+}
+
+.datos .col-sm-5 {
+    margin: 1% auto;
+}
+
+.datos .row input {
+    width: 60%;
+    margin: 1% 2.5%;
+}
+.datos p {
+    margin: 1% 0 1% 4%;
+    font-size: .75rem;
+}
+
+.datos button {
+    width: 15%;
+    font-weight: bold;
+    border: none;
+    margin: 1% auto 0 35%;
+    color: lightseagreen;
+    background-color: whitesmoke;
+}
+.datos button:hover {
+    background-color: lightgrey;
+}
+
+/* Add Profile Img */
+
+.add-profile {
+    margin: 2% 0 2% 5%;
+}
+
+.add-profile h4 {
+    margin: 2% 0;
+}
