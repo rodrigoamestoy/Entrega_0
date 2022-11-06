@@ -92,7 +92,7 @@
           </div>
           <div class="row">
             <label>Email <span class="asterisk">*</span></label>
-            <input type="text" id="email" required>
+            <input type="text" id="emailInput" value="" required>
           </div>
         </div>
         <div class="col-sm-5">
@@ -110,12 +110,13 @@
           </div>
         </div>
         <p>Importante: Los <span class="asterisk">*</span> informan de los datos requeridos</p>
-        <button type="submit" id="save-data-btn">Guardar cambios</button>
       </form>
       <div class="add-profile">
         <h4>Agrega una imagen de perfil</h4>
         <input type="file" id="profile-file">
       </div>
+      <p id="succes-alert">¡Su información ha sido guardada con éxito!</p>
+      <button type="submit" form="data-form" id="save-data-btn">Guardar cambios</button>
     </div>
   </main>
   <footer class="text-muted">
