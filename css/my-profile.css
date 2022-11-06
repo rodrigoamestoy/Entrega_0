@@ -9,8 +9,8 @@
 }
 
 #profile-img {
-    margin: 2% 0;
-    width: 150px;
+    margin: 3% 0;
+    width: 130px;
     height: 100px;
 }
 
@@ -42,16 +42,22 @@
     margin: 1% 0 1% 4%;
     font-size: .75rem;
 }
+#email {
+    color: black;
+}
+#email:hover {
+    color: black;
+}
 
-.datos button {
-    width: 15%;
+#save-data-btn {
+    width: 30%;
     font-weight: bold;
     border: none;
-    margin: 1% auto 0 35%;
+    margin: 1% 0 0 5%;
     color: lightseagreen;
-    background-color: whitesmoke;
+    background-color: rgb(206, 233, 206);
 }
-.datos button:hover {
+#save-data-btn:hover {
     background-color: lightgrey;
 }
 
@@ -63,4 +69,15 @@
 
 .add-profile h4 {
     margin: 2% 0;
+}
+
+#succes-alert {
+    width: 70%;
+    color: white;
+    text-align: center;
+    padding: 1%;
+    background-color: greenyellow;
+    font-size: 1.2rem;
+    display: none;
+    margin: 2% 0 2% 5%;
 }
