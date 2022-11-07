@@ -53,8 +53,9 @@ const emailNavbar = document.getElementById('email');
 function emailDisplay() {
     const emailInfo = localStorage.getItem('user');
     if (emailInfo === null) {
-      document.getElementById('sign-out').innerHTML = "Login";
-      emailNavbar.innerHTML = "More Options"
+      let icon = `<i class="fa fa-sign-in-alt"></i>`
+      document.getElementById('sign-out').innerHTML = "Login" + " " + icon;
+      emailNavbar.innerHTML = "More Options";
     } else {
       emailNavbar.innerHTML = emailInfo;
     }

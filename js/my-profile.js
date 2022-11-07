@@ -2,7 +2,10 @@
 
 const getUser = localStorage.getItem('user'),
 getUserName = localStorage.getItem('userName'),
-getUserLastname = localStorage.getItem('userLastname');
+getUserSecondName = localStorage.getItem('userSecondName'),
+getUserLastname = localStorage.getItem('userLastname'),
+getUserSecondLastname = localStorage.getItem('userSecondLastname'),
+getUserPhone = localStorage.getItem('userPhone');
 
 function userAuth(status) {
     if (status == null) {
@@ -30,14 +33,26 @@ document.addEventListener('DOMContentLoaded', () => {
     emailInput = document.getElementById('emailInput'),
     lastnameInput = document.getElementById('lastname'),
     nameInput = document.getElementById('first-name'),
+    secondNameInput = document.getElementById('second-name'),
+    secondLastnameInput = document.getElementById('second-lastname'),
+    phoneInput = document.getElementById('contact-number'),
     succesAlert = document.getElementById('succes-alert'),
     saveDataBtn = document.getElementById('save-data-btn');
 
     emailInput.defaultValue = getUser;
+
     if (getUserName != null) {
         nameInput.defaultValue = getUserName;
     }
-
+    if (getUserSecondName != null) {
+        secondNameInput.defaultValue = getUserSecondName;
+    } 
+    if (getUserSecondLastname != null) {
+        secondLastnameInput.defaultValue = getUserSecondLastname;
+    }
+    if (getUserPhone != null) {
+        phoneInput.defaultValue = getUserPhone;
+    }
     if (getUserLastname != null) {
         lastnameInput.defaultValue = getUserLastname;
     }
@@ -54,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('userName', nameInput.value);
             localStorage.setItem('userLastname', lastnameInput.value);
             localStorage.setItem('user', emailInput.value);
+            localStorage.setItem('userSecondName', secondNameInput.value);
+            localStorage.setItem('userSecondLastname', secondLastnameInput.value);
+            localStorage.setItem('userPhone', phoneInput.value);
             succesAlert.style.display = "block";
         } else {
 
