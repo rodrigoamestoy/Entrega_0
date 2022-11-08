@@ -1,8 +1,9 @@
 
+/* Title */
+
 .title {
     margin: 2% 0 2% 6%;
 }
-
 .title, .add-profile h4 {
     font-weight: bold;
     font-family: var(--title-font);
@@ -42,10 +43,10 @@
     margin: 1% 0 1% 4%;
     font-size: .75rem;
 }
-#email {
+#emailInput {
     color: black;
 }
-#email:hover {
+#emailInput:hover {
     color: black;
 }
 
