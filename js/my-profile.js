@@ -7,10 +7,12 @@ getUserLastname = localStorage.getItem('userLastname'),
 getUserSecondLastname = localStorage.getItem('userSecondLastname'),
 getUserPhone = localStorage.getItem('userPhone');
 
+// Displays an error message if the user is not logged
+
 function userAuth(status) {
     if (status == null) {
         let container = document.querySelectorAll('.container'),
-        notLogedHTML =  `<h1 style="color: red; margin-top: 10%; border: 1px solid red; padding: 5%; background-color: rgb(214, 45, 45, 0.5);"> 
+        notLogedHTML =  `<h1 style="color: red; text-align: center; margin-top: 10%; border: 1px solid red; padding: 5%; background-color: rgb(214, 45, 45, 0.5);"> 
         Por favor primero ingrese a su cuenta</h1>`;
         container[1].innerHTML = notLogedHTML;
     }
@@ -20,6 +22,8 @@ userAuth(getUser)
 
 const savedImg = localStorage.getItem('profile-img'),
 img = document.getElementById('profile-img');
+
+// Displays the image in the local storage if there is one
 
 if (savedImg != undefined) {
     img.src = savedImg;
@@ -38,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
     phoneInput = document.getElementById('contact-number'),
     succesAlert = document.getElementById('succes-alert'),
     saveDataBtn = document.getElementById('save-data-btn');
+
+    // Default values in inputs if there they are saved in the local storage
 
     emailInput.defaultValue = getUser;
 
@@ -85,6 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
             formInputs[2].style.border = "1px solid red";
         }
     }
+
+    // Converts the img in a different type of data so it can be saved
+    // in the local storage and then displayed in the user profile
 
     profileFile.addEventListener('change', () => {
         const reader = new FileReader();
