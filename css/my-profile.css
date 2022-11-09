@@ -10,9 +10,12 @@
 }
 
 #profile-img {
-    margin: 3% 0;
+    margin: 2.5% 0;
     width: 130px;
-    height: 100px;
+    height: 110px;
+    border: 1px solid black;
+    padding: 1%;
+    border-radius: 5%;
 }
 
 /* Form data */
