@@ -1,0 +1,22 @@
+{
+  "name": "@rodrigoamestoy2/proyecto-jap",
+  "version": "1.0.0",
+  "description": "Proyecto de e-commerce",
+  "main": "init.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodrigoamestoy/Proyecto-JaP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rodrigoamestoy/Proyecto-JaP/issues"
+  },
+  "homepage": "https://rodrigoamestoy.github.io/Proyecto-JaP/index"
+}

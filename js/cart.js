@@ -1,5 +1,7 @@
 "use strict";
 
+import {CART} from "../js/cartobject.js";
+
 const CART_URL = 'https://japceibal.github.io/emercado-api/user_cart/25801.json';
 
 async function USER_CART() {
@@ -12,26 +14,12 @@ async function USER_CART() {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    const buyBtn = document.getElementById('buy');
-    const CART_JSON = await USER_CART();
-    const CART = localStorage.getItem(1234);
-    const CART_PRODUCTS = JSON.parse(CART);
-
-    // Number of items in the cart
-
-    function numOfItems(items) {
-        let sum = 0;
-        let one = 1
-        for (let i = 0; i < items; i++) {
-            sum += one;
-        }
-        return sum;
-    };
-    document.getElementById('n-products').innerHTML = numOfItems(1 + (CART_PRODUCTS ? CART_PRODUCTS.length : 0));
-
-    // Displays json cart product and the cart object
-
     const productContainer = document.getElementById('display-products');
+    const CART_JSON = await USER_CART();
+    const cart = localStorage.getItem(1234);
+    const CART_PRODUCTS = JSON.parse(cart);
+
+    CART.init();
     displayCart(CART_JSON);
 
     function displayCart(product) {
@@ -42,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             let htmlToAppend = `
             <div class="product-container">
-            <div class="img-container col-sm-1"> 
+            <div class="img-container col-sm-2"> 
                 <img id="img" src="${product[i].image}" alt="">
             </div>
             <div class="p-name col-sm-2">
@@ -74,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let cart_product = CART_PRODUCTS;
                 let htmlToAppend = `
                 <div class="product-container">
-                <div class="img-container col-sm-1"> 
+                <div class="img-container col-sm-2"> 
                     <img id="img" src="${cart_product[j].image}" alt="">
                 </div>
                 <div class="p-name col-sm-2">
@@ -99,6 +87,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 productContainer.innerHTML += htmlToAppend; 
             }
         }
+    };
+
+    // Number of items in the cart
+
+    let productsInCart = document.getElementById('n-products');
+    productsInCart.innerHTML = numOfItems();
+
+    function numOfItems() {
+        let productsInCart = document.querySelectorAll('.product-container');
+        return productsInCart.length;
     };
 
     // Change input value 
@@ -126,8 +124,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 window.alert('Enter a valid number');
                 return false;
             } else {
-                productQuantity[i].value = sum;
+                if (i >= 1) {
+                    productQuantity[i].value = sum;
+                    CART.reduce(CART.contents[i-1].id);
+                } else {
+                    productQuantity[i].value = sum;
+                }
             }
+
+            // Refreshes the cart subtotal for the JSON and the Object
+
             cartSubTotalRefresher(i);
             subTotal();
     
@@ -157,10 +163,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             productQuantity[i].focus();
             window.alert('You exceed the product availability');
         } else {
-            productQuantity[i].value = sum;
+            if (i >= 1) {
+                productQuantity[i].value = sum;
+                CART.increase(CART.contents[i-1].id);
+            } else {
+                productQuantity[i].value = sum;
+            }
         }
+
+        // Refreshes the cart subtotal for the JSON and the Object
+
         cartSubTotalRefresher(i);
-        subTotal()
+        subTotal();
 
         if (checkbox1.checked == true) {
             displayCartTotal(shipmentCost(15));
@@ -177,7 +191,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Refreshes the product subtotal value
 
-    const cartSubTotal = document.querySelectorAll('#sub-total');
+    let cartSubTotal = document.querySelectorAll('#sub-total');
 
     // Server product function
 
@@ -204,11 +218,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (j > 0) {
             deleteBtn[j].addEventListener('click', () => {
                 deleteBtn[j].parentElement.remove();
-                // Add CART.delete function with NodeJS or import method
+                CART.remove(CART.contents[j-1].id);
+                let shipment = document.querySelectorAll('#envio-checked');
+                let x = [];
+                for (let i = 0; i < shipment.length; i++) {
+                    if (shipment[i].checked) {
+                        x.push(shipment[i]);
+                    };
+                };
+                cartSubtotal.innerHTML = " " + setComa(productsTotal());
+                cartShipment.innerHTML = " " + setComa(shipmentCartTotal(x[0].value));
+                cartTotal.innerHTML = " " + setComa((productsTotal() + shipmentCartTotal(x[0].value)));
+                productsInCart.innerHTML = numOfItems();
             });
         } else {
             deleteBtn[j].addEventListener('click', () => {
                 deleteBtn[j].parentElement.remove();
+                cartSubtotal.innerHTML = 0;
+                cartShipment.innerHTML = 0;
+                cartTotal.innerHTML = 0;
+                productsInCart.innerHTML = numOfItems();
             });
         }
     };
@@ -217,12 +246,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     // a sum 
 
     function productsSum() {
+        let cartSubTotal = document.querySelectorAll('#sub-total')
         let sum = 0;
         for (let i = 0; i < cartSubTotal.length; i++) {
             sum += parseInt(cartSubTotal[i].innerHTML.replace(/\./g,''));
         }
         return sum;
     };
+
+    // Functions for CART objects
+
+    function productsTotal() {
+        let sum = 0;
+        for (let i = 0; i < CART.contents.length; i++) {
+            sum = (CART.contents[i].cost * CART.contents[i].count) + sum;
+        }
+        return parseInt(sum + CART_JSON[0].unitCost);
+    }
+    function shipmentCartTotal(percentage) {
+        let cost = (productsTotal()) * (percentage / 100);
+        cost = Math.round(cost);
+        return cost;
+    }
 
     // Checkboxes validation 
 
@@ -236,18 +281,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         checkbox3.checked = false;
         displayCartTotal(shipmentCost(15));
         shipmentTotal(15);
+        shipmentCartTotal(15)
     });
     checkbox2.addEventListener('click', () => {
         checkbox1.checked = false;
         checkbox3.checked = false;
         displayCartTotal(shipmentCost(7));
         shipmentTotal(7);
+        shipmentCartTotal(7)
     });
     checkbox3.addEventListener('click', () => {
         checkbox1.checked = false;
         checkbox2.checked = false;
         displayCartTotal(shipmentCost(5));
         shipmentTotal(5);
+        shipmentCartTotal(5)
     });
 
     // Shipment cost
@@ -303,12 +351,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Purchase Validations
 
     const cardNumber = document.getElementById('card-number'),
+    cardCheckbox = document.getElementById('card-transaction'),
     cardSecurityCode = document.getElementById('security-code'),
+    buyBtn = document.getElementById('buy'),
     cardExpiration = document.getElementById('expiration'),
     savePuchase = document.getElementById('save-purchase'),
     bankAccount = document.getElementById('bank-account'),
+    bankCheckbox = document.getElementById('bank-transaction'),
     purchaseMethod = document.getElementById('purchase-method'),
     succesAlert = document.getElementById('succes-alert'),
+    errorAlert = document.getElementById('error-alert'),
     directions = document.querySelectorAll('.direccion-envio input'),
     street = directions[0],
     streetNumber = directions[1],
@@ -317,8 +369,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     function shipmentValidation() {
         if (street.value != "" && streetNumber.value != "" && streetCorner.value != "") {
             return true;
-        } else {
+        } else if ( street.value == "" ) {
+            setTimeout( () => {
+            street.style.outline = "1px solid red";;
+            street.focus();
+            street.placeholder = "Ingrese un valor";
+            }, 0);
+            setTimeout( () => {
+                street.blur();
+                street.style.outline = "none"
+                street.placeholder = "";
+            }, 4000)
             return false;
+        } else if ( streetNumber.value == "" ) {
+            setTimeout( () => {
+                streetNumber.style.outline = "1px solid red";;
+                streetNumber.focus();
+                streetNumber.placeholder = "Ingrese un valor";
+                }, 0);
+                setTimeout( () => {
+                    streetNumber.blur();
+                    streetNumber.style.outline = "none"
+                    streetNumber.placeholder = "";
+                }, 4000)
+                return false;
+        } else {
+            setTimeout( () => {
+                streetCorner.style.outline = "1px solid red";;
+                streetCorner.focus();
+                streetCorner.placeholder = "Ingrese un valor";
+                }, 0);
+                setTimeout( () => {
+                    streetCorner.blur();
+                    streetCorner.style.outline = "none"
+                    streetCorner.placeholder = "";
+                }, 4000)
+                return false;
         }
     };
     function cardValidation() {
@@ -328,36 +414,48 @@ document.addEventListener('DOMContentLoaded', async () => {
             return false;
         }
     };
+    function paymentValidation() {
+        if (bankCheckbox.checked != false || cardCheckbox.checked != false ) {
+            return true;
+        } else {
+            setTimeout( () => {
+                purchaseMethod.style.color = "red";
+            }, 0);
+            setTimeout( () => {
+                purchaseMethod.style.color = "";
+            }, 4000)
+            return false;
+        }
+    }
 
     function succesAlertVanish() {
-        succesAlert.style.visibility = "hidden"
+        succesAlert.style.visibility = "hidden";
     };
     function purchaseValidation() {
-        if ( cardValidation() != false && shipmentValidation() != false || bankAccount.value != "" &&  shipmentValidation() != false) {
-            setTimeout(succesAlertVanish, 3000);
+        if ( paymentValidation() != false && cardValidation() != false && shipmentValidation() != false || paymentValidation() != false && bankAccount.value != "" &&  shipmentValidation() != false ) {
+            setTimeout(succesAlertVanish, 5000);
             succesAlert.style.visibility = "visible";
+            succesAlert.scrollIntoView();
         } else {
-            window.alert('Completa todo los campos');
+            shipmentValidation();
+            setTimeout( () => {
+                errorAlert.style.visibility = "hidden";
+            }, 5000);
+            setTimeout( () => {
+                errorAlert.scrollIntoView();
+                errorAlert.style.visibility = "visible";
+            }, 1)
         }
     };
 
     savePuchase.addEventListener('click', () => {
         if ( bankPurchase.checked || cardPurchase.checked ) 
-        // Checks if the bank option is checked
-        bankPurchase.checked ? 
-        // If checked sets this HTML
-        purchaseMethod.innerHTML = "Transferencia Bancaria <i class='fa fa-university'></i>" : 
-        // If it is not checked sets this HTML
+        bankPurchase.checked ?
+        purchaseMethod.innerHTML = "Transferencia Bancaria <i class='fa fa-university'></i>" :
         purchaseMethod.innerHTML = "Tarjeta <i class='fa fa-credit-card'></i>";
     });
-
-    // Buy
 
     buyBtn.addEventListener('click', () => {
         purchaseValidation();
     });    
 });
-
-
-
-

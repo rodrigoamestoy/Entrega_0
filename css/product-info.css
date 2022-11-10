@@ -2,7 +2,7 @@
 #product-container {
     margin: 2% auto;
     padding: 2%;
-    border: 2px solid rgb(56, 53, 53, 0.5);
+    border: 2px solid black;
     border-top-right-radius: 5%;
     border-bottom-left-radius: 5%;
     background-color: white;
@@ -22,14 +22,14 @@
     margin: 15% 0;
 }
 .p-images img:hover {
-    border: 2px solid black;
+    border: 2px solid blue;
     cursor: pointer;
 }
 
 /* Big image */
 
 .image-display {
-
+    overflow: hidden;
 }
 #big-image {
     width: 95%;
@@ -37,6 +37,10 @@
     margin: 0 2% 0 4%;
     background-color: white;
     border-radius: 5%;
+}
+.image-display:hover img {
+    transition: transform 1s ease;
+    transform: scale(1.5);
 }
 
 /* Product Info */
@@ -49,7 +53,7 @@
     background-color: white;
     width: 50%;
     text-shadow: 1px .25px rgba(0, 0, 0, .75);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 #product-category {
     margin: .5% auto;
@@ -68,36 +72,53 @@
     width: 90%;
     margin: 2% auto;
     padding-bottom: 1%;
-    font-weight: bold;
     border-bottom: 1px solid black;
-    text-align: center;
-    font-family: var(--product-title-font);
+    text-align: right;
+    font-size: 2rem;
+    text-shadow: 1px 2px gray;
+    font-family: var(--product-font);
+    font-weight: bold;
 }
 #product-description {
-    font-weight: 500;
+    color: black;
+    font-size: 1.4rem;
     width: 90%;
     margin: 2% auto 0 auto;
 }
 #product-price {
     margin: 2% auto 0 auto;
+    font-size: 1.6rem;
     padding-bottom: 1%;
     width: 90%;
     font-style: italic;
     border-bottom: 1px solid black;
 }
 #add-cart {
-    margin: 2% 7% 1% auto;
-    width: 35%;
+    margin: 5% 7% 1% auto;
+    width: 75%;
     border: none;
-    background-color: rgb(209, 201, 201);
-    font-family: var(--product-font);
+    color: black;
+    background-color: lightblue;
+    font-family: var(--title-font);
     font-weight: bold;
     letter-spacing: 2px;
 }
 #add-cart:hover {
-    background-color: rgba(128, 128, 128, 0.5);
-    border: 1px solid black;
-    font-size: 1.1rem;
+    box-shadow: -2px 2px 12px 0px rgba(0,0,0,0.75);
+}
+#cart-alert {
+    display: none;
+    font-size: .9rem;
+    background-color: greenyellow;
+    width: 75%;
+    height: 55px;
+    margin: 2% 7% 1% auto;
+    text-align: center;
+}
+#cart-alert p {
+    margin: 1% auto;
+    font-weight: bold;
+    text-shadow: 3px 1px white;
 }
 
 /* Comments Section */
@@ -109,7 +130,7 @@
     border-top-right-radius: 0px;
     letter-spacing: 2px;
     font-family: var(--product-font);
-    margin: 2% 0 0 0;
+    margin: 2% 0 0 10%;
 }
 #comments-container h2 {
     text-align: center;
@@ -133,9 +154,9 @@
 /* Add Comment Section */
 
 #add-comment {
-    width: 100%;
+    width: 80%;
     text-align: left;
-    margin: 0 auto 0 20%;
+    margin: 0 0 0 20%;
 }
 #add-comment h3 {
     font-family: var(--title-font);
@@ -163,7 +184,7 @@
     color: rgba(255, 255, 0, 0.829);
 }
 
-/* Footer carousel */
+/* Carousel */
 
 .carousel-title {
     margin-top: 5%;
@@ -173,7 +194,7 @@
 .carousel {
     display: block;
     margin: 1% auto;
-    width: 80%;
+    width: 20%;
     padding: 2px;
     border-radius: 10px;
     border: none;
@@ -185,7 +206,13 @@
     margin: auto 0;
     height: 20%;
     border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.651);
+    background-color: rgba(128, 128, 128, 0.4);
+}
+.carousel-control-next-icon {
+}
+.carousel button:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid black;
 }
 .carousel img {
     border-top-right-radius: 6px;
@@ -195,17 +222,21 @@
 .carousel-title h4 {
     font-size: 2rem;
     font-family: var(--title-font);
+    text-shadow: 1px 1px grey;
 }
 #carousel2 {
-    width: 60%;
+    width: 55%;
+}
+.carousel-indicators {
+    margin-bottom: 9%;
 }
 #carousel2 figcaption {
-    width: 25%;
-    margin: 2% auto;
-    padding: 1% 0 2% 0;
+    width: 60%;
+    margin: 1% auto;
+    padding: 2.7%;
     text-align: center;
     background-color: rgba(165, 93, 77, 0.747);
-    border-radius: 50%;
+    border-radius: 5%;
     font-family: var(--product-font);
     font-weight: bold;
     font-style: italic;
@@ -228,6 +259,7 @@
 
 .p-images {
     flex-direction: row;
+    flex-wrap: wrap;
 }
 .p-images img{
     width: 75px;
@@ -282,7 +314,8 @@
     font-family: var(--product-title-font);
 }
 #product-description {
-    font-weight: 500;
+    color: black;
+    font-size: 1.4rem;
     width: 90%;
     margin: 2% auto 0 auto;
 }
@@ -293,6 +326,16 @@
     font-style: italic;
     border-bottom: 1px solid black;
 }
+#cart-alert {
+    font-size: .9rem;
+    height: 60px;
+}
+#cart-alert p {
+    text-align: center;
+}
+
+/* Comments */
+
 #add-comment {
     width: 90%;
     text-align: left;
@@ -304,10 +347,17 @@
 .container {
     flex-direction: column;
 }
+
+/* Carousel */
+
+.carousel-indicators {
+    margin-bottom: 20%;
+}
+
 #carousel-inner .carousel-item figcaption {
-    width: 80%;
-    font-size: 1.5rem;
-    padding: 10%;
+    width: 90%;
+    font-size: 1.2rem;
+    padding-top: 10%;
     border-radius: 10%;
 }
 }

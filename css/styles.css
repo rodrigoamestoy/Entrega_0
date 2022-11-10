@@ -22,6 +22,29 @@
   font-weight: bold;
 }
 
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ccc; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* Navbar */
+
 nav a {
   text-decoration: none;
   color: white;
@@ -35,7 +58,21 @@ nav a {
 .dropdown ul {
   background-color: whitesmoke;
 }
-
+.dropdown-menu a {
+  margin: 0 auto;
+  width: 90%;
+}
+.dropdown-menu a:hover {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.dropdown-menu a:hover i {
+  color: rgb(69, 69, 207);
+}
+.navbar i {
+  padding: 2%;
+}
 
 .bd-placeholder-img {
   font-size: 1.125rem;

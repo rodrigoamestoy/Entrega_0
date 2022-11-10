@@ -73,13 +73,13 @@
         <div class="envio">
         <div class="tipos-envio">
           <div class="tipo-list">      
-            <label for=""><input type="checkbox" value="envio" name="envio" id="">Premium 2 a 5 días (15%)
+            <label for=""><input type="checkbox" value="15" name="envio" id="envio-checked">Premium 2 a 5 días (15%)
             </label>
             <label for="">
-              <input type="checkbox" value="envio" name="envio" id="">Express 5 a 8 días (7%)
+              <input type="checkbox" value="7" name="envio" id="envio-checked">Express 5 a 8 días (7%)
             </label>
             <label for="">
-              <input type="checkbox" checked value="envio" name="envio" id="">Standard 12 a 15 días (5%)
+              <input type="checkbox" checked value="5" name="envio" id="envio-checked">Standard 12 a 15 días (5%)
             </label>
         </div>
         <div class="direccion-envio" id="direccion">
@@ -190,9 +190,13 @@
     </div>
     
     
-    <div id="succes-alert">
+    <div class="alerta" id="succes-alert">
       <p>Su compra ha sido realizada con éxito!</p>
       <p>Muchas gracias!</p>
+    </div>
+    <div class="alerta" id="error-alert">
+      <p>Vaya, algo a salido mal</p>
+      <p>Parece que faltan algunos datos por rellenar</p>
     </div>
   </main>
   <footer class="text-muted">
@@ -215,6 +219,7 @@
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
-  <script src="js/cart.js"></script>
+  <script type="module" src="js/cart.js"></script>
+  <script type="module" src="js/cartobject.js"></script>
 </body>
 </html>

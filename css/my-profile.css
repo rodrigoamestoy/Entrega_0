@@ -1,0 +1,80 @@
+
+/* Title */
+
+.title {
+    margin: 2% 0 2% 6%;
+}
+.title, .add-profile h4 {
+    font-weight: bold;
+    font-family: var(--title-font);
+}
+#profile-img {
+    margin: 2.5% 0;
+    width: 130px;
+    height: 110px;
+    border: 1px solid black;
+    padding: 1%;
+    border-radius: 5%;
+}
+
+/* Form data */
+
+.asterisk, .blank-asterisk {
+    font-size: 45px;
+    position: relative;
+    top: 18px;
+    font-weight: bold;
+}
+.blank-asterisk {
+    color: white;
+}
+.datos {
+    margin: 2% auto;
+}
+.datos .col-sm-5 {
+    margin: 1% auto;
+}
+.datos .row input {
+    width: 60%;
+    margin: 1% 2.5%;
+}
+.datos p {
+    margin: 1% 0 1% 4%;
+    font-size: .75rem;
+}
+#emailInput {
+    color: black;
+}
+#emailInput:hover {
+    color: black;
+}
+#save-data-btn {
+    width: 30%;
+    font-weight: bold;
+    border: none;
+    margin: 1% 0 0 5%;
+    color: lightseagreen;
+    background-color: rgb(206, 233, 206);
+}
+#save-data-btn:hover {
+    background-color: lightgrey;
+}
+
+/* Add Profile Img */
+
+.add-profile {
+    margin: 2% 0 2% 5%;
+}
+.add-profile h4 {
+    margin: 2% 0;
+}
+#succes-alert {
+    width: 70%;
+    color: white;
+    text-align: center;
+    padding: 1%;
+    background-color: greenyellow;
+    font-size: 1.2rem;
+    display: none;
+    margin: 2% 0 2% 5%;
+}
