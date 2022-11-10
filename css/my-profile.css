@@ -8,7 +8,6 @@
     font-weight: bold;
     font-family: var(--title-font);
 }
-
 #profile-img {
     margin: 2.5% 0;
     width: 130px;
@@ -29,15 +28,12 @@
 .blank-asterisk {
     color: white;
 }
-
 .datos {
     margin: 2% auto;
 }
-
 .datos .col-sm-5 {
     margin: 1% auto;
 }
-
 .datos .row input {
     width: 60%;
     margin: 1% 2.5%;
@@ -52,7 +48,6 @@
 #emailInput:hover {
     color: black;
 }
-
 #save-data-btn {
     width: 30%;
     font-weight: bold;
@@ -70,11 +65,9 @@
 .add-profile {
     margin: 2% 0 2% 5%;
 }
-
 .add-profile h4 {
     margin: 2% 0;
 }
-
 #succes-alert {
     width: 70%;
     color: white;
