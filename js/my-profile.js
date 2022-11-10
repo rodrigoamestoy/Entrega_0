@@ -18,7 +18,7 @@ function userAuth(status) {
     }
 }
 
-userAuth(getUser)
+userAuth(getUser);
 
 const savedImg = localStorage.getItem('profile-img'),
 img = document.getElementById('profile-img');
@@ -83,14 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     });
-
-    function formValidation() {
-        if (formInputs[0].value == '' || formInputs[1].value == '' || formInputs[2].value == '') {
-            formInputs[0].style.border = "1px solid red";
-            formInputs[1].style.border = "1px solid red";
-            formInputs[2].style.border = "1px solid red";
-        }
-    }
 
     // Converts the img in a different type of data so it can be saved
     // in the local storage and then displayed in the user profile

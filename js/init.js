@@ -17,6 +17,8 @@ let hideSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
+// Sets the coma for large numbers
+
 function setComa(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
@@ -46,11 +48,13 @@ let getJSONData = function(url){
     });
 }
 
-// Displays user in navbar
+document.addEventListener('DOMContentLoaded', () => {
 
-const emailNavbar = document.getElementById('email');
+  // Displays user in navbar
 
-function emailDisplay() {
+  const emailNavbar = document.getElementById('email');
+
+  function emailDisplay() {
     const emailInfo = localStorage.getItem('user');
     if (emailInfo === null) {
       let icon = `<i class="fa fa-sign-in-alt"></i>`
@@ -59,16 +63,14 @@ function emailDisplay() {
     } else {
       emailNavbar.innerHTML = emailInfo;
     }
-}
+  }
+  emailDisplay();
 
-document.addEventListener('DOMContentLoaded', () => {
-    emailDisplay();
+  // Signs out
+
+  const signOutBtn = document.getElementById('sign-out');
+
+  signOutBtn.addEventListener('click', () => {
+    localStorage.removeItem('user');
+  });
 }) 
-
-// Signs out
-
-const signOutBtn = document.getElementById('sign-out');
-
-signOutBtn.addEventListener('click', () => {
-  localStorage.removeItem('user');
-});
